@@ -46,6 +46,7 @@ html = f'''<!doctype html>
 <style>html,body{{margin:0;background:#FFFFFF}}</style>
 {helmet.strip()}
 <script src="rsvp.js" defer></script>
+<script src="guests.js" defer></script>
 </head>
 <body>
 {body.strip()}

@@ -18,7 +18,7 @@
 body{margin:0;background:#F2F2EE}
 a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .site,.site *{font-style:normal;font-synthesis:none;box-sizing:border-box}
-.site{font-family:'Aspekta',Helvetica,Arial,sans-serif;color:#1C1C1A;background:#F2F2EE;font-size:16px;line-height:1.45;--ease:cubic-bezier(.2,.7,0,1);--peri:#A2AEDA;--sage:#DCE2BE;--mist:#D8E2DC;--blush:#F8ECEA;--sand:#EDE6DD;--peri-ink:#4F5DA8;--sage-ink:#66702A;--rose-ink:#B0456C;overflow-x:clip}
+.site{font-family:'Aspekta',Helvetica,Arial,sans-serif;color:#1C1C1A;background:#FFFFFF;font-size:16px;line-height:1.45;--ease:cubic-bezier(.2,.7,0,1);--peri:#A2AEDA;--sage:#DCE2BE;--mist:#D8E2DC;--blush:#F8ECEA;--sand:#EDE6DD;--peri-ink:#4F5DA8;--sage-ink:#66702A;--rose-ink:#B0456C;overflow-x:clip}
 .site p,.site h1,.site h2,.site h3,.site ul,.site ol,.site dl,.site dd,.site figure{margin:0}
 .mono{font-family:'Azeret Mono',ui-monospace,monospace}
 .disp{font-family:'PP Neue Machina','Aspekta',Helvetica,Arial,sans-serif;font-weight:400}
@@ -211,8 +211,27 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .foot{grid-template-columns:minmax(0,1fr)}
 .boat>div{min-height:0!important}
 }
+
+/* who's coming */
+.gate{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;max-width:460px}
+.gate .fld{flex:1;min-width:200px}
+.gmsg{min-height:18px}
+.guests{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:28px 20px;margin-top:8px}
+.gcard{background:#FFFFFF;padding:9px 9px 14px;box-shadow:0 14px 34px rgba(28,28,26,0.12);display:flex;flex-direction:column;gap:10px;transform:rotate(var(--r,0deg));transition:transform 0.7s var(--ease),box-shadow 0.7s var(--ease)}
+.gcard:nth-child(3n+1){--r:-1.5deg}.gcard:nth-child(3n+2){--r:1.2deg}.gcard:nth-child(3n){--r:-0.6deg}
+.gcard:hover{transform:rotate(0deg) translateY(-8px);box-shadow:0 24px 50px rgba(28,28,26,0.18)}
+.gcard .gph{display:block;aspect-ratio:4/5;overflow:hidden;background:var(--mist)}
+.gcard .gph img{display:block;width:100%;height:100%;object-fit:cover}
+.gcard .gini{display:flex;width:100%;height:100%;align-items:center;justify-content:center;font-size:56px;font-weight:550;letter-spacing:-0.04em;text-transform:uppercase}
+.gcard .gname{font-size:20px;line-height:1.05;letter-spacing:-0.02em;font-weight:550}
+.gcard .gline{font-size:14px;line-height:1.35}
+.gcard .gmeta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;text-transform:uppercase}
+.gform{background:#FFFFFF;border:1px solid #1C1C1A;padding:28px 24px;display:flex;flex-direction:column;gap:22px}
+.gfile{font:inherit;font-size:13px}
+[hidden]{display:none!important}
 </style>
 <script src="rsvp.js" defer></script>
+<script src="guests.js" defer></script>
 </head>
 <body>
 <div class="site">
@@ -222,7 +241,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <main id="top" style="width: 100%">
 
 <!-- BANNER -->
-<div class="ticker" aria-label="Miami Art Week, Friday to Sunday. Stay Monday if you can. RSVP by Tuesday, November 10." style="background: var(--sage); padding: 11px 0; font-size: 13px; border-bottom: 1px solid rgba(28,28,26,0.18)">
+<div class="ticker" aria-label="Miami Art Week, Friday to Sunday. Stay Monday if you can. RSVP by Tuesday, November 10." style="background: linear-gradient(100deg, #C4C7CA 0%, #EEF0F2 20%, #B9BDC1 42%, #E7E9EB 64%, #BFC3C7 84%, #E2E4E6 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(28,28,26,0.12); padding: 11px 0; font-size: 13px; text-transform: lowercase; color: #2A2B2D">
 <div aria-hidden="true"><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span></div>
 </div>
 
@@ -584,7 +603,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 <h2 class="big trk">RSVP</h2>
 </div>
-<div class="rsvp" role="group" aria-label="RSVP form" style="padding: 48px 27px; background: #F2F2EE; border-left: 1px solid #1C1C1A; display: flex; flex-direction: column; gap: 32px"><div id="rsvp-app" style="display: contents"></div><template id="rsvp-tpl">
+<div class="rsvp" role="group" aria-label="RSVP form" style="padding: 48px 27px; background: #FFFFFF; border-left: 1px solid #1C1C1A; display: flex; flex-direction: column; gap: 32px"><div id="rsvp-app" style="display: contents"></div><template id="rsvp-tpl">
 <div class="mono lbl" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
 <sc-for list="{{ progress }}" as="p" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; gap: 8px"><span class="{{ p.bar }}"></span><span>{{ p.label }}</span></div></sc-for>
 </div>
@@ -654,9 +673,42 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 </section>
 
+<!-- 12 · WHO'S COMING -->
+<section id="guests" class="sec wrap" aria-label="Who’s coming" style="scroll-margin-top: 60px">
+<div class="sh mono lbl"><span>(12)</span><span>Who’s coming</span><span>Password only</span></div>
+<div class="two" style="align-items: end; row-gap: 28px; margin-bottom: 40px">
+<h2 class="big trk">Who’s coming</h2>
+<div class="sv" style="display: flex; flex-direction: column; gap: 22px">
+<p class="lead" style="max-width: 520px">See who’s in, and add a profile so everyone knows each other before Friday. Use the password from the group chat.</p>
+<form id="guest-gate" class="gate" autocomplete="off">
+<label class="fld"><span class="lbl mono">Password</span><input type="password" name="password" placeholder="From the group chat" required></label>
+<button type="submit" class="btn">Open</button>
+</form>
+<p id="guest-msg" class="mono cap gmsg" role="status"></p>
+</div>
+</div>
+<div id="guest-area" hidden>
+<div class="two" style="gap: 40px; align-items: start">
+<div id="guest-list" class="guests" aria-live="polite"></div>
+<form id="guest-form" class="gform" autocomplete="off">
+<p class="mono lbl ip" id="guest-form-title">Add yourself</p>
+<label class="fld"><span class="lbl mono">Your name</span><input type="text" name="name" maxlength="60" placeholder="First and last" required></label>
+<label class="fld"><span class="lbl mono">One line about you</span><input type="text" name="line" maxlength="120" placeholder="What you’re most excited for"></label>
+<div class="duo">
+<label class="fld"><span class="lbl mono">Flying from</span><input type="text" name="from" maxlength="40" placeholder="City"></label>
+<label class="fld"><span class="lbl mono">Instagram</span><input type="text" name="ig" maxlength="40" placeholder="@handle"></label>
+</div>
+<div class="fld"><span class="lbl mono">Are you in?</span><div class="pills" id="guest-status"><button type="button" class="pill on" data-v="I’m in">I’m in</button><button type="button" class="pill" data-v="Probably">Probably</button></div></div>
+<label class="fld"><span class="lbl mono">Photo</span><input class="gfile" type="file" name="photo" accept="image/*"></label>
+<div class="nav" style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><button type="button" class="back" id="guest-remove" hidden>Remove my profile</button><span></span><button type="submit" class="btn" id="guest-save">Save my profile</button></div>
+</form>
+</div>
+</div>
+</section>
+
 <!-- 11 · MEMORIES -->
 <section id="memories" class="sec wrap" aria-label="Memories" style="scroll-margin-top: 60px">
-<div class="sh mono lbl"><span>(12)</span><span>Memories</span><span>After the weekend</span></div>
+<div class="sh mono lbl"><span>(13)</span><span>Memories</span><span>After the weekend</span></div>
 <div class="two" style="align-items: end; row-gap: 28px; margin-bottom: 40px">
 <h2 class="big trk">Memories</h2>
 <div class="sv" style="display: flex; flex-direction: column; gap: 20px">
