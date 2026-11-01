@@ -1,4 +1,15 @@
 {
   "playlistUrl": "https://open.spotify.com/playlist/6nVE5YsGJgZkczU6wE9S9C",
-  "albumUrl": "#memories"
+  "albumUrl": "#memories",
+  "hostName": "Ilelosa",
+  "hostPhone": "",
+  "backupContact": "",
+  "payMethods": "",
+  "rooms": [],
+  "_help": {
+    "hostPhone": "Shown in the FAQ emergency answer, e.g. +1 416 555 0100",
+    "backupContact": "e.g. Ada, +1 647 555 0101",
+    "payMethods": "Replaces the default payment line, e.g. Interac e-Transfer to hello@losaeguavoen.com",
+    "rooms": "[{\"room\": \"Main bedroom\", \"beds\": \"King\", \"people\": \"Ilelosa, Ada\"}]"
+  }
 }

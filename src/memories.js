@@ -21,7 +21,10 @@ async function api(method, body) {
   return j;
 }
 
+let authed = false;
+let kind = 'memory';
 function unlocked() {
+  authed = true;
   ss.set('oe-pw', pw);
   $('mem-gate').hidden = true;
   $('mem-pw-row').hidden = true;
@@ -32,26 +35,42 @@ async function loadAlbum() {
   const j = await api('GET');
   unlocked();
   const items = [];
-  (j.memories || []).forEach((m) => {
+  const all = j.memories || [];
+  renderFits(all.filter((m) => m.kind === 'fit'));
+  const memories = all.filter((m) => m.kind !== 'fit');
+  memories.forEach((m) => {
     const who = esc(m.name) + (m.day ? ' · ' + esc(m.day.slice(0, 3)) : '');
     m.media.forEach((x) => items.push(x.type === 'video'
       ? `<figure><video src="${esc(x.url)}" muted playsinline loop preload="metadata" controls></video></figure>`
       : `<figure><a href="${esc(x.url)}" target="_blank" rel="noopener"><img src="${esc(x.url)}" alt="Photo from ${esc(m.name)}" loading="lazy"></a><figcaption class="mono cap">${who}</figcaption></figure>`));
     if (m.note) items.push(`<blockquote><p>${esc(m.note)}</p><p class="mono cap">${who}</p></blockquote>`);
   });
-  const n = (j.memories || []).reduce((a, m) => a + m.media.length, 0);
+  const n = memories.reduce((a, m) => a + m.media.length, 0);
   $('mem-count').textContent = n ? n + (n === 1 ? ' photo' : ' photos and videos') : '';
   $('mem-album').innerHTML = items.length ? items.join('') : '<p class="mono cap">Nothing yet. Be the first.</p>';
 }
 
+function renderFits(fits) {
+  const el = $('fits'); if (!el) return;
+  const items = [];
+  fits.forEach((m) => m.media.forEach((x) => {
+    const cap = `<figcaption class="mono cap">${esc(m.name)}${m.day ? ' · ' + esc(m.day.slice(0, 3)) : ''}</figcaption>`;
+    items.push(x.type === 'video'
+      ? `<figure><video src="${esc(x.url)}" muted playsinline loop autoplay preload="metadata"></video>${cap}</figure>`
+      : `<figure><img src="${esc(x.url)}" alt="${esc(m.name)}’s fit" loading="lazy">${cap}</figure>`);
+  }));
+  el.innerHTML = items.length ? items.join('') : '<p class="mono cap">One photo a day, once we’re there.</p>';
+}
+
 function open(mode) {
+  kind = mode === 'fit' ? 'fit' : 'memory';
   const panel = $('mem-panel');
   panel.hidden = false;
-  $('mem-title').textContent = mode === 'note' ? 'Send a memory' : 'Add to the album';
-  $('mem-pw-row').hidden = !!pw;
+  $('mem-title').textContent = mode === 'fit' ? 'Add today’s fit' : mode === 'note' ? 'Send a memory' : 'Add to the album';
+  $('mem-pw-row').hidden = !!pw || authed;
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   setTimeout(() => {
-    if (!pw) panel.password.focus();
+    if (!pw && !authed) panel.password.focus();
     else if (mode === 'note') panel.note.focus();
   }, 400);
 }
@@ -97,7 +116,7 @@ async function share(e) {
       done += file.size;
       media.push({ url: blob.url, type: file.type });
     }
-    const j = await api('POST', { name: f.name.value, day, note, media });
+    const j = await api('POST', { kind, name: f.name.value, day, note, media });
     ls.add({ id: j.id, token: j.token });
     files = []; showThumbs(); f.reset(); setDay(day);
     $('mem-bar').hidden = true;
@@ -115,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!$('mem-panel')) return;
   $('mem-open-album').addEventListener('click', () => open('album'));
   $('mem-open-note').addEventListener('click', () => open('note'));
+  if ($('fit-open')) $('fit-open').addEventListener('click', () => open('fit'));
   $('mem-close').addEventListener('click', () => { $('mem-panel').hidden = true; });
   $('mem-day').addEventListener('click', (e) => { if (e.target.dataset && e.target.dataset.v) setDay(e.target.dataset.v); });
   const input = $('mem-panel').files, drop = $('mem-drop');
@@ -128,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAlbum().catch((err) => { pw = ''; e.target.password.value = ''; e.target.password.placeholder = err.status === 401 ? 'That’s not the password' : err.message; });
   });
   document.addEventListener('oe-unlock', (e) => { pw = e.detail; loadAlbum().catch(() => {}); });
-  if (pw) loadAlbum().catch(() => { pw = ''; });
+  loadAlbum().catch(() => {});
   // pick up new photos and notes every 30 seconds while the album is open
   setInterval(() => {
     if (!pw || document.hidden || $('mem-album-wrap').hidden) return;

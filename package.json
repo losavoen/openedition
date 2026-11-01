@@ -6,7 +6,8 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@vercel/blob": "^1.0.0"
+    "@vercel/blob": "^1.0.0",
+    "@vercel/functions": "^2.2.13"
   },
   "devDependencies": {
     "esbuild": "^0.24.0"

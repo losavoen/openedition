@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Closing Edition (miami art week)</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&family=Cutive+Mono&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Aspekta';src:url('/assets/fonts/Aspekta-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Aspekta';src:url('/assets/fonts/Aspekta-550.woff2') format('woff2');font-weight:550;font-display:swap}
+:root{--blush:#F8ECEA;--mist:#D8E2DC;--sage:#DCE2BE;--ink:#1C1C1A;--peri-ink:#4F5DA8;--ease:cubic-bezier(.2,.7,0,1)}
+*{box-sizing:border-box}
+html,body{margin:0;background:#FFFFFF;color:var(--ink);font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.45}
+p{margin:0}
+a{color:inherit}
+.ticker{background:var(--blush);padding:11px 16px;font-size:13px;text-transform:lowercase;display:flex;justify-content:space-between;gap:16px}
+.wrap{padding-inline:27px}
+.mono{font-family:'Azeret Mono',ui-monospace,monospace;font-size:12px;letter-spacing:0.04em;text-transform:uppercase}
+.big{font-size:clamp(48px,5.6vw,84px);line-height:0.86;letter-spacing:-0.04em;text-transform:uppercase;font-weight:550;margin:0}
+.sub{font-family:'Cutive Mono','Azeret Mono',monospace;font-size:clamp(18px,1.9vw,28px);line-height:1.1}
+header{min-height:70svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:64px 16px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-top:1px solid var(--ink);padding-top:14px}
+.stats .n{font-size:clamp(48px,6.4vw,96px);line-height:0.82;font-weight:550;letter-spacing:-0.045em}
+.day{margin-top:96px}
+.sh{display:flex;justify-content:space-between;border-top:1px solid var(--ink);padding-top:14px;margin-bottom:24px}
+.grid{columns:4 220px;column-gap:16px}
+.grid>*{break-inside:avoid;margin:0 0 16px;display:block}
+.grid figure{margin:0 0 16px;position:relative;overflow:hidden;background:var(--mist)}
+.grid img,.grid video{display:block;width:100%;height:auto;filter:grayscale(1) contrast(1.04);transition:filter 0.8s var(--ease)}
+.grid figure:hover img,.grid figure:hover video{filter:none}
+.grid figcaption{position:absolute;left:10px;right:10px;bottom:10px;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,0.5)}
+blockquote{margin:0 0 16px;background:var(--blush);padding:24px 22px;display:flex;flex-direction:column;gap:14px}
+blockquote p:first-child{font-size:clamp(20px,1.8vw,27px);line-height:1.2;letter-spacing:-0.01em}
+footer{padding:120px 27px 28px}
+footer div{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--ink);padding-top:14px}
+.empty{padding:48px 0}
+@media (max-width:760px){.wrap{padding-inline:16px}.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="ticker"><span>open edition (miami art week)</span><a href="/">back to the site</a></div>
+<header>
+<h1 style="margin:0;display:flex;flex-direction:column;align-items:center;gap:14px"><span class="big">Closing<br>Edition</span><span class="sub">(miami art week)</span></h1>
+<p class="mono">December 4–7, 2026</p>
+</header>
+<main class="wrap">
+<div class="stats"><div><p class="n" id="s-people">—</p><p class="mono">People</p></div><div><p class="n" id="s-photos">—</p><p class="mono">Photos and videos</p></div><div><p class="n" id="s-notes">—</p><p class="mono">Favourite moments</p></div></div>
+<div id="days"><p class="empty mono">The recap fills in as people add to the album.</p></div>
+</main>
+<footer><div class="mono"><span>See you next time</span><a href="/#memories">Add to the album</a></div></footer>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  var ORDER = ['Friday', 'Saturday', 'Sunday', 'Monday', ''];
+  fetch('/api/memories', { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (j) {
+    var all = j.memories || [];
+    if (!all.length) return;
+    var people = {}, photos = 0, notes = 0, byDay = {};
+    all.forEach(function (m) { people[m.name] = 1; photos += m.media.length; if (m.note) notes++; (byDay[m.day || ''] = byDay[m.day || ''] || []).push(m); });
+    document.getElementById('s-people').textContent = Object.keys(people).length;
+    document.getElementById('s-photos').textContent = photos;
+    document.getElementById('s-notes').textContent = notes;
+    document.getElementById('days').innerHTML = ORDER.filter(function (d) { return byDay[d]; }).map(function (d, i) {
+      var items = [];
+      byDay[d].forEach(function (m) {
+        m.media.forEach(function (x) {
+          items.push(x.type === 'video'
+            ? '<figure><video src="' + esc(x.url) + '" muted playsinline loop controls preload="metadata"></video></figure>'
+            : '<figure><img src="' + esc(x.url) + '" alt="Photo from ' + esc(m.name) + '" loading="lazy"><figcaption class="mono">' + esc(m.name) + (m.kind === 'fit' ? ' · fit' : '') + '</figcaption></figure>');
+        });
+        if (m.note) items.push('<blockquote><p>' + esc(m.note) + '</p><p class="mono">' + esc(m.name) + '</p></blockquote>');
+      });
+      return '<section class="day"><div class="sh mono"><span>(' + String(i + 1).padStart(2, '0') + ')</span><span>' + esc(d || 'The weekend') + '</span><span>' + byDay[d].length + ' posts</span></div><h2 class="big" style="margin-bottom:32px">' + esc(d || 'The weekend') + '</h2><div class="grid">' + items.join('') + '</div></section>';
+    }).join('');
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>

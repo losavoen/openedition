@@ -61,7 +61,14 @@
       block2: !s.airport || !s.arriveDay,
       block3: !s.leaving,
       next1: declined ? go(5) : go(2), next2: go(3), next3: go(4), next4: go(5), back: back,
-      summary: rows, mailto: mailto
+      summary: rows, mailto: mailto,
+      // save to the site (arrivals board, song requests), then the mailto link opens your email app
+      submit: function () {
+        try {
+          fetch('/api/rsvps', { method: 'POST', keepalive: true, credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(s) })
+            .then(function () { document.dispatchEvent(new CustomEvent('oe-rsvp-saved')); }).catch(function () {});
+        } catch (e) {}
+      }
     };
   }
 

@@ -32,3 +32,14 @@ Guests unlock the section with a shared password, then add or edit their own pro
 ## Memories (shared album)
 
 After the trip, people unlock the album with the same password, then upload photos and videos and leave a favourite moment. Files go straight from the browser to Vercel Blob (`api/upload.js` issues the upload token). Each memory is stored as JSON under `memories/` (`api/memories.js`). `src/memories.js` is bundled to `memories.js` by the build script.
+
+## Password page
+
+`middleware.js` sends anyone without the site cookie to `/login`. One password (`GUEST_PASSWORD`) covers the site, the guest list and the album. Changing it on Vercel signs everyone out.
+
+## Other settings
+
+- `config.json`: `hostPhone`, `backupContact`, `payMethods` and `rooms` fill the emergency answer, payment line and rooms board. Run the build after editing.
+- `KIT_ITEMS` (Vercel env var, one item per line): the kit contents, revealed from Friday, December 4.
+- RSVPs are saved to Blob under `rsvps/` (`api/rsvps.js`) and feed the "Who lands when" board and song requests.
+- `/recap` builds a recap page from the album.

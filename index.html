@@ -7,7 +7,7 @@
 <meta name="description" content="Plans, costs and RSVP for our trip to Miami Art Week, December 4–7, 2026.">
 <meta property="og:title" content="Open Edition — Miami Art Week">
 <meta property="og:description" content="Plans, costs and RSVP for our trip to Miami Art Week, December 4–7, 2026.">
-<meta property="og:image" content="assets/c4eb66219cdb3bccb6a3bd147e0dcdea.jpg">
+<meta property="og:image" content="/assets/og.jpg">
 <style>html,body{margin:0;background:#FFFFFF}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&amp;family=Cutive+Mono&amp;display=swap" rel="stylesheet">
@@ -251,10 +251,36 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .album figcaption{position:absolute;left:10px;right:10px;bottom:10px;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,0.5)}
 .album blockquote{background:var(--blush);padding:22px 20px;display:flex;flex-direction:column;gap:14px}
 .album blockquote p:first-child{font-size:20px;line-height:1.2;letter-spacing:-0.01em}
+
+/* extras */
+.cd{font-variant-numeric:tabular-nums}
+.today-tag{display:none}
+.card.today{outline:2px solid #1C1C1A;outline-offset:6px}
+.card.today .today-tag,.spread.today .today-tag{display:inline-flex;align-self:flex-start;background:#1C1C1A;color:#FFFFFF;padding:3px 8px;border-radius:999px}
+.ros.now{background:var(--blush);margin-inline:-10px;padding-inline:10px}
+.arr{margin-top:72px;border-top:1px solid #1C1C1A;padding-top:14px}
+.arr-day{display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr);gap:16px;padding:18px 0;border-bottom:1px solid rgba(28,28,26,0.18)}
+.arr-row{display:grid;grid-template-columns:90px minmax(0,1.2fr) 70px minmax(0,1fr);gap:12px;padding:6px 0;align-items:baseline}
+.picks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.pick{border-top:1px solid #1C1C1A;padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.pick .n{font-size:clamp(40px,4vw,64px);line-height:0.9;font-weight:550;letter-spacing:-0.04em}
+.fits{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin-top:20px}
+.fits figure{position:relative;margin:0;aspect-ratio:3/4;overflow:hidden;background:#FFFFFF}
+.fits img,.fits video{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.04);transition:filter 0.8s var(--ease)}
+.fits figure:hover img,.fits figure:hover video{filter:none}
+.fits figcaption{position:absolute;left:8px;right:8px;bottom:8px;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,0.5)}
+.pay{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:27px;margin-top:48px;padding-top:20px;border-top:1px solid #1C1C1A}
+.rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.rooms div{background:#FFFFFF;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.kit-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:40px}
+.kit-items p{border-top:1px solid #1C1C1A;padding-top:14px;font-size:22px;letter-spacing:-0.02em}
+@media (max-width:760px){.arr-day{grid-template-columns:1fr}.arr-row{grid-template-columns:70px minmax(0,1fr) 44px}.arr-row>:nth-child(4){grid-column:2 / -1}.picks,.pay{grid-template-columns:1fr}}
 </style>
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
 <script src="memories.js" defer></script>
+<script>window.OE_CONFIG = {"hostName": "Ilelosa", "hostPhone": "", "backupContact": "", "rooms": [], "payMethods": ""};</script>
+<script src="extras.js" defer></script>
 </head>
 <body>
 <div class="site">
@@ -265,7 +291,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 
 <!-- BANNER -->
 <div class="ticker" aria-label="Miami Art Week, Friday to Sunday. Stay Monday if you can. RSVP by Tuesday, November 10." style="background: var(--blush); padding: 11px 0; font-size: 13px; text-transform: lowercase; color: #1C1C1A">
-<div aria-hidden="true"><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span></div>
+<div aria-hidden="true"><span class="cd" style="padding-right: 40px">Five weeks to Miami</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span><span class="cd" style="padding-right: 40px">Five weeks to Miami</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span></div>
 </div>
 
 <!-- HERO -->
@@ -296,6 +322,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="sv" style="display: flex; flex-direction: column; gap: 14px">
 <p class="mono lbl is">What I need from you</p>
 <p class="lead">A yes or no by <span class="ip">Tuesday, November 10</span>. Then I’ll know if we keep this Airbnb, find another place, or cancel. Flights from Toronto are going up, so the sooner the better.</p>
+<p class="mono lbl" style="color: #55524F">Bookings lock on Friday, November 13. After that, deposits can’t be refunded.</p>
 </div>
 </div>
 </section>
@@ -322,6 +349,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <span class="ip">From MIA</span><span>About 20 minutes</span>
 <span class="ip">From FLL</span><span>About 40–50 minutes</span>
 </div>
+<div style="display: flex; flex-direction: column; gap: 12px"><p class="mono lbl ip">Rooms</p><div class="rooms" id="rooms"><div><span class="mono cap">Coming soon</span><span class="cap">Rooms and beds go up here after RSVPs close on November 10.</span></div></div></div>
 </div>
 </div>
 <div class="two" style="gap: 0">
@@ -352,6 +380,10 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="ros wide sv"><span class="mono lbl ir">Traffic</span><div><p style="font-weight: 550">What to avoid</p><p class="cap">The MacArthur and Julia Tuttle causeways get busy in the afternoon. Last year the Venetian bridge also closed in the late afternoon. Go early or after dark.</p></div></div>
 </div>
 </div>
+<div class="arr sv" id="arrivals-board">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 8px"><p class="mono lbl ip">Who lands when</p><p class="mono cap">Fills in from the RSVPs. Share rides from the same airport.</p></div>
+<div id="arrivals"><p class="cap" style="padding: 18px 0">No arrivals yet.</p></div>
+</div>
 </section>
 
 <!-- 04 · ITINERARY -->
@@ -363,10 +395,10 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 
 <nav class="cards" aria-label="Days">
-<a class="card sv" href="#fri"><span class="cimg"><img src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt="The house in Little River"></span><span class="mono lbl ip">Fri / Dec 4</span><span class="ct">Land and go</span><span class="cap">Drop bags, the fair, dinner by the river</span></a>
-<a class="card sv" href="#sat"><span class="cimg"><img src="assets/6d5b2c5b16a2856583fe6d970384b8b9.jpg" alt="Jet skis heading toward the skyline at dusk"></span><span class="mono lbl ir">Sat / Dec 5</span><span class="ct">Art, then water</span><span class="cap">Brunch, art, the boat, a night out</span></a>
-<a class="card sv" href="#sun"><span class="cimg"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Loungers under fringed umbrellas facing the Miami skyline" style="object-position: 50% 60%"></span><span class="mono lbl is">Sun / Dec 6</span><span class="ct">Slow Sunday</span><span class="cap">Church, matcha, the beach club, dinner</span></a>
-<a class="card sv" href="#mon"><span class="cimg"><img src="assets/a84798b4498739329e65cf17fed751f2.jpg" alt="Pool loungers under palm trees" style="object-position: 50% 70%"></span><span class="mono lbl ip">Mon / Dec 7</span><span class="ct">Stay or fly</span><span class="cap">Work or explore, fly out at 9</span></a>
+<a class="card sv" href="#fri"><span class="cimg"><img src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt="The house in Little River"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ip">Fri / Dec 4</span><span class="ct">Land and go</span><span class="cap">Drop bags, the fair, dinner by the river</span></a>
+<a class="card sv" href="#sat"><span class="cimg"><img src="assets/6d5b2c5b16a2856583fe6d970384b8b9.jpg" alt="Jet skis heading toward the skyline at dusk"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ir">Sat / Dec 5</span><span class="ct">Art, then water</span><span class="cap">Brunch, art, the boat, a night out</span></a>
+<a class="card sv" href="#sun"><span class="cimg"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Loungers under fringed umbrellas facing the Miami skyline" style="object-position: 50% 60%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl is">Sun / Dec 6</span><span class="ct">Slow Sunday</span><span class="cap">Church, matcha, the beach club, dinner</span></a>
+<a class="card sv" href="#mon"><span class="cimg"><img src="assets/a84798b4498739329e65cf17fed751f2.jpg" alt="Pool loungers under palm trees" style="object-position: 50% 70%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ip">Mon / Dec 7</span><span class="ct">Stay or fly</span><span class="cap">Work or explore, fly out at 9</span></a>
 </nav>
 
 <div style="display: flex; flex-direction: column; gap: 56px; margin-top: 88px">
@@ -451,6 +483,16 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 </article>
 
+<!-- ART WEEK PICKS -->
+<div class="sv" style="display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap"><p class="mono lbl ip">If you only see three things</p><p class="mono cap">For the non-art people too</p></div>
+<div class="picks">
+<div class="pick"><span class="n">01</span><p style="font-weight: 550">Art Basel, Miami Beach</p><p class="cap">The main fair at the Convention Center. Give it three hours, wear flat shoes, and don’t try to see everything.</p></div>
+<div class="pick"><span class="n">02</span><p style="font-weight: 550">ICA Miami</p><p class="cap">Free, in the Design District, close to the house. Easy to do in an hour.</p></div>
+<div class="pick"><span class="n">03</span><p style="font-weight: 550">Superblue</p><p class="cap">Big immersive rooms you walk through. About $42, and good for photos.</p></div>
+</div>
+</div>
+
 <!-- ALSO ON -->
 <div class="sv" style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 27px; padding-top: 20px; border-top: 1px solid #1C1C1A">
 <div style="display: flex; flex-direction: column; gap: 14px">
@@ -501,7 +543,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <p class="lead sv" style="max-width: 520px">Ideas, not rules. A look for each part of the trip: <span class="is">green</span>, <span class="ir">red</span>, animal print, satin and gold.</p>
 </div>
 <div class="mono cap sv" style="justify-self: end; display: grid; grid-template-columns: auto auto; column-gap: 28px; row-gap: 4px; text-transform: uppercase">
-<span>Trip</span><span>Miami Art Week</span><span>Edit</span><span>Wardrobe</span><span>Year</span><span>2026</span>
+<span>Trip</span><span>Miami Art Week</span><span>Weather</span><span>Highs around 77°F / 25°C</span><span>Nights</span><span>Around 64°F / 18°C</span><span>Pack</span><span>A layer for the boat, swimwear</span>
 </div>
 </div>
 <div class="board">
@@ -522,6 +564,10 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <figure class="sc" style="grid-column: 7 / span 3; aspect-ratio: 4/5"><img src="assets/982880e2200e74c486dbc6610cd84e2f.jpg" alt="Striped bandeau with a chartreuse skirt and purple heels" style="object-position: 50% 40%"></figure>
 <figure class="sc" style="grid-column: 10 / span 3; aspect-ratio: 3/5; margin-top: 40px"><img src="assets/04489c978cf8f115fbac43843951a9a7.jpg" alt="Teal satin corset top with a brown fringe skirt" style="object-position: 50% 30%"></figure>
 </div>
+<div style="margin-top: 72px; border-top: 1px solid #1C1C1A; padding-top: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap"><p class="mono lbl ip">Fits of the weekend</p><button type="button" class="pill" id="fit-open">Add today’s fit</button></div>
+<div class="fits" id="fits"><p class="mono cap">One photo a day, once we’re there.</p></div>
+</div>
 </div>
 </section>
 
@@ -535,6 +581,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <p class="mono lbl" style="color: #55524F">No hints. Open it Friday.</p>
 </div>
 </div>
+<div class="kit-items" id="kit-items" hidden></div>
 </section>
 
 <!-- 07 · SOUNDTRACK -->
@@ -561,6 +608,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="trk-row"><span class="mono cap ip">09</span><span style="font-weight: 550">Swim Good</span><span class="cap">Frank Ocean</span><span class="mono cap">The boat</span></div>
 <div class="trk-row"><span class="mono cap ip">10</span><span style="font-weight: 550">Human Nature</span><span class="cap">Michael Jackson</span><span class="mono cap">Monday</span></div>
 <div class="trk-row" style="border-bottom: 1px solid rgba(28,28,26,0.28)"><span class="mono cap ip">11</span><span style="font-weight: 550">Yours</span><span class="cap">Two songs each</span><span class="mono cap">Add in the RSVP</span></div>
+<div id="song-requests"></div>
 </div>
 </div>
 </section>
@@ -592,6 +640,10 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 <p class="cap" style="max-width: 280px; font-size: 13px">Rough cost per person in USD, plus about $160 CAD for the house. Rides, cars and lunches are extra. If it’s too much, tell me in the RSVP and we’ll change the plan.</p>
 </div>
+<div class="pay sv">
+<div style="display: flex; flex-direction: column; gap: 12px"><p class="mono lbl ip">Pay your share</p><p class="lead" style="margin: 0">I’ll send exact totals after RSVPs close on November 10. Please pay by Friday, November 13 so I can book.</p></div>
+<div style="display: flex; flex-direction: column; gap: 12px; justify-content: flex-end"><p class="cap" id="pay-methods" style="font-size: 15px">Interac e-Transfer or Zelle. Details are in the group chat.</p><p class="mono cap" style="text-transform: uppercase">Prices are in USD. If you pay in CAD, use that day’s exchange rate.</p></div>
+</div>
 </div>
 </section>
 
@@ -611,6 +663,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">Do I need a weekend ticket?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">No. The $92 day ticket is enough for Friday.</dd></div>
 <div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">Which beach club?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Nikki Beach or Joia Beach. We’ll choose once we know numbers and budget.</dd></div>
 <div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">What if it’s over my budget?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Tell me in the RSVP. Dinners and the beach club are estimates, and we can change the plan.</dd></div>
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">What if something goes wrong?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Call 911 in an emergency. Then call me or message the group chat. The house is at 262 NW 75th St, Miami, FL 33150.<span id="host-contact"></span></dd></div>
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">What’s the weather like?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Warm. Early December is usually in the mid 70s°F (around 25°C) by day and mid 60s°F (around 18°C) at night. Bring a layer for the boat.</dd></div>
 </dl>
 </div>
 </section>
@@ -693,7 +747,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <sc-for list="{{ summary }}" as="r" hint-placeholder-count="5"><dt class="mono cap" style="text-transform: uppercase">{{ r.k }}</dt><dd class="cap" style="font-size: 14px">{{ r.v }}</dd></sc-for>
 </dl>
 <p class="cap" style="max-width: 420px">This opens an email to me with your answers. Press send and you’re done.</p>
-<div class="nav"><button type="button" class="back" onClick="{{ back }}">Edit</button><a class="btn" href="{{ mailto }}">Send my RSVP</a></div>
+<div class="nav"><button type="button" class="back" onClick="{{ back }}">Edit</button><a class="btn" href="{{ mailto }}" onClick="{{ submit }}">Send my RSVP</a></div>
 </div>
 </sc-if>
 </template></div>
@@ -720,7 +774,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <form id="guest-form" class="gform" autocomplete="off">
 <p class="mono lbl ip" id="guest-form-title">Add yourself</p>
 <label class="fld"><span class="lbl mono">Your name</span><input type="text" name="name" maxlength="60" placeholder="First and last" required></label>
-<label class="fld"><span class="lbl mono">One line about you</span><input type="text" name="line" maxlength="120" placeholder="What you’re most excited for"></label>
+<label class="fld"><span class="lbl mono">The piece you’d buy if money was no object</span><input type="text" name="line" maxlength="120" placeholder="An artist, a piece, or just a vibe"></label>
 <div class="duo">
 <label class="fld"><span class="lbl mono">Flying from</span><input type="text" name="from" maxlength="40" placeholder="City"></label>
 <label class="fld"><span class="lbl mono">Instagram</span><input type="text" name="ig" maxlength="40" placeholder="@handle"></label>
@@ -743,6 +797,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div style="display: flex; gap: 10px; flex-wrap: wrap">
 <button type="button" class="btn" id="mem-open-album">Add to the album</button>
 <button type="button" class="pill" id="mem-open-note">Send a memory</button>
+<a class="pill" href="/recap">See the recap</a>
 </div>
 </div>
 </div>

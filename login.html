@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Edition (miami art week)</title>
+<meta name="description" content="Our trip to Miami Art Week, December 4–7, 2026. Password required.">
+<meta property="og:title" content="Open Edition (miami art week)">
+<meta property="og:description" content="December 4–7, 2026. Password in the group chat.">
+<meta property="og:image" content="/assets/og.jpg">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&family=Cutive+Mono&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Aspekta';src:url('/assets/fonts/Aspekta-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Aspekta';src:url('/assets/fonts/Aspekta-550.woff2') format('woff2');font-weight:550;font-display:swap}
+:root{--blush:#F8ECEA;--ink:#1C1C1A;--peri-ink:#4F5DA8;--ease:cubic-bezier(.2,.7,0,1)}
+*{box-sizing:border-box}
+html,body{margin:0;background:#FFFFFF;color:var(--ink);font-family:'Aspekta',Helvetica,Arial,sans-serif}
+.ticker{background:var(--blush);padding:11px 16px;font-size:13px;text-transform:lowercase;text-align:center}
+main{min-height:calc(100svh - 41px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:48px 16px;text-align:center}
+h1{margin:0;display:flex;flex-direction:column;align-items:center;gap:14px}
+.big{font-size:clamp(48px,5.6vw,84px);line-height:0.86;letter-spacing:-0.04em;text-transform:uppercase;font-weight:550}
+.sub{font-family:'Cutive Mono','Azeret Mono',monospace;font-weight:400;font-size:clamp(18px,1.9vw,28px);line-height:1.1}
+.mono{font-family:'Azeret Mono',ui-monospace,monospace;font-size:12px;letter-spacing:0.04em;text-transform:uppercase}
+form{display:flex;gap:12px;align-items:flex-end;width:100%;max-width:420px;margin-top:12px}
+label{flex:1;display:flex;flex-direction:column;gap:10px;text-align:left}
+input{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--ink);padding:10px 0;border-radius:0;width:100%}
+input:focus{outline:none;border-bottom:2px solid var(--peri-ink)}
+button{font:inherit;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;font-weight:550;min-height:44px;padding:0 22px;border-radius:999px;background:var(--ink);color:#F2F2EE;border:1px solid var(--ink);cursor:pointer;transition:transform 0.4s var(--ease)}
+button:hover{transform:translateY(-2px)}
+.err{min-height:16px;color:#B0456C}
+.fade{animation:up 1s var(--ease) both}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+</style>
+</head>
+<body>
+<div class="ticker">december 4–7, 2026 · password in the group chat</div>
+<main>
+<h1 class="fade"><span class="big">Open<br>Edition</span><span class="sub">(miami art week)</span></h1>
+<form class="fade" method="post" action="/api/login" style="animation-delay:0.15s">
+<input type="hidden" name="next" id="next" value="/">
+<label><span class="mono">Password</span><input type="password" name="password" autocomplete="current-password" required autofocus></label>
+<button type="submit">Enter</button>
+</form>
+<p class="mono err" id="err" role="alert"></p>
+</main>
+<script>
+(function(){var q=new URLSearchParams(location.search);var n=q.get('next');if(n&&n.charAt(0)==='/'&&n.charAt(1)!=='/')document.getElementById('next').value=n;if(q.get('e'))document.getElementById('err').textContent='That’s not the password. Try again.';})();
+</script>
+</body>
+</html>

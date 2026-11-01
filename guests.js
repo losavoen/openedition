@@ -56,8 +56,8 @@
     Array.prototype.forEach.call($('guest-status').children, function (b) { b.className = b.getAttribute('data-v') === v ? 'pill on' : 'pill'; });
   }
 
-  function load() {
-    msg('Opening…');
+  function load(silent) {
+    if (!silent) msg('Opening…');
     return api('GET').then(function (j) {
       guests = j.guests || [];
       try { document.dispatchEvent(new CustomEvent('oe-unlock', { detail: pw })); } catch (e) {}
@@ -66,7 +66,7 @@
       $('guest-gate').hidden = true;
       $('guest-area').hidden = false;
       render(); fillForm();
-    }).catch(function (e) { msg(e.status === 401 ? 'That’s not the password.' : e.message); });
+    }).catch(function (e) { if (silent) { msg(''); return; } msg(e.status === 401 ? 'That’s not the password.' : e.message); });
   }
 
   function resize(file) {
@@ -126,7 +126,7 @@
     });
 
     pw = getPw();
-    if (pw) load();
+    load(true); // signed in to the site, so this usually opens straight away
 
     // keep the list fresh: pick up new profiles every 30 seconds while the tab is open
     setInterval(function () {

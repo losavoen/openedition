@@ -42,12 +42,14 @@ html = f'''<!doctype html>
 <meta name="description" content="{desc}">
 <meta property="og:title" content="Open Edition — Miami Art Week">
 <meta property="og:description" content="{desc}">
-<meta property="og:image" content="assets/c4eb66219cdb3bccb6a3bd147e0dcdea.jpg">
+<meta property="og:image" content="/assets/og.jpg">
 <style>html,body{{margin:0;background:#FFFFFF}}</style>
 {helmet.strip()}
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
 <script src="memories.js" defer></script>
+<script>window.OE_CONFIG = {json.dumps({k: cfg[k] for k in ('hostName', 'hostPhone', 'backupContact', 'rooms', 'payMethods') if k in cfg})};</script>
+<script src="extras.js" defer></script>
 </head>
 <body>
 {body.strip()}
