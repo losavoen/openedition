@@ -109,7 +109,7 @@
     var timer = null, hovering = false;
     function current() {
       var mid = window.innerHeight * 0.4, on = null;
-      links.forEach(function (a) { var el = document.querySelector(a.getAttribute('href')); if (el && el.getBoundingClientRect().top <= mid) on = a; });
+      links.forEach(function (a) { var h = a.getAttribute('href'); var el = h.charAt(0) === '#' ? document.querySelector(h) : null; if (el && el.getBoundingClientRect().top <= mid) on = a; });
       links.forEach(function (a) { a.classList.toggle('on', a === on); });
       if (on && on.scrollIntoView && nav.classList.contains('show')) { var box = nav.firstElementChild; box.scrollLeft = on.offsetLeft - box.clientWidth / 2 + on.clientWidth / 2; }
     }
