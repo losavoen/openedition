@@ -133,11 +133,26 @@ header,footer{position:relative;z-index:5;display:flex;justify-content:space-bet
     { name: 'Preview', day: 'Monday', media: [{ url: '/assets/a84798b4498739329e65cf17fed751f2.jpg', type: 'image' }] }
   ];
 
+  var A = '/assets/';
+  // ?sample shows a finished tape: what it looks like after everyone has added footage.
+  var SAMPLE = [
+    { name: 'Ilelosa', day: 'Friday', media: [{ url: A + 'f63505a42750c5a52910c41fafde0526.jpg', type: 'image' }, { url: A + '33b2dca8bf23bad75dc01309e0e0694f.jpg', type: 'image' }] },
+    { name: 'Ada', day: 'Friday', note: 'Walking into the fair and losing everyone within five minutes.', media: [{ url: A + 'ce9c479ce68a77630ab0c0e8cee3ed96.jpg', type: 'image' }, { url: A + 'c4eb66219cdb3bccb6a3bd147e0dcdea.jpg', type: 'image' }] },
+    { name: 'Tomi', day: 'Friday', media: [{ url: A + '45d3085f470d21e1b85bcaedd49351e5.jpg', type: 'image' }] },
+    { name: 'Kemi', day: 'Saturday', media: [{ url: A + '6d5b2c5b16a2856583fe6d970384b8b9.jpg', type: 'image' }, { url: A + 'sample/jetski.mp4', type: 'video' }] },
+    { name: 'Ilelosa', day: 'Saturday', note: 'Golden hour on the boat. Nobody talked for ten minutes.', media: [{ url: A + 'sample/boat.mp4', type: 'video' }, { url: A + '1c8c9309193976c9a4e1ebbffde5c892.jpg', type: 'image' }, { url: A + 'd95dbf2f141cda43394cd25cdb42755f.jpg', type: 'image' }] },
+    { name: 'Zee', day: 'Saturday', media: [{ url: A + 'd6d17608513a701b079d98bc3ec87c83.jpg', type: 'image' }, { url: A + '04489c978cf8f115fbac43843951a9a7.jpg', type: 'image' }] },
+    { name: 'Ada', day: 'Sunday', media: [{ url: A + 'sample/beach.mp4', type: 'video' }, { url: A + 'f74d28082aed0a2416fb3f59121b5f88.jpg', type: 'image' }] },
+    { name: 'Tomi', day: 'Sunday', note: 'Wynwood straight from the beach club, sand still in our shoes.', media: [{ url: A + 'ad825815a1adc46bdf5b2dbdbb544e6d.jpg', type: 'image' }, { url: A + '534f7c8849ccf34dee84dda23f9163d5.jpg', type: 'image' }] },
+    { name: 'Kemi', day: 'Monday', media: [{ url: A + 'a84798b4498739329e65cf17fed751f2.jpg', type: 'image' }] },
+    { name: 'Ilelosa', day: 'Monday', note: 'Same time next year?', media: [{ url: A + 'f63505a42750c5a52910c41fafde0526.jpg', type: 'image' }] }
+  ];
+
   function build(memories, preview) {
     var byDay = {};
     memories.forEach(function (m) { var d = DAYS.indexOf(m.day) > -1 ? m.day : 'Friday'; (byDay[d] = byDay[d] || []).push(m); });
     var html = '<div class="strip">';
-    html += '<div class="title-card"><span class="mono">' + (preview ? 'Preview · footage starts Dec 4' : 'Everyone’s footage') + '</span><span class="big">Open<br>Edition</span><span class="side">(miami art week) — the tape</span></div>';
+    html += '<div class="title-card"><span class="mono">' + (preview ? 'Preview · footage starts Dec 4' : (/[?&]sample\b/.test(location.search) ? 'Sample tape · how it looks when it’s full' : 'Everyone’s footage')) + '</span><span class="big">Open<br>Edition</span><span class="side">(miami art week) — the tape</span></div>';
     var n = 0;
     DAYS.forEach(function (day) {
       if (!byDay[day]) return;
@@ -249,6 +264,7 @@ header,footer{position:relative;z-index:5;display:flex;justify-content:space-bet
   }
   grain();
 
+  if (/[?&]sample\b/.test(location.search)) { build(SAMPLE, false); tick(); return; }
   fetch('/api/memories', { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.json() : { memories: [] }; })
     .then(function (j) {
       var mem = (j.memories || []).filter(function (m) { return (m.media && m.media.length) || m.note; });
