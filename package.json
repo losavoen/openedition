@@ -2,8 +2,16 @@
   "name": "openedition",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@vercel/blob": "^1.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "scripts": {
+    "rebuild": "python3 scripts/build.py"
   }
 }

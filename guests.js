@@ -60,6 +60,7 @@
     msg('Opening…');
     return api('GET').then(function (j) {
       guests = j.guests || [];
+      try { document.dispatchEvent(new CustomEvent('oe-unlock', { detail: pw })); } catch (e) {}
       setPw(pw);
       msg('');
       $('guest-gate').hidden = true;

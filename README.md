@@ -28,3 +28,7 @@ Guests unlock the section with a shared password, then add or edit their own pro
 - Environment variables on Vercel:
   - `GUEST_PASSWORD`: the shared password
   - `BLOB_READ_WRITE_TOKEN`: added automatically when a Blob store is connected to the project
+
+## Memories (shared album)
+
+After the trip, people unlock the album with the same password, then upload photos and videos and leave a favourite moment. Files go straight from the browser to Vercel Blob (`api/upload.js` issues the upload token). Each memory is stored as JSON under `memories/` (`api/memories.js`). `src/memories.js` is bundled to `memories.js` by the build script.

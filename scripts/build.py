@@ -47,6 +47,7 @@ html = f'''<!doctype html>
 {helmet.strip()}
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
+<script src="memories.js" defer></script>
 </head>
 <body>
 {body.strip()}
@@ -55,3 +56,7 @@ html = f'''<!doctype html>
 '''
 (root / 'index.html').write_text(html)
 print('wrote index.html', len(html), 'bytes')
+
+# bundle the memories uploader (uses the Vercel Blob browser client)
+import subprocess
+subprocess.run(['npx', 'esbuild', 'src/memories.js', '--bundle', '--minify', '--format=iife', '--target=es2019', '--outfile=memories.js'], cwd=root, check=True)

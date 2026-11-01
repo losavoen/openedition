@@ -232,9 +232,29 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .gform{background:#FFFFFF;border:1px solid #1C1C1A;padding:28px 24px;display:flex;flex-direction:column;gap:22px}
 .gfile{font:inherit;font-size:13px}
 [hidden]{display:none!important}
+
+/* memories flow */
+.mpanel{background:#FFFFFF;border:1px solid #1C1C1A;padding:28px 24px;display:flex;flex-direction:column;gap:22px;margin-bottom:48px}
+.mdrop{display:flex;flex-direction:column;align-items:flex-start;gap:10px;border:1px dashed #1C1C1A;padding:22px;cursor:pointer;transition:background-color 0.4s var(--ease)}
+.mdrop:hover,.mdrop.over{background:var(--mist)}
+.mdrop input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.mthumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px}
+.mthumbs span{display:block;aspect-ratio:1;overflow:hidden;background:var(--mist);position:relative}
+.mthumbs img,.mthumbs video{display:block;width:100%;height:100%;object-fit:cover}
+.mbar{height:2px;background:rgba(28,28,26,0.15);position:relative;overflow:hidden}
+.mbar i{position:absolute;inset:0 auto 0 0;background:#1C1C1A;width:0;transition:width 0.3s var(--ease)}
+.album{columns:4 220px;column-gap:16px;margin-top:20px}
+.album>*{break-inside:avoid;margin:0 0 16px;display:block}
+.album figure{position:relative;overflow:hidden;background:var(--mist)}
+.album img,.album video{display:block;width:100%;height:auto;filter:grayscale(1) sepia(0.35) contrast(1.04);transition:filter 0.8s var(--ease)}
+.album figure:hover img,.album figure:hover video{filter:none}
+.album figcaption{position:absolute;left:10px;right:10px;bottom:10px;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,0.5)}
+.album blockquote{background:var(--blush);padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+.album blockquote p:first-child{font-size:20px;line-height:1.2;letter-spacing:-0.01em}
 </style>
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
+<script src="memories.js" defer></script>
 </head>
 <body>
 <div class="site">
@@ -244,7 +264,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <main id="top" style="width: 100%">
 
 <!-- BANNER -->
-<div class="ticker" aria-label="Miami Art Week, Friday to Sunday. Stay Monday if you can. RSVP by Tuesday, November 10." style="background: linear-gradient(100deg, #C4C7CA 0%, #EEF0F2 20%, #B9BDC1 42%, #E7E9EB 64%, #BFC3C7 84%, #E2E4E6 100%); padding: 11px 0; font-size: 13px; text-transform: lowercase; color: #2A2B2D">
+<div class="ticker" aria-label="Miami Art Week, Friday to Sunday. Stay Monday if you can. RSVP by Tuesday, November 10." style="background: #1C1C1A; padding: 11px 0; font-size: 13px; text-transform: lowercase; color: #F2F2EE">
 <div aria-hidden="true"><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span></div>
 </div>
 
@@ -715,13 +735,26 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="two" style="align-items: end; row-gap: 28px; margin-bottom: 40px">
 <h2 class="big trk">Memories</h2>
 <div class="sv" style="display: flex; flex-direction: column; gap: 20px">
-<p class="lead" style="max-width: 520px">Add your photos and videos to one shared album. Then send me your favourite moment for the recap.</p>
+<p class="lead" style="max-width: 520px">Add your photos and videos to one shared album, and tell us your favourite moment. Only people with the password can see it.</p>
 <div style="display: flex; gap: 10px; flex-wrap: wrap">
-<a class="btn" href="#memories">Add to the album</a>
-<a class="pill" href="mailto:hello@losaeguavoen.com?subject=Miami%20memory&amp;body=My%20favourite%20part%20was%3A%20">Send a memory</a>
+<button type="button" class="btn" id="mem-open-album">Add to the album</button>
+<button type="button" class="pill" id="mem-open-note">Send a memory</button>
 </div>
 </div>
 </div>
+<form id="mem-panel" class="mpanel" autocomplete="off" hidden>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><p class="mono lbl ip" id="mem-title">Add to the album</p><button type="button" class="back" id="mem-close">Close</button></div>
+<label class="fld" id="mem-pw-row"><span class="lbl mono">Password</span><input type="password" name="password" placeholder="From the group chat"></label>
+<div class="duo">
+<label class="fld"><span class="lbl mono">Your name</span><input type="text" name="name" maxlength="60" placeholder="First name is fine"></label>
+<div class="fld"><span class="lbl mono">Which day?</span><div class="pills" id="mem-day"><button type="button" class="pill" data-v="Friday">Fri</button><button type="button" class="pill" data-v="Saturday">Sat</button><button type="button" class="pill" data-v="Sunday">Sun</button><button type="button" class="pill" data-v="Monday">Mon</button></div></div>
+</div>
+<label class="mdrop" id="mem-drop"><span class="mono lbl">Photos and videos</span><span class="cap">Tap to choose, or drop them here.</span><input type="file" name="files" accept="image/*,video/*" multiple></label>
+<div class="mthumbs" id="mem-thumbs"></div>
+<label class="fld"><span class="lbl mono">Your favourite moment</span><textarea rows="3" name="note" maxlength="600" placeholder="The part you’ll still talk about next year"></textarea></label>
+<div class="mbar" id="mem-bar" hidden><i></i></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><p class="mono cap" id="mem-msg" role="status"></p><button type="submit" class="btn" id="mem-save">Share</button></div>
+</form>
 <div class="sheet">
 <figure class="fr sv"><span class="mono cap ip">01 · Fri</span><span class="fb"><img src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="Plane window at sunrise"></span><figcaption class="cap">Wheels down</figcaption></figure>
 <figure class="fr sv"><span class="mono cap ip">02 · Fri</span><span class="fb"><img src="assets/c4eb66219cdb3bccb6a3bd147e0dcdea.jpg" alt="Palms and towers at night"></span><figcaption class="cap">First night</figcaption></figure>
@@ -730,6 +763,12 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <figure class="fr sv"><span class="mono cap is">05 · Sun</span><span class="fb"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Beach club loungers"></span><figcaption class="cap">Beach club</figcaption></figure>
 <figure class="fr sv"><span class="mono cap is">06 · Sun</span><span class="fb"><img src="assets/45d3085f470d21e1b85bcaedd49351e5.jpg" alt="Lit stairs on the way to dinner"></span><figcaption class="cap">Last dinner</figcaption></figure>
 </div>
+<div id="mem-album-wrap" style="margin-top: 64px" hidden>
+<div class="sh mono lbl" style="border-top: 1px solid #1C1C1A; padding-top: 14px"><span>The album</span><span id="mem-count"></span><span>Hover for colour</span></div>
+<div id="mem-album" class="album" aria-live="polite"></div>
+</div>
+<form id="mem-gate" class="gate" style="margin-top: 48px" autocomplete="off"><label class="fld"><span class="lbl mono">See the album</span><input type="password" name="password" placeholder="Password from the group chat" required></label><button type="submit" class="pill">Open</button></form>
+
 </section>
 
 </main>
