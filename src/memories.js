@@ -129,4 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.addEventListener('oe-unlock', (e) => { pw = e.detail; loadAlbum().catch(() => {}); });
   if (pw) loadAlbum().catch(() => { pw = ''; });
+  // pick up new photos and notes every 30 seconds while the album is open
+  setInterval(() => {
+    if (!pw || document.hidden || $('mem-album-wrap').hidden) return;
+    if ($('mem-save').disabled) return; // mid-upload
+    loadAlbum().catch(() => {});
+  }, 30000);
 });

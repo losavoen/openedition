@@ -127,5 +127,13 @@
 
     pw = getPw();
     if (pw) load();
+
+    // keep the list fresh: pick up new profiles every 30 seconds while the tab is open
+    setInterval(function () {
+      if (!pw || document.hidden || $('guest-area').hidden) return;
+      var f = $('guest-form');
+      if (f.contains(document.activeElement)) return; // don't interrupt someone typing
+      api('GET').then(function (j) { guests = j.guests || []; render(); }).catch(function () {});
+    }, 30000);
   });
 })();
