@@ -28,7 +28,7 @@
     var list = $('guest-list');
     if (!guests.length) { list.innerHTML = '<p class="mono cap" style="grid-column: 1 / -1">No one yet. Be the first.</p>'; return; }
     // Each guest is hung like a work in a show: framed photo + museum wall label.
-    // A red dot means "acquired" (I'm in), a hollow dot means "on hold" (Probably).
+    // The label says "Acquired" (I'm in) or "On hold" (Probably).
     list.innerHTML = guests.map(function (g, i) {
       var face = g.photo ? '<img src="' + esc(g.photo) + '" alt="' + esc(g.name) + '">' : '<span class="gini">' + esc((g.name || '?').trim().charAt(0)) + '</span>';
       var ig = g.ig ? '<a class="mono cap" href="https://instagram.com/' + encodeURIComponent(g.ig) + '" target="_blank" rel="noopener">@' + esc(g.ig) + '</a>' : '';

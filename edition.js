@@ -43,10 +43,8 @@
     ctx.font = '550 168px "Aspekta", Helvetica, Arial, sans-serif';
     ctx.fillText('No. ' + n, M - 6, 1070);
 
-    // red dot: sold
-    ctx.fillStyle = RED; ctx.beginPath(); ctx.arc(W - M - 18, 1020, 18, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = INK; ctx.textAlign = 'right'; ctx.font = '400 22px "Azeret Mono", monospace';
-    ctx.fillText('ACQUIRED', W - M - 48, 1028);
+    ctx.fillText('ACQUIRED', W - M, 1028);
 
     ctx.textAlign = 'left'; ctx.font = '400 26px "Azeret Mono", monospace';
     var rows = [['COLLECTOR', (d.name || '').toUpperCase()], ['ARRIVES', [d.arriveDay, d.airport].filter(Boolean).join(' · ').toUpperCase() || 'TBC'], ['EDITION', 'ONE OF ONE · DEC 4–7, 2026']];
