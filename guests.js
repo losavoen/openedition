@@ -36,7 +36,7 @@
       var inn = g.status !== 'Probably';
       return '<article class="gcard"><span class="gph">' + face + '</span>' +
         '<div class="glabel">' +
-        '<p class="gmeta mono cap"><span>Cat. ' + String(i + 1).padStart(2, '0') + esc(you) + '</span><span class="gdot' + (inn ? ' on' : '') + '" title="' + (inn ? 'Acquired' : 'On hold') + '"></span></p>' +
+        '<p class="gmeta mono cap"><span>Cat. ' + String(i + 1).padStart(2, '0') + esc(you) + '</span></p>' +
         '<p class="gname">' + esc(g.name) + '</p>' +
         (g.from ? '<p class="cap">Lives and works in ' + esc(g.from) + '</p>' : '') +
         (g.line ? '<p class="gline">Would buy: “' + esc(g.line) + '”</p>' : '') +
