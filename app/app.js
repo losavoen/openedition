@@ -178,13 +178,12 @@
       var install = standalone() ? '<p class="mono muted">Installed. You’re all set.</p>'
         : deferredInstall ? '<button class="btn ghost full" id="ob-install">Add Open Edition to your home screen</button>'
         : '<div class="card"><p class="mono muted" style="margin-bottom:8px">Keep it on your home screen</p><p style="font-size:14px">' + (ios ? 'Tap the Share button in Safari, then “Add to Home Screen”.' : 'Open your browser menu and choose “Install app” or “Add to Home screen”.') + '</p></div>';
-      body = '<div class="stage" style="gap:18px"><p class="mono muted">03 · How the show works</p>' +
+      body = '<div class="stage" style="gap:18px"><p class="mono muted">03 · How it works</p><h2 style="font-size:34px;line-height:1;letter-spacing:-0.03em;font-weight:550">Three things to know</h2>' +
         '<div class="steps">' +
-        '<div><b>24</b><p><span style="font-weight:550">frames a day.</span> <span class="muted">Your roll resets every morning. Make them count.</span></p></div>' +
-        '<div><b>9am</b><p><span style="font-weight:550">The darkroom.</span> <span class="muted">Photos develop the next morning, so nobody’s on their phone at dinner.</span></p></div>' +
-        '<div><b>1</b><p><span style="font-weight:550">Shot a day.</span> <span class="muted">Each room has an assignment. Everyone shoots the same thing, differently.</span></p></div>' +
-        '<div><b>∞</b><p><span style="font-weight:550">The tape.</span> <span class="muted">Everything ends up on the tape we watch on Sunday night.</span></p></div>' +
-        '</div>' + install + '</div>' + dots + '<button class="btn full" id="ob-done">Enter the show</button>';
+        '<div><b>1</b><p><span style="font-weight:550">Take photos with the round button.</span> <span class="muted">You get 24 a day, so make them count.</span></p></div>' +
+        '<div><b>2</b><p><span style="font-weight:550">They show up the next morning at 9.</span> <span class="muted">Like film. Nobody sees anything until then, so we stay off our phones at dinner.</span></p></div>' +
+        '<div><b>3</b><p><span style="font-weight:550">On Sunday night we watch them together.</span> <span class="muted">Everyone’s photos become one video, the tape.</span></p></div>' +
+        '</div>' + install + '</div>' + dots + '<button class="btn full" id="ob-done">Start</button>';
     }
     el.innerHTML = '<div class="ob">' + body + '</div>';
     $$('[data-ob]', el).forEach(function (b) {
@@ -196,6 +195,77 @@
     $$('[data-lens]', el).forEach(function (b) { b.onclick = function () { S.lens = b.getAttribute('data-lens'); store.set('lens', S.lens); $$('[data-lens]', el).forEach(function (x) { x.classList.toggle('on', x === b); }); }; });
     var ins = $('#ob-install'); if (ins) ins.onclick = function () { deferredInstall.prompt(); deferredInstall.userChoice.finally(function () { deferredInstall = null; renderOb(3); }); };
     var done = $('#ob-done'); if (done) done.onclick = function () { store.set('onboarded', true); enter(); };
+  }
+
+
+  // ---------- looks (background themes, Slack-style picker) ----------
+  var THEMES = [
+    { id: 'night', name: 'Night', sw: ['#0E0E0D', '#F2F2EE'] },
+    { id: 'gallery', name: 'Gallery white', sw: ['#FFFFFF', '#1C1C1A'] },
+    { id: 'blush', name: 'Blush', sw: ['#F8ECEA', '#1C1C1A'] },
+    { id: 'mist', name: 'Mist', sw: ['#D8E2DC', '#1C1C1A'] },
+    { id: 'sage', name: 'Sage', sw: ['#DCE2BE', '#1C1C1A'] },
+    { id: 'peri', name: 'Periwinkle', sw: ['#A2AEDA', '#1C1C1A'] }
+  ];
+  function applyTheme(id) {
+    document.documentElement.setAttribute('data-theme', id);
+    var t = THEMES.filter(function (x) { return x.id === id; })[0] || THEMES[0];
+    var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', t.sw[0]);
+  }
+  applyTheme(store.get('theme', 'gallery'));
+
+  // ---------- sending to iMessage / WhatsApp ----------
+  // The phone's share sheet is how a web app hands photos to Messages or WhatsApp.
+  function shareText(text) {
+    if (navigator.share) return navigator.share({ text: text }).catch(function () {});
+    sheet('<p class="mono muted">Send</p><h2 style="font-size:28px;margin:12px 0 16px;letter-spacing:-0.03em">Where to?</h2>' +
+      '<div style="display:flex;flex-direction:column;gap:10px"><a class="btn full" href="https://wa.me/?text=' + encodeURIComponent(text) + '" target="_blank" rel="noopener">WhatsApp</a>' +
+      '<a class="btn ghost full" href="sms:&body=' + encodeURIComponent(text) + '">Messages</a>' +
+      '<button class="btn ghost full" id="copy-txt">Copy text</button></div>');
+    $('#copy-txt').onclick = function () { (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { toast('Copied'); closeSheet(); }).catch(function () { toast('Couldn’t copy'); }); };
+  }
+  function shareMedia(url, caption) {
+    var text = caption ? caption + ' · Open Edition (miami art week)' : 'From Open Edition (miami art week)';
+    if (!navigator.share) return shareText(text + '\n' + url);
+    fetch(url).then(function (r) { return r.blob(); }).then(function (b) {
+      var ext = /video/.test(b.type) ? 'mp4' : 'jpg';
+      var f = new File([b], 'open-edition.' + ext, { type: b.type || 'image/jpeg' });
+      if (navigator.canShare && navigator.canShare({ files: [f] })) return navigator.share({ files: [f], text: text });
+      return navigator.share({ text: text, url: url });
+    }).catch(function () {});
+  }
+  function afterPost() {
+    var url = cam.blob ? URL.createObjectURL(cam.blob) : '';
+    sheet('<p class="mono muted">Posted</p><h2 style="font-size:28px;margin:12px 0 8px;letter-spacing:-0.03em">It’s in. Everyone sees it tomorrow at 9am.</h2>' +
+      '<p class="muted" style="font-size:14px;margin-bottom:18px">Want to send it to the group chat now too?</p>' +
+      '<div style="display:flex;flex-direction:column;gap:10px"><button class="btn full" id="send-now">Send to iMessage or WhatsApp</button><button class="btn ghost full" id="send-later">Keep it a surprise</button></div>');
+    var note = $('#cam-note').value.trim();
+    $('#send-now').onclick = function () { shareMedia(url, note); closeSheet(); };
+    $('#send-later').onclick = closeSheet;
+  }
+
+  // ---------- settings ----------
+  function sheetSettings() {
+    var cur = store.get('theme', 'gallery');
+    sheet('<p class="mono muted">Settings</p><h2 style="font-size:30px;margin:12px 0 18px;letter-spacing:-0.03em">Make it yours</h2>' +
+      '<p class="mono" style="margin-bottom:10px">Background</p>' +
+      '<div class="themes">' + THEMES.map(function (t) {
+        return '<button data-theme-pick="' + t.id + '" class="' + (t.id === cur ? 'on' : '') + '"><span class="sw" style="background:' + t.sw[0] + '"><i style="background:' + t.sw[1] + '"></i><i style="background:' + t.sw[1] + ';width:40%"></i></span><span style="font-size:13px">' + t.name + '</span></button>';
+      }).join('') + '</div>' +
+      '<p class="mono" style="margin:22px 0 10px">Your name</p><input class="field" id="set-name" maxlength="40" value="' + esc(S.name) + '">' +
+      '<p class="mono" style="margin:22px 0 10px">Group chat link</p><input class="field" id="set-chat" placeholder="Paste the WhatsApp group invite link" value="' + esc(store.get('chat', '')) + '">' +
+      '<p class="muted" style="font-size:13px;margin-top:8px">In WhatsApp: group info → Invite via link → Copy. For iMessage, leave it blank and we’ll open Messages.</p>' +
+      '<div style="display:flex;flex-direction:column;gap:10px;margin-top:22px"><button class="btn full" id="set-save">Save</button><button class="btn ghost full" id="set-how">Show me how it works again</button></div>');
+    $$('[data-theme-pick]').forEach(function (b) { b.onclick = function () { var id = b.getAttribute('data-theme-pick'); store.set('theme', id); applyTheme(id); $$('[data-theme-pick]').forEach(function (x) { x.classList.toggle('on', x === b); }); }; });
+    $('#set-save').onclick = function () { var n = $('#set-name').value.trim(); if (n) { S.name = n; store.set('name', n); } store.set('chat', $('#set-chat').value.trim()); closeSheet(); toast('Saved'); show(current); };
+    $('#set-how').onclick = function () { closeSheet(); store.set('coach', true); $('#tabs').classList.add('hide'); $$('.screen').forEach(function (x) { x.classList.remove('on'); }); $('#s-ob').classList.add('on'); renderOb(3); };
+  }
+  function openChat() {
+    var link = store.get('chat', '');
+    if (link) return window.open(link, '_blank');
+    sheet('<p class="mono muted">Group chat</p><h2 style="font-size:28px;margin:12px 0 16px;letter-spacing:-0.03em">Open the chat</h2>' +
+      '<div style="display:flex;flex-direction:column;gap:10px"><a class="btn full" href="whatsapp://">Open WhatsApp</a><a class="btn ghost full" href="sms:">Open Messages</a><button class="btn ghost full" id="chat-set">Save our group link</button></div>');
+    $('#chat-set').onclick = sheetSettings;
   }
 
   // ---------- now ----------
@@ -225,7 +295,8 @@
     var developing = S.memories.filter(function (m) { return !developed(m, t.n); }).length;
 
     el.innerHTML =
-      '<div class="top"><span class="mono">Room 0' + (t.i + 1) + ' · Side ' + d.side + '</span><span class="mono muted">' + clock(t.n.min) + ' · Miami</span></div>' +
+      '<div class="top"><span class="mono">Day ' + (t.i + 1) + ' of 4 · ' + clock(t.n.min) + ' in Miami</span><button class="x" data-act="settings" aria-label="Settings">⚙</button></div>' +
+      (store.get('coach', true) ? '<div class="card" id="coach" style="margin:0 20px 16px"><p class="mono muted" style="margin-bottom:10px">How this works</p><p style="font-size:15px;line-height:1.55">1. Tap the <b>round button</b> to take a photo. You get 24 a day.<br>2. Your photos appear in <b>Photos</b> the next morning at 9.<br>3. <b>Schedule</b> has every plan. <b>People</b> has everyone coming.</p><button class="btn ghost" id="coach-ok" style="min-height:40px;margin-top:12px;font-size:13px">Got it</button></div>' : '') +
       '<div class="hello"><p class="mono muted" style="margin-bottom:8px">' + hello + (S.name ? ', ' + esc(S.name) : '') + '</p><h1 class="big">' + esc(d.day) + '</h1></div>' +
       '<div class="now-card" style="background:' + d.color + '"><div class="inner">' +
         '<div class="when"><span class="mono">' + (nowRow ? 'Now · ' + esc(nowRow.time) : 'Coming up') + '</span><span class="mono">' + esc(d.date.slice(5).replace('-', '/')) + '</span></div>' +
@@ -234,25 +305,29 @@
         (next && nowRow ? '<div class="next"><span class="mono">Next · ' + esc(next.time) + '</span><span style="font-weight:550;text-align:right">' + esc(next.title) + '</span></div>' : '') +
       '</div></div>' +
       '<div class="shot-card"><img src="' + DAY_HERO[d.day] + '" alt=""><div class="in">' +
-        '<p class="mono" style="opacity:0.8">Today’s shot</p><p style="font-size:26px;line-height:1.05;letter-spacing:-0.02em;font-weight:550">' + esc(d.shot) + '</p>' +
-        '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span class="mono">' + (ROLL - used) + ' of ' + ROLL + ' frames left</span><button class="btn" id="now-shoot" style="min-height:42px;padding:0 18px;font-size:13px">Shoot it</button></div>' +
+        '<p class="mono" style="opacity:0.8">Today’s photo challenge</p><p style="font-size:26px;line-height:1.05;letter-spacing:-0.02em;font-weight:550">' + esc(d.shot) + '</p>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span class="mono">' + (ROLL - used) + ' of ' + ROLL + ' photos left today</span><button class="btn" id="now-shoot" style="min-height:42px;padding:0 18px;font-size:13px">Take a photo</button></div>' +
         '<div class="roll">' + Array.apply(null, Array(ROLL)).map(function (_, i) { return '<i class="' + (i < used ? 'used' : '') + '"></i>'; }).join('') + '</div>' +
       '</div></div>' +
       '<div class="tiles">' +
-        '<button class="tile" data-act="dark"><span class="mono muted">Darkroom</span><b>' + developing + ' developing</b><span class="mono muted">Ready 9am</span></button>' +
-        '<button class="tile" data-act="tape"><span class="mono muted">The tape</span><b>Watch so far</b><span class="mono muted">' + S.memories.length + ' posts</span></button>' +
+        '<button class="tile" data-act="dark"><span class="mono muted">Photos</span><b>' + (developing ? developing + ' coming tomorrow' : 'See everyone’s') + '</b><span class="mono muted">' + (developing ? 'Appear at 9am' : 'Open') + '</span></button>' +
+        '<button class="tile" data-act="tape"><span class="mono muted">The tape</span><b>Watch the video</b><span class="mono muted">' + S.memories.length + ' posts</span></button>' +
         (ride ? '<button class="tile wide" data-act="ride"><span class="mono muted">Your ride · ' + esc(ride.me.airport || '') + ' · ' + esc(ride.me.arriveDay || '') + '</span><b>' + (ride.crew.length > 1 ? 'Sharing with ' + esc(ride.crew.filter(function (c) { return c !== ride.me; }).map(function (c) { return c.name; }).join(', ')) : 'Solo for now') + '</b><span class="mono muted">' + esc(ride.crew[0] === ride.me && ride.crew.length > 1 ? 'You call the Uber' : ride.crew.length > 1 ? ride.crew[0].name + ' calls the Uber' : 'Check the board on the site') + '</span></button>' : '') +
         '<button class="tile" data-act="house"><span class="mono muted">The house</span><b>' + (S.house ? 'Directions' : 'Little River') + '</b><span class="mono muted">' + (S.house ? 'Opens Maps' : 'Sign in on the site') + '</span></button>' +
         '<button class="tile" data-act="tab"><span class="mono muted">The tab</span><b>' + (bal == null ? 'Log a cost' : bal > 0.009 ? 'You’re owed $' + bal.toFixed(2) : bal < -0.009 ? 'You owe $' + (-bal).toFixed(2) : 'All square') + '</b><span class="mono muted">' + S.tab.length + ' items</span></button>' +
+        '<button class="tile wide" data-act="chat"><span class="mono muted">Group chat</span><b>Send a message or photo</b><span class="mono muted">iMessage or WhatsApp</span></button>' +
         '<button class="tile" data-act="music"><span class="mono muted">Soundtrack</span><b>On the aux</b><span class="mono muted">Spotify</span></button>' +
         '<button class="tile" data-act="kit"><span class="mono muted">The kit</span><b>' + (S.kit ? 'Opened' : 'Sealed') + '</b><span class="mono muted">' + (S.kit ? S.kit.length + ' things' : 'Opens Friday') + '</span></button>' +
       '</div>';
     $('#now-shoot').onclick = openCam;
+    var co = $('#coach-ok'); if (co) co.onclick = function () { store.set('coach', false); $('#coach').remove(); };
     $$('[data-act]', el).forEach(function (b) { b.onclick = function () { act(b.getAttribute('data-act')); }; });
   }
 
   function act(a) {
     if (a === 'dark') return show('dark');
+    if (a === 'settings') return sheetSettings();
+    if (a === 'chat') return openChat();
     if (a === 'tape') return location.href = '/tape' + (SAMPLE ? '?sample' : '');
     if (a === 'music') return window.open(PLAYLIST, '_blank');
     if (a === 'house') return S.house ? window.open(S.house.maps, '_blank') : toast('Sign in on the site to see the address');
@@ -281,22 +356,26 @@
   }
 
   // ---------- rooms ----------
+  // Schedule: a day switcher (Fri–Mon), then that day's plan, then that day's photos.
+  var schedDay = null;
   function renderRooms() {
-    var t = today(), el = $('#s-rooms'), n = t.n;
-    el.innerHTML = '<div class="top"><span class="mono">The rooms</span><span class="mono muted">Four days, four sides</span></div>' +
-      '<div class="hello"><h1 class="big">Rooms</h1></div>' +
-      '<div class="decks">' + S.days.map(function (d, i) {
-        var mine = S.memories.filter(function (m) { return m.day === d.day && developed(m, n) && m.media && m.media[0] && m.media[0].type !== 'video'; });
-        var img = mine.length ? mine[mine.length - 1].media[0].url : DAY_HERO[d.day];
-        return '<button class="deck" data-day="' + i + '" style="background:' + d.color + ';border:0;text-align:left">' +
-          '<div class="photo"><img src="' + esc(img) + '" alt=""></div>' +
-          '<div class="label"><div><p class="mono">Room 0' + (i + 1) + ' · Side ' + d.side + '</p>' + (i === t.i ? '<p class="mono" style="margin-top:6px">● Now showing</p>' : '') + '</div>' +
-          '<div><h3>' + d.day + '</h3><p class="mono" style="margin-top:10px">' + d.date.slice(5).replace('-', '/') + ' · ' + d.rows.length + ' stops</p><p style="font-size:13px;margin-top:10px;opacity:0.75">' + esc(d.shot) + '</p></div></div></button>';
+    var t = today(), el = $('#s-rooms');
+    if (schedDay == null) schedDay = t.i;
+    var d = S.days[schedDay];
+    if (!d) { el.innerHTML = '<p class="empty-note">Loading…</p>'; return; }
+    var frames = S.memories.filter(function (m) { return m.day === d.day && developed(m, t.n); });
+    el.innerHTML = '<div class="top"><span class="mono">Schedule · Miami time</span><button class="x" id="share-day" aria-label="Send this day’s plan">↗</button></div>' +
+      '<div class="hello"><h1 class="big">' + d.day + '</h1></div>' +
+      '<div class="daypick">' + S.days.map(function (x, i) {
+        return '<button data-sd="' + i + '" class="' + (i === schedDay ? 'on' : '') + '" style="--c:' + x.color + '"><span class="mono">' + x.day.slice(0, 3) + '</span><b>' + x.date.slice(8) + '</b><i>' + (i === t.i ? 'today' : '&nbsp;') + '</i></button>';
       }).join('') + '</div>' +
-      '<div class="sub"><span class="mono">' + esc(S.days[t.i].day) + ', in order</span><span class="mono muted">Tap a room</span></div>' +
-      timeline(S.days[t.i], t);
-    $$('[data-day]', el).forEach(function (b) { b.onclick = function () { dayDetail(+b.getAttribute('data-day')); }; });
-    var deck = $$('.deck', el)[t.i]; if (deck) setTimeout(function () { deck.scrollIntoView({ inline: 'center', block: 'nearest' }); }, 50);
+      '<div class="daybar" style="background:' + d.color + '"><span class="mono">Day ' + (schedDay + 1) + ' of 4 · ' + d.rows.length + ' plans</span><span style="font-size:14px">Photo challenge: ' + esc(d.shot) + '</span></div>' +
+      timeline(d, t) +
+      '<div class="sub"><span class="mono">' + d.day + '’s photos</span><span class="mono muted">' + frames.length + '</span></div>' +
+      '<div style="padding:0 20px">' + (frames.length ? gridHTML(frames) : '<p class="muted" style="font-size:14px">' + (schedDay >= t.i ? 'Photos from this day appear the next morning at 9.' : 'No photos from this day.') + '</p>') + '</div>';
+    $$('[data-sd]', el).forEach(function (b) { b.onclick = function () { schedDay = +b.getAttribute('data-sd'); renderRooms(); }; });
+    $('#share-day').onclick = function () { shareText(d.day + ' in Miami\n' + d.rows.map(function (r) { return r.time + '  ' + r.title; }).join('\n') + '\n\nPhoto challenge: ' + d.shot); };
+    wireGrid(el);
   }
   function timeline(d, t) {
     var isToday = S.days.indexOf(d) === t.i, cur = null;
@@ -326,7 +405,7 @@
   }
   function wireGrid(root) {
     $$('[data-m]', root).forEach(function (b) {
-      if (b.classList.contains('dev')) { b.onclick = function () { toast('Still developing. Ready at 9am.'); }; return; }
+      if (b.classList.contains('dev')) { b.onclick = function () { toast('This one appears tomorrow at 9am.'); }; return; }
       b.onclick = function () { var m = S.memories.filter(function (x) { return String(x.id) === b.getAttribute('data-m'); })[0]; if (m) view(m, +b.getAttribute('data-j')); };
     });
   }
@@ -336,14 +415,14 @@
     var done = S.memories.filter(function (m) { return developed(m, t.n); });
     var byDay = {}; done.forEach(function (m) { (byDay[m.day || 'The weekend'] = byDay[m.day || 'The weekend'] || []).push(m); });
     var nextAt = dev.length ? developsAt(dev[0]) : null;
-    el.innerHTML = '<div class="top"><span class="mono">Darkroom</span><span class="mono muted">' + done.length + ' developed</span></div>' +
-      '<div class="hello"><h1 class="big">Dark<br>room</h1></div>' +
-      '<div class="redlight"><p class="mono" style="margin-bottom:8px">In the tray</p><p style="font-size:24px;font-weight:550;letter-spacing:-0.02em;line-height:1.05">' + (dev.length ? dev.length + ' frames developing' : 'Nothing developing') + '</p><p class="muted" style="font-size:14px;margin-top:6px">' + (dev.length ? 'They come out at ' + clock(nextAt.min) + (nextAt.date !== t.n.date ? ' tomorrow' : ' today') + '. No peeking.' : 'Shoot something and it’ll develop by the next morning.') + '</p></div>' +
+    el.innerHTML = '<div class="top"><span class="mono">Photos · ' + done.length + ' so far</span><a class="x" href="/tape' + (SAMPLE ? '?sample' : '') + '" aria-label="Watch the tape">▶</a></div>' +
+      '<div class="hello"><h1 class="big">Photos</h1></div>' +
+      '<div class="redlight"><p class="mono" style="margin-bottom:8px">Coming tomorrow</p><p style="font-size:24px;font-weight:550;letter-spacing:-0.02em;line-height:1.05">' + (dev.length ? dev.length + ' photos waiting' : 'Nothing waiting') + '</p><p class="muted" style="font-size:14px;margin-top:6px">' + (dev.length ? 'They appear at ' + clock(nextAt.min) + (nextAt.date !== t.n.date ? ' tomorrow' : ' today') + ', like film. Until then they stay blurred.' : 'Photos you take today appear here the next morning at 9.') + '</p></div>' +
       (dev.length ? '<div style="padding:0 20px 8px">' + gridHTML(dev, true) + '</div>' : '') +
       ['Monday', 'Sunday', 'Saturday', 'Friday', 'The weekend'].filter(function (k) { return byDay[k]; }).map(function (k) {
         return '<div class="sub"><span class="mono">' + k + '</span><span class="mono muted">' + byDay[k].length + ' posts</span></div><div style="padding:0 20px">' + gridHTML(byDay[k]) + '</div>';
       }).join('') +
-      (!S.memories.length ? '<p class="empty-note">The darkroom fills up as everyone shoots. Tap the shutter to start your roll.</p>' : '');
+      (!S.memories.length ? '<p class="empty-note">No photos yet. Tap the round button to take the first one.</p>' : '');
     wireGrid(el);
   }
 
@@ -351,13 +430,14 @@
   function renderGuests() {
     var el = $('#s-guests');
     var list = S.guests.length ? S.guests : S.arrivals.map(function (a) { return { name: a.name, status: 'I’m in', from: '' }; });
-    el.innerHTML = '<div class="top"><span class="mono">The guests</span><span class="mono muted">' + list.length + ' in the show</span></div>' +
-      '<div class="hello"><h1 class="big">Who’s<br>here</h1></div>' +
+    el.innerHTML = '<div class="top"><span class="mono">People · ' + list.length + ' coming</span><button class="x" data-act="chat" aria-label="Open the group chat">✉</button></div>' +
+      '<div class="hello"><h1 class="big">Who’s<br>coming</h1><p class="muted" style="font-size:14px;margin-top:10px">Tap someone to see their profile and photos.</p></div>' +
       (list.length ? '<div class="glist">' + list.map(function (g, i) {
         var count = S.memories.filter(function (m) { return m.name && g.name && m.name.split(' ')[0].toLowerCase() === g.name.split(' ')[0].toLowerCase(); }).length;
-        return '<button class="gitem" data-g="' + i + '"><span class="ph">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="">' : esc((g.name || '?').charAt(0))) + '</span><span><p style="font-weight:550;font-size:17px">' + esc(g.name) + '</p><p class="muted" style="font-size:13px">' + esc(g.from ? 'Lives and works in ' + g.from : g.status || '') + '</p></span><span class="mono muted">' + count + ' frames</span></button>';
+        return '<button class="gitem" data-g="' + i + '"><span class="ph">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="">' : esc((g.name || '?').charAt(0))) + '</span><span><p style="font-weight:550;font-size:17px">' + esc(g.name) + '</p><p class="muted" style="font-size:13px">' + esc(g.from ? 'Lives and works in ' + g.from : g.status || '') + '</p></span><span class="mono muted">' + count + ' photos</span></button>';
       }).join('') + '</div>' : '<p class="empty-note">Guests show up here once they add a profile on the site.</p>') +
       '<div style="padding:20px"><a class="btn ghost full" href="/#guests">Edit my wall label</a></div>';
+    $$('[data-act]', el).forEach(function (b) { b.onclick = function () { act(b.getAttribute('data-act')); }; });
     $$('[data-g]', el).forEach(function (b) { b.onclick = function () {
       var g = list[+b.getAttribute('data-g')], t = today();
       var frames = S.memories.filter(function (m) { return m.name && m.name.split(' ')[0].toLowerCase() === g.name.split(' ')[0].toLowerCase() && developed(m, t.n); });
@@ -385,6 +465,7 @@
     $('#v-who').textContent = (m.name || '') + (m.day ? ' · ' + m.day : '');
     $('#v-note').textContent = m.note || '';
     $('#v-meta').textContent = m.kind === 'fit' ? 'Fit of the day' : m.kind === 'daily' ? 'Same spot, every day' : 'Moment';
+    $('#v-send').onclick = function () { shareMedia(x.url, m.note); };
     $('#viewer').classList.add('on');
   }
   $('#v-close').onclick = function () { $('#viewer').classList.remove('on'); $('#v-media').innerHTML = ''; };
@@ -393,12 +474,12 @@
   var cam = { file: null, kind: 'memory', blob: null, isVideo: false };
   function openCam() {
     var t = today();
-    if (rollUsed() >= ROLL) { toast('That’s your 24 for today. New roll at midnight.'); return; }
+    if (rollUsed() >= ROLL) { toast('That’s your 24 photos for today. You get 24 more tomorrow.'); return; }
     cam = { file: null, kind: 'memory', blob: null, isVideo: false };
-    $('#cam-frame').innerHTML = '<div class="empty"><p class="mono muted">Today’s shot</p><p style="font-size:24px;font-weight:550;letter-spacing:-0.02em;max-width:260px;line-height:1.1">' + esc(t.day ? t.day.shot : '') + '</p><p class="muted" style="font-size:13px">Tap the shutter to shoot, or pick from your library.</p></div>';
-    $('#cam-shot').textContent = 'Room 0' + (t.i + 1) + ' · Side ' + (t.day ? t.day.side : '');
+    $('#cam-frame').innerHTML = '<div class="empty"><p class="mono muted">Today’s photo challenge</p><p style="font-size:24px;font-weight:550;letter-spacing:-0.02em;max-width:260px;line-height:1.1">' + esc(t.day ? t.day.shot : '') + '</p><p class="muted" style="font-size:13px">Tap the big button to take a photo, or Library to pick one. Choose a filter, then tap Post.</p></div>';
+    $('#cam-shot').textContent = 'Filter';
     $('#cam-day').textContent = t.day ? t.day.day : '';
-    $('#cam-roll').textContent = (ROLL - rollUsed()) + ' / ' + ROLL;
+    $('#cam-roll').textContent = (ROLL - rollUsed()) + ' of ' + ROLL + ' left today';
     $('#cam-note').value = '';
     $('#cam-send').disabled = true;
     $$('#kindseg button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-k') === 'memory'); });
@@ -467,7 +548,7 @@
     var btn = this, t = today();
     if (!cam.blob) return;
     if (!S.name) { toast('Add your name in the welcome screens first'); return; }
-    btn.disabled = true; btn.textContent = 'Developing…';
+    btn.disabled = true; btn.textContent = 'Posting…';
     var ext = cam.isVideo ? (cam.file.name.split('.').pop() || 'mp4') : 'jpg';
     var send = SAMPLE ? Promise.resolve({ url: URL.createObjectURL(cam.blob) }) :
       window.OEUpload('album/' + S.name.replace(/[^\w]+/g, '-') + '-' + Date.now() + '.' + ext, cam.blob, {
@@ -481,10 +562,10 @@
       store.set('roll-' + t.n.date, rollUsed() + 1);
       S.memories.push({ id: j.id, kind: cam.kind, name: S.name, day: t.day ? t.day.day : '', note: $('#cam-note').value.trim(), createdAt: new Date().toISOString(), media: [{ url: URL.createObjectURL(cam.blob), type: cam.isVideo ? 'video' : 'image' }] });
       $('#cam').classList.remove('on');
-      toast('In the darkroom. Ready at 9am.');
+      afterPost();
       show(current);
     }).catch(function (err) { toast(err.message || 'Upload failed. Try again.'); })
-      .then(function () { btn.disabled = false; btn.textContent = 'Develop'; });
+      .then(function () { btn.disabled = false; btn.textContent = 'Post'; });
   };
 
   // ---------- start ----------
