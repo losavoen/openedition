@@ -50,6 +50,7 @@ html = f'''<!doctype html>
 <script src="memories.js" defer></script>
 <script>window.OE_CONFIG = {json.dumps({k: cfg[k] for k in ('hostName', 'hostPhone', 'backupContact', 'rooms', 'payMethods') if k in cfg})};</script>
 <script src="extras.js" defer></script>
+<script src="edition.js" defer></script>
 </head>
 <body>
 {body.strip()}

@@ -42,9 +42,18 @@ export default async function handler(req, res) {
       doc.updatedAt = new Date().toISOString();
       const key = slug(doc.name);
       const old = (await list({ prefix: `${PREFIX}${key}--` })).blobs;
+      // Edition number: kept from your first RSVP, otherwise the next number in line.
+      let edition = 0;
+      if (old.length) { try { edition = (await (await fetch(old[old.length - 1].url, { cache: 'no-store' })).json()).edition || 0; } catch {} }
+      if (!edition) {
+        const people = new Set((await all()).map((b) => b.pathname.split('/')[1].replace(/--[^/]*$/, '')));
+        people.delete(key);
+        edition = people.size + 1;
+      }
+      doc.edition = edition;
       await put(`${PREFIX}${key}--.json`, JSON.stringify(doc), { access: 'public', addRandomSuffix: true, contentType: 'application/json', cacheControlMaxAge: 0 });
       await Promise.all(old.map((b) => del(b.url).catch(() => {})));
-      return res.status(201).json({ ok: true });
+      return res.status(201).json({ ok: true, edition });
     }
     res.setHeader('Allow', 'GET, POST');
     return res.status(405).json({ error: 'Method not allowed' });

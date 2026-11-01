@@ -43,3 +43,7 @@ After the trip, people unlock the album with the same password, then upload phot
 - `KIT_ITEMS` (Vercel env var, one item per line): the kit contents, revealed from Friday, December 4.
 - RSVPs are saved to Blob under `rsvps/` (`api/rsvps.js`) and feed the "Who lands when" board and song requests.
 - `/recap` builds a recap page from the album.
+
+## Privacy
+
+The house address is not in the page or this repo. It's stored in the `HOUSE_ADDRESS` env var on Vercel and only sent to signed-in guests (`api/house.js`).

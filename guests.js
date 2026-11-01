@@ -27,14 +27,22 @@
   function render() {
     var list = $('guest-list');
     if (!guests.length) { list.innerHTML = '<p class="mono cap" style="grid-column: 1 / -1">No one yet. Be the first.</p>'; return; }
-    list.innerHTML = guests.map(function (g) {
+    // Each guest is hung like a work in a show: framed photo + museum wall label.
+    // A red dot means "acquired" (I'm in), a hollow dot means "on hold" (Probably).
+    list.innerHTML = guests.map(function (g, i) {
       var face = g.photo ? '<img src="' + esc(g.photo) + '" alt="' + esc(g.name) + '">' : '<span class="gini">' + esc((g.name || '?').trim().charAt(0)) + '</span>';
       var ig = g.ig ? '<a class="mono cap" href="https://instagram.com/' + encodeURIComponent(g.ig) + '" target="_blank" rel="noopener">@' + esc(g.ig) + '</a>' : '';
       var you = mine && mine.id === g.id ? ' · You' : '';
+      var inn = g.status !== 'Probably';
       return '<article class="gcard"><span class="gph">' + face + '</span>' +
+        '<div class="glabel">' +
+        '<p class="gmeta mono cap"><span>Cat. ' + String(i + 1).padStart(2, '0') + esc(you) + '</span><span class="gdot' + (inn ? ' on' : '') + '" title="' + (inn ? 'Acquired' : 'On hold') + '"></span></p>' +
         '<p class="gname">' + esc(g.name) + '</p>' +
-        (g.line ? '<p class="gline">' + esc(g.line) + '</p>' : '') +
-        '<p class="gmeta mono cap"><span>' + esc(g.status) + esc(you) + '</span><span>' + esc(g.from) + '</span></p>' + ig + '</article>';
+        (g.from ? '<p class="cap">Lives and works in ' + esc(g.from) + '</p>' : '') +
+        (g.line ? '<p class="gline">Would buy: “' + esc(g.line) + '”</p>' : '') +
+        '<p class="cap gmed">Mixed media: a carry-on, sunscreen, three outfits a day.</p>' +
+        '<p class="gmeta mono cap"><span>' + (inn ? 'Acquired' : 'On hold') + '</span>' + ig + '</p>' +
+        '</div></article>';
     }).join('');
   }
 

@@ -8,6 +8,13 @@
 
   function setState(patch) { Object.assign(state, patch); render(); }
 
+  // After sending: move to the edition card and ask edition.js to draw it.
+  function editionDetail() { return { name: state.name, edition: state.edition || 0, arriveDay: state.arriveDay, airport: state.airport, attending: state.attending }; }
+  function showEdition(n) {
+    setState({ step: 6, edition: n });
+    setTimeout(function () { document.dispatchEvent(new CustomEvent('oe-edition', { detail: editionDetail() })); }, 0);
+  }
+
   function vals() {
     var s = state;
     var set = function (k) { return function (e) { var p = {}; p[k] = e.target.value; setState(p); }; };
@@ -40,7 +47,10 @@
     var body = rows.map(function (r) { return r.k + ': ' + r.v; }).join('\n');
     var mailto = 'mailto:' + RSVP_EMAIL + '?subject=' + encodeURIComponent('RSVP · Miami Art Week · ' + (s.name || 'Guest')) + '&body=' + encodeURIComponent(body);
     return {
-      s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, s4: s.step === 4, s5: s.step === 5,
+      s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, s4: s.step === 4, s5: s.step === 5, s6: s.step === 6,
+      coming: !declined,
+      editionLine: declined ? 'Noted. There’s always the next edition.' : 'Edition No. ' + String(s.edition || 0).padStart(2, '0') + '. Welcome to the show.',
+      saveEdition: function () { document.dispatchEvent(new CustomEvent('oe-edition-save', { detail: editionDetail() })); },
       progress: progress,
       name: s.name, setName: set('name'),
       inFlight: s.inFlight, setInFlight: set('inFlight'), inTime: s.inTime, setInTime: set('inTime'),
@@ -64,10 +74,10 @@
       summary: rows, mailto: mailto,
       // save to the site (arrivals board, song requests), then the mailto link opens your email app
       submit: function () {
-        try {
-          fetch('/api/rsvps', { method: 'POST', keepalive: true, credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(s) })
-            .then(function () { document.dispatchEvent(new CustomEvent('oe-rsvp-saved')); }).catch(function () {});
-        } catch (e) {}
+        fetch('/api/rsvps', { method: 'POST', keepalive: true, credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(s) })
+          .then(function (r) { return r.json(); })
+          .then(function (j) { document.dispatchEvent(new CustomEvent('oe-rsvp-saved')); showEdition(j.edition || 0); })
+          .catch(function () { showEdition(0); });
       }
     };
   }

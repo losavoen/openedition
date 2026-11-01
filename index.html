@@ -275,12 +275,39 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .kit-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:40px}
 .kit-items p{border-top:1px solid #1C1C1A;padding-top:14px;font-size:22px;letter-spacing:-0.02em}
 @media (max-width:760px){.arr-day{grid-template-columns:1fr}.arr-row{grid-template-columns:70px minmax(0,1fr) 44px}.arr-row>:nth-child(4){grid-column:2 / -1}.picks,.pay{grid-template-columns:1fr}}
+
+/* guests as wall labels */
+.guests{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:40px 24px}
+.gcard{background:transparent;box-shadow:none;padding:0;transform:none;gap:14px}
+.gcard:hover{transform:none;box-shadow:none}
+.gcard .gph{box-shadow:0 18px 40px rgba(28,28,26,0.14);border:10px solid #FFFFFF;outline:1px solid rgba(28,28,26,0.08);transition:transform 0.8s var(--ease)}
+.gcard:hover .gph{transform:translateY(-6px)}
+.glabel{display:flex;flex-direction:column;gap:4px;background:#FFFFFF;border:1px solid rgba(28,28,26,0.14);padding:12px 12px 14px;max-width:220px}
+.glabel .gname{font-size:16px}
+.glabel .gline,.glabel .gmed{font-size:12px;line-height:1.35}
+.glabel .gmed{color:#76736F}
+.gdot{width:11px;height:11px;border-radius:50%;border:1.5px solid #C0262D;display:inline-block}
+.gdot.on{background:#C0262D}
+/* your edition */
+.edition{display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.edition canvas{width:100%;max-width:360px;height:auto;box-shadow:0 18px 40px rgba(28,28,26,0.14)}
+
+/* bottom nav: shows only while scrolling */
+.dock{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:50;transform:translate(-50%,140%);opacity:0;transition:transform 0.6s var(--ease),opacity 0.4s var(--ease);max-width:calc(100vw - 24px)}
+.dock.show{transform:translate(-50%,0);opacity:1}
+.dock div{display:flex;gap:2px;background:#1C1C1A;border-radius:999px;padding:5px;overflow-x:auto;scrollbar-width:none;box-shadow:0 14px 34px rgba(28,28,26,0.22)}
+.dock div::-webkit-scrollbar{display:none}
+.dock a{flex:none;color:#F2F2EE;font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.04em;text-transform:lowercase;padding:9px 12px;border-radius:999px;white-space:nowrap;transition:background-color 0.3s var(--ease),color 0.3s var(--ease)}
+.dock a:hover{background:rgba(255,255,255,0.12)}
+.dock a.on{background:var(--blush);color:#1C1C1A}
+@media (prefers-reduced-motion:reduce){.dock{transition:opacity 0.2s}}
 </style>
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
 <script src="memories.js" defer></script>
 <script>window.OE_CONFIG = {"hostName": "Ilelosa", "hostPhone": "", "backupContact": "", "rooms": [], "payMethods": ""};</script>
 <script src="extras.js" defer></script>
+<script src="edition.js" defer></script>
 </head>
 <body>
 <div class="site">
@@ -343,19 +370,18 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="sv" style="display: flex; flex-direction: column; gap: 24px">
 <p style="font-size: clamp(18px, 1.5vw, 22px); line-height: 1.32; text-align: justify">A white house under big trees in Little River, 10 minutes from the Design District. It’s about <span class="ip">$160 CAD each</span>. I’ll update you if that changes once we know who’s coming.</p>
 <div class="mono" style="display: grid; grid-template-columns: auto 1fr; column-gap: 40px; row-gap: 6px; font-size: 12px; text-transform: uppercase">
-<span class="ip">Address</span><span>262 NW 75th St, Miami, FL 33150</span>
+<span class="ip">Address</span><span data-house="address">Shared once you’re signed in</span>
 <span class="ip">Cost</span><span>About $160 CAD each</span>
 <span class="ip">From MIA</span><span>About 20 minutes</span>
 <span class="ip">From FLL</span><span>About 40–50 minutes</span>
 </div>
-<div style="display: flex; flex-direction: column; gap: 12px"><p class="mono lbl ip">Rooms</p><div class="rooms" id="rooms"><div><span class="mono cap">Coming soon</span><span class="cap">Rooms and beds go up here after RSVPs close on November 10.</span></div></div></div>
 </div>
 </div>
 <div class="two" style="gap: 0">
 <div class="sc" style="height: clamp(320px, 42vw, 560px); overflow: hidden"><img class="im" src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt="The front of the house and the driveway"></div>
 <div class="sc" style="position: relative; height: clamp(320px, 42vw, 560px); overflow: hidden">
 <img class="im" src="assets/9839b35cc0a19e6c28087d20bc1d638b.jpg" alt="The living room, with a wood-beam ceiling">
-<img src="assets/b859f6c0031d675accdb8ffbed7d5b23.jpg" alt="Map of the house in Little River" style="position: absolute; right: 16px; bottom: 16px; width: min(220px, 45%); aspect-ratio: 220/142; object-fit: cover; border: 6px solid #F2F2EE">
+<a class="pill" data-house="map" href="#stay" target="_blank" rel="noopener" style="position: absolute; right: 16px; bottom: 16px; background: #FFFFFF; border-color: #FFFFFF">Open in Maps</a>
 </div>
 </div>
 </div>
@@ -396,7 +422,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <nav class="cards" aria-label="Days">
 <a class="card sv" href="#fri"><span class="cimg"><img src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt="The house in Little River"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ip">Fri / Dec 4</span><span class="ct">Land and go</span><span class="cap">Drop bags, the fair, dinner by the river</span></a>
 <a class="card sv" href="#sat"><span class="cimg"><img src="assets/6d5b2c5b16a2856583fe6d970384b8b9.jpg" alt="Jet skis heading toward the skyline at dusk"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ir">Sat / Dec 5</span><span class="ct">Art, then water</span><span class="cap">Brunch, art, the boat, a night out</span></a>
-<a class="card sv" href="#sun"><span class="cimg"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Loungers under fringed umbrellas facing the Miami skyline" style="object-position: 50% 60%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl is">Sun / Dec 6</span><span class="ct">Slow Sunday</span><span class="cap">Church, matcha, the beach club, dinner</span></a>
+<a class="card sv" href="#sun"><span class="cimg"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Loungers under fringed umbrellas facing the Miami skyline" style="object-position: 50% 60%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl is">Sun / Dec 6</span><span class="ct">Slow Sunday</span><span class="cap">Church, matcha, beach club, Wynwood, dinner</span></a>
 <a class="card sv" href="#mon"><span class="cimg"><img src="assets/a84798b4498739329e65cf17fed751f2.jpg" alt="Pool loungers under palm trees" style="object-position: 50% 70%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ip">Mon / Dec 7</span><span class="ct">Stay or fly</span><span class="cap">Work or explore, fly out at 9</span></a>
 </nav>
 
@@ -412,7 +438,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="page" style="background: #FFFFFF">
 <p class="mono cap" style="text-transform: uppercase">Run of show</p>
 <div>
-<div class="ros"><span class="mono cap">11:00</span><div><p style="font-weight: 550">Land</p><p class="cap">MIA or FLL. We’ll share cars by airport: MIA is about 20 minutes from the house, FLL about 40–50. We’ll share Ubers from each airport.</p></div></div>
+<div class="ros"><span class="mono cap">11:00</span><div><p style="font-weight: 550">Land</p><p class="cap">MIA or FLL. MIA is about 20 minutes from the house and FLL about 40–50. We’ll share Ubers from each airport.</p></div></div>
 <div class="ros"><span class="mono cap">12:30</span><div><p style="font-weight: 550">Bags down, quick lunch</p><p class="cap">I’ll ask the host about dropping bags early. Then a quick lunch nearby.</p></div></div>
 <div class="ros"><span class="mono cap">14:00</span><div><p style="font-weight: 550">Art Basel Miami Beach</p><p class="cap">Miami Beach Convention Center, open until 6. Day ticket $92. Ride over, or try the free water taxi.</p></div></div>
 <div class="ros"><span class="mono cap">18:30</span><div><p style="font-weight: 550">Check in, shower, get ready</p><p class="cap">Time to get ready.</p></div></div>
@@ -456,9 +482,9 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div>
 <div class="ros"><span class="mono cap">10:00</span><div><p style="font-weight: 550">VOUS Church</p><p class="cap">Design District, 77 NE 40th St. Services at 10 and 12.</p></div></div>
 <div class="ros"><span class="mono cap">11:30</span><div><p style="font-weight: 550">Matcha at Bigface</p><p class="cap">40 NE 40th St, across the street.</p></div></div>
-<div class="ros"><span class="mono cap">12:30</span><div><p style="font-weight: 550">Wynwood Walls</p><p class="cap">Around $12–15. An hour is plenty.</p></div></div>
-<div class="ros"><span class="mono cap">14:00</span><div><p style="font-weight: 550">Beach club: Nikki Beach or Joia Beach</p><p class="cap">Four hours in the sun. About $100–150 each. Flying home today? Pack your bags in the morning and go to the airport from here. <span class="ir">Book.</span></p></div></div>
-<div class="ros"><span class="mono cap">18:00</span><div><p style="font-weight: 550">Home to change</p><p class="cap">If you’re staying Monday.</p></div></div>
+<div class="ros"><span class="mono cap">12:30</span><div><p style="font-weight: 550">Beach club: Nikki Beach or Joia Beach</p><p class="cap">Four hours in the sun. About $100–150 each. Flying home today? Pack your bags in the morning and go to the airport from here. <span class="ir">Book.</span></p></div></div>
+<div class="ros"><span class="mono cap">16:30</span><div><p style="font-weight: 550">Wynwood Walls</p><p class="cap">Straight from the beach club, around golden hour. About $12–15, and an hour is plenty.</p></div></div>
+<div class="ros"><span class="mono cap">18:30</span><div><p style="font-weight: 550">Home to change</p><p class="cap">If you’re staying Monday.</p></div></div>
 <div class="ros"><span class="mono cap">20:30</span><div><p style="font-weight: 550">Dinner at MILA</p><p class="cap">Rooftop on Lincoln Road, smart casual. About $100–150 each. <span class="ir">Book.</span></p></div></div>
 </div>
 </div>
@@ -658,7 +684,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">Do I need a weekend ticket?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">No. The $92 day ticket is enough for Friday.</dd></div>
 <div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">Which beach club?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Nikki Beach or Joia Beach. We’ll choose once we know numbers and budget.</dd></div>
 <div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">What if it’s over my budget?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Tell me in the RSVP. Dinners and the beach club are estimates, and we can change the plan.</dd></div>
-<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">What if something goes wrong?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Call 911 in an emergency. Then call me or message the group chat. The house is at 262 NW 75th St, Miami, FL 33150.<span id="host-contact"></span></dd></div>
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">What if something goes wrong?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Call 911 in an emergency. Then call me or message the group chat. The house address is in “Where we’re staying”.<span id="host-contact"></span></dd></div>
 <div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">What’s the weather like?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Warm. Early December is usually in the mid 70s°F (around 25°C) by day and mid 60s°F (around 18°C) at night. Bring a layer for the boat.</dd></div>
 </dl>
 </div>
@@ -745,6 +771,17 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="nav"><button type="button" class="back" onClick="{{ back }}">Edit</button><a class="btn" href="{{ mailto }}" onClick="{{ submit }}">Send my RSVP</a></div>
 </div>
 </sc-if>
+<sc-if value="{{ s6 }}" hint-placeholder-val="{{ false }}">
+<div class="step edition">
+<p class="mono lbl ip">Your edition</p>
+<p class="lead" style="margin: 0">{{ editionLine }}</p>
+<sc-if value="{{ coming }}" hint-placeholder-val="{{ true }}">
+<canvas id="edition-canvas" width="1080" height="1350" role="img" aria-label="Your Open Edition card"></canvas>
+<p class="cap" style="max-width: 360px">One of one, made from your name. Save it and post it.</p>
+</sc-if>
+<div class="nav"><button type="button" class="back" onClick="{{ back }}">Edit my RSVP</button><sc-if value="{{ coming }}" hint-placeholder-val="{{ true }}"><button type="button" class="btn" onClick="{{ saveEdition }}">Save the image</button></sc-if></div>
+</div>
+</sc-if>
 </template></div>
 </div>
 </section>
@@ -755,7 +792,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="two" style="align-items: end; row-gap: 28px; margin-bottom: 40px">
 <h2 class="big trk">Who’s coming</h2>
 <div class="sv" style="display: flex; flex-direction: column; gap: 22px">
-<p class="lead" style="max-width: 520px">See who’s in, and add a profile so everyone knows each other before Friday. Use the password from the group chat.</p>
+<p class="lead" style="max-width: 520px">The show is the people. Hang your portrait and write your own wall label. A red dot means you’re in.</p>
 <form id="guest-gate" class="gate" autocomplete="off">
 <label class="fld"><span class="lbl mono">Password</span><input type="password" name="password" placeholder="From the group chat" required></label>
 <button type="submit" class="btn">Open</button>
@@ -771,7 +808,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <label class="fld"><span class="lbl mono">Your name</span><input type="text" name="name" maxlength="60" placeholder="First and last" required></label>
 <label class="fld"><span class="lbl mono">The piece you’d buy if money was no object</span><input type="text" name="line" maxlength="120" placeholder="An artist, a piece, or just a vibe"></label>
 <div class="duo">
-<label class="fld"><span class="lbl mono">Flying from</span><input type="text" name="from" maxlength="40" placeholder="City"></label>
+<label class="fld"><span class="lbl mono">Lives and works in</span><input type="text" name="from" maxlength="40" placeholder="City"></label>
 <label class="fld"><span class="lbl mono">Instagram</span><input type="text" name="ig" maxlength="40" placeholder="@handle"></label>
 </div>
 <div class="fld"><span class="lbl mono">Are you in?</span><div class="pills" id="guest-status"><button type="button" class="pill on" data-v="I’m in">I’m in</button><button type="button" class="pill" data-v="Probably">Probably</button></div></div>
@@ -827,6 +864,10 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 
 </main>
 
+<!-- BOTTOM NAV (shown only while scrolling) -->
+<nav class="dock" id="dock" aria-label="Sections"><div>
+<a href="#plan">plan</a><a href="#stay">the house</a><a href="#around">getting around</a><a href="#itinerary">itinerary</a><a href="#boat">boat</a><a href="#wardrobe">wardrobe</a><a href="#soundtrack">soundtrack</a><a href="#costs">costs</a><a href="#faq">faq</a><a href="#rsvp">rsvp</a><a href="#guests">who’s coming</a><a href="#memories">memories</a>
+</div></nav>
 <!-- FOOTER -->
 <footer style="width: 100%; box-sizing: border-box; padding: 120px 27px 28px">
 <div class="mono cap" style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid #1C1C1A; text-transform: uppercase"><span>See you in Miami</span><span>Brought to you by Roaming Haus</span></div>

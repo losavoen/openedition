@@ -93,10 +93,43 @@
     if (bits.length && $('host-contact')) $('host-contact').textContent = ' ' + bits.join('. ') + '.';
   }
 
+  function house() {
+    api('/api/house').then(function (j) {
+      if (!j.address) return;
+      Array.prototype.forEach.call(document.querySelectorAll('[data-house="address"]'), function (el) { el.textContent = j.address; });
+      Array.prototype.forEach.call(document.querySelectorAll('[data-house="map"]'), function (el) { el.href = j.maps; });
+    }).catch(function () {});
+  }
+
+  // Bottom nav: slides up while you scroll (past the hero), hides a moment after you stop.
+  function dock() {
+    var nav = $('dock'); if (!nav) return;
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+    var hero = document.querySelector('.hero');
+    var timer = null, hovering = false;
+    function current() {
+      var mid = window.innerHeight * 0.4, on = null;
+      links.forEach(function (a) { var el = document.querySelector(a.getAttribute('href')); if (el && el.getBoundingClientRect().top <= mid) on = a; });
+      links.forEach(function (a) { a.classList.toggle('on', a === on); });
+      if (on && on.scrollIntoView && nav.classList.contains('show')) { var box = nav.firstElementChild; box.scrollLeft = on.offsetLeft - box.clientWidth / 2 + on.clientWidth / 2; }
+    }
+    function hide() { if (!hovering) nav.classList.remove('show'); }
+    window.addEventListener('scroll', function () {
+      var past = !hero || hero.getBoundingClientRect().bottom < window.innerHeight * 0.5;
+      if (!past) { nav.classList.remove('show'); return; }
+      nav.classList.add('show'); current();
+      clearTimeout(timer); timer = setTimeout(hide, 1600);
+    }, { passive: true });
+    nav.addEventListener('pointerenter', function () { hovering = true; clearTimeout(timer); });
+    nav.addEventListener('pointerleave', function () { hovering = false; timer = setTimeout(hide, 1200); });
+    nav.addEventListener('focusin', function () { nav.classList.add('show'); clearTimeout(timer); });
+    nav.addEventListener('focusout', function () { timer = setTimeout(hide, 1200); });
+  }
+
   function rsvpData() { api('/api/rsvps').then(function (d) { board(d); songs(d); }).catch(function () {}); }
 
   document.addEventListener('DOMContentLoaded', function () {
-    countdown(); liveItinerary(); config(); kit(); rsvpData();
+    countdown(); liveItinerary(); config(); kit(); house(); dock(); rsvpData();
     document.addEventListener('oe-rsvp-saved', rsvpData);
     setInterval(function () { if (!document.hidden) { countdown(); rsvpData(); } }, 60000);
   });
