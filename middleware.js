@@ -5,7 +5,7 @@ import { next } from '@vercel/functions/middleware';
 
 export const config = {
   // Public: the login page, its fonts, the share image and the two endpoints that check the password themselves.
-  matcher: ['/((?!login|api/login|api/upload|assets/fonts/|assets/og\\.jpg|favicon).*)']
+  matcher: ['/((?!login|api/login|api/upload|assets/fonts/|assets/og\\.jpg|favicon|app/manifest\\.webmanifest|app/sw\\.js|app/icons/).*)']
 };
 
 async function siteToken(password) {

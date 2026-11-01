@@ -1,0 +1,164 @@
+{
+ "days": [
+  {
+   "id": "fri",
+   "day": "Friday",
+   "date": "2026-12-04",
+   "side": "A",
+   "color": "#D8E2DC",
+   "shot": "Your first look at the fair",
+   "rows": [
+    {
+     "time": "11:00",
+     "title": "Land",
+     "desc": "MIA or FLL. MIA is about 20 minutes from the house and FLL about 40–50. We’ll share Ubers from each airport."
+    },
+    {
+     "time": "12:30",
+     "title": "Bags down, quick lunch",
+     "desc": "I’ll ask the host about dropping bags early. Then a quick lunch nearby."
+    },
+    {
+     "time": "14:00",
+     "title": "Art Basel Miami Beach",
+     "desc": "Miami Beach Convention Center, open until 6. Day ticket $92. Ride over, or try the free water taxi."
+    },
+    {
+     "time": "18:30",
+     "title": "Check in, shower, get ready",
+     "desc": "Time to get ready."
+    },
+    {
+     "time": "20:30",
+     "title": "Welcome dinner, Casa Neos",
+     "desc": "On the Miami River. About $100–150 each. Book."
+    },
+    {
+     "time": "22:30",
+     "title": "Out",
+     "desc": "Easiest option: unKommon Art Week at Little River Studios, a few blocks from the house. Tickets on DICE."
+    }
+   ]
+  },
+  {
+   "id": "sat",
+   "day": "Saturday",
+   "date": "2026-12-05",
+   "side": "B",
+   "color": "#A2AEDA",
+   "shot": "Golden hour on the boat",
+   "rows": [
+    {
+     "time": "10:00",
+     "title": "Brunch, Coconut Grove Farmers Market",
+     "desc": "3300 Grand Ave. Saturdays only."
+    },
+    {
+     "time": "12:00",
+     "title": "Superblue: James Turrell’s Blue Sea Sky",
+     "desc": "1101 NW 23rd St. $42 on weekends. Book a time."
+    },
+    {
+     "time": "13:30",
+     "title": "Design District, ICA Miami, Edgewater",
+     "desc": "ICA is free. Galleries, shops and a walk by the water."
+    },
+    {
+     "time": "15:00",
+     "title": "Rest",
+     "desc": "Back to the house for a break."
+    },
+    {
+     "time": "16:30",
+     "title": "The boat",
+     "desc": "About $120 USD each, fuel included. We leave before sunset and come back after dark. Book."
+    },
+    {
+     "time": "19:30",
+     "title": "Quick dinner in Wynwood",
+     "desc": "Near the next stop."
+    },
+    {
+     "time": "21:00",
+     "title": "Everyday People",
+     "desc": "The Art Week party. The 2026 date isn’t out yet. Last year it was on Saturday and cost $35."
+    },
+    {
+     "time": "Late",
+     "title": "Circoloco, if you want it",
+     "desc": "Factory Town, Hialeah. Doors at 10, from $211."
+    }
+   ]
+  },
+  {
+   "id": "sun",
+   "day": "Sunday",
+   "date": "2026-12-06",
+   "side": "C",
+   "color": "#DCE2BE",
+   "shot": "Sand to Wynwood",
+   "rows": [
+    {
+     "time": "10:00",
+     "title": "VOUS Church",
+     "desc": "Design District, 77 NE 40th St. Services at 10 and 12."
+    },
+    {
+     "time": "11:30",
+     "title": "Matcha at Bigface",
+     "desc": "40 NE 40th St, across the street."
+    },
+    {
+     "time": "12:30",
+     "title": "Beach club: Nikki Beach or Joia Beach",
+     "desc": "Four hours in the sun. About $100–150 each. Flying home today? Pack your bags in the morning and go to the airport from here. Book."
+    },
+    {
+     "time": "16:30",
+     "title": "Wynwood Walls",
+     "desc": "Straight from the beach club, around golden hour. About $12–15, and an hour is plenty."
+    },
+    {
+     "time": "18:30",
+     "title": "Home to change",
+     "desc": "If you’re staying Monday."
+    },
+    {
+     "time": "20:30",
+     "title": "Dinner at MILA",
+     "desc": "Rooftop on Lincoln Road, smart casual. About $100–150 each. Book."
+    }
+   ]
+  },
+  {
+   "id": "mon",
+   "day": "Monday",
+   "date": "2026-12-07",
+   "side": "D",
+   "color": "#F8ECEA",
+   "shot": "The last view before you fly",
+   "rows": [
+    {
+     "time": "09:00",
+     "title": "Coffee, then pack",
+     "desc": "Check out by 11, time to confirm with the host. Bags come with us."
+    },
+    {
+     "time": "11:00",
+     "title": "Work from Miami",
+     "desc": "A coworking space in Wynwood or a café with good Wi-Fi. We’ll pick one closer to the date."
+    },
+    {
+     "time": "11:00",
+     "title": "Or take the day",
+     "desc": "A last swim, anything we missed, or a long lunch."
+    },
+    {
+     "time": "18:00",
+     "title": "Airport",
+     "desc": "For flights around 9. Leave extra time for FLL."
+    }
+   ]
+  }
+ ]
+}

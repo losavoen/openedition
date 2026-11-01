@@ -60,3 +60,15 @@ The house address is not in the page or this repo. It's stored in the `HOUSE_ADD
 - **The tab** (`api/tab.js`): shared costs logged during the trip, settled into who owes who.
 - **Calendar**: `openedition.ics` is built from the itinerary by `scripts/build.py`.
 - **Screening mode** on `/tape`: full screen, sound on, plays from the start. `/tape?sample` shows a finished sample.
+
+## The app (`/app`)
+
+An installable app (add to home screen) for the four days in Miami. It stays locked behind a countdown until Friday, December 4.
+
+- **Now**: what's on and what's next, today's shot, your 24-frame roll, your ride, the tab, the kit, the soundtrack.
+- **Camera**: four lenses (Gallery, Golden hour, Night tape, Clean) baked into each photo; post as a moment, a fit or the daily group photo.
+- **Darkroom**: photos develop the next morning at 9 (Monday's at 9pm).
+- **Rooms**: the four days as cassette-style cards with the run of show and that day's developed frames.
+- **Guests**: everyone's wall label and their frames.
+
+Preview switches: `/app/?preview` (open early), `/app/?at=sat-16:45` (pretend time), `/app/?sample` (sample photos), `/app/?welcome` (replay onboarding).

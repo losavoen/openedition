@@ -88,3 +88,25 @@ for n, (s_, e_, t_, d_) in enumerate(events):
 lines.append('END:VCALENDAR')
 (root / 'openedition.ics').write_text('\r\n'.join(lines) + '\r\n')
 print('wrote openedition.ics with', len(events), 'events')
+
+# itinerary data for the app
+_days = []
+for aid, date, day, side, color, shot in [
+    ('fri', '2026-12-04', 'Friday', 'A', '#D8E2DC', 'Your first look at the fair'),
+    ('sat', '2026-12-05', 'Saturday', 'B', '#A2AEDA', 'Golden hour on the boat'),
+    ('sun', '2026-12-06', 'Sunday', 'C', '#DCE2BE', 'Sand to Wynwood'),
+    ('mon', '2026-12-07', 'Monday', 'D', '#F8ECEA', 'The last view before you fly')]:
+    art = re.search(r'<article id="%s".*?</article>' % aid, src, re.S)
+    rows = []
+    if art:
+        for t, title, desc in re.findall(r'<div class="ros"><span class="mono cap">([^<]*)</span><div><p style="font-weight: 550">(.*?)</p>(?:<p class="cap">(.*?)</p>)?', art.group(0), re.S):
+            clean = lambda x: _html.unescape(re.sub(r'<[^>]+>', '', x)).strip()
+            rows.append({'time': clean(t), 'title': clean(title), 'desc': clean(desc or '')})
+    _days.append({'id': aid, 'day': day, 'date': date, 'side': side, 'color': color, 'shot': shot, 'rows': rows})
+(root / 'app').mkdir(exist_ok=True)
+(root / 'app' / 'itinerary.json').write_text(json.dumps({'days': _days}, ensure_ascii=False, indent=1))
+print('wrote app/itinerary.json')
+
+# app upload helper (Vercel Blob browser client)
+(root / 'src' / 'app-upload.js').write_text("import { upload } from '@vercel/blob/client';\nwindow.OEUpload = upload;\n")
+subprocess.run(['npx', 'esbuild', 'src/app-upload.js', '--bundle', '--minify', '--format=iife', '--target=es2019', '--outfile=app/upload.js'], cwd=root, check=True)
