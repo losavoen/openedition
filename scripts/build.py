@@ -63,3 +63,28 @@ print('wrote index.html', len(html), 'bytes')
 # bundle the memories uploader (uses the Vercel Blob browser client)
 import subprocess
 subprocess.run(['npx', 'esbuild', 'src/memories.js', '--bundle', '--minify', '--format=iife', '--target=es2019', '--outfile=memories.js'], cwd=root, check=True)
+
+# calendar file of the itinerary (times are Miami time)
+import html as _html
+from datetime import datetime, timedelta
+def _txt(x):
+    return _html.unescape(re.sub(r'<[^>]+>', '', x)).replace('\\', '\\\\').replace(',', '\\,').replace(';', '\;').strip()
+events = []
+for aid, date in [('fri', '2026-12-04'), ('sat', '2026-12-05'), ('sun', '2026-12-06'), ('mon', '2026-12-07')]:
+    art = re.search(r'<article id="%s".*?</article>' % aid, src, re.S)
+    if not art: continue
+    rows = re.findall(r'<div class="ros"><span class="mono cap">(\d{1,2}):(\d{2})</span><div><p style="font-weight: 550">(.*?)</p>(?:<p class="cap">(.*?)</p>)?', art.group(0), re.S)
+    starts = [datetime.fromisoformat(date) + timedelta(hours=int(h), minutes=int(m)) for h, m, *_ in rows]
+    for i, (h, m, title, desc) in enumerate(rows):
+        start = starts[i]
+        end = starts[i + 1] if i + 1 < len(starts) and starts[i + 1] > start else start + timedelta(minutes=90)
+        events.append((start, end, _txt(title), _txt(desc or '')))
+stamp = datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')
+lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Open Edition//Miami Art Week//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Open Edition (miami art week)', 'X-WR-TIMEZONE:America/New_York']
+for n, (s_, e_, t_, d_) in enumerate(events):
+    lines += ['BEGIN:VEVENT', 'UID:oe-%d-%s@openedition' % (n, s_.strftime('%Y%m%dT%H%M')), 'DTSTAMP:' + stamp,
+              'DTSTART;TZID=America/New_York:' + s_.strftime('%Y%m%dT%H%M%S'), 'DTEND;TZID=America/New_York:' + e_.strftime('%Y%m%dT%H%M%S'),
+              'SUMMARY:' + t_, 'DESCRIPTION:' + d_, 'END:VEVENT']
+lines.append('END:VCALENDAR')
+(root / 'openedition.ics').write_text('\r\n'.join(lines) + '\r\n')
+print('wrote openedition.ics with', len(events), 'events')

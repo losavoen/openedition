@@ -37,7 +37,8 @@ async function loadAlbum() {
   const items = [];
   const all = j.memories || [];
   renderFits(all.filter((m) => m.kind === 'fit'));
-  const memories = all.filter((m) => m.kind !== 'fit');
+  renderDaily(all.filter((m) => m.kind === 'daily'));
+  const memories = all.filter((m) => m.kind !== 'fit' && m.kind !== 'daily');
   memories.forEach((m) => {
     const who = esc(m.name) + (m.day ? ' · ' + esc(m.day.slice(0, 3)) : '');
     m.media.forEach((x) => items.push(x.type === 'video'
@@ -48,6 +49,18 @@ async function loadAlbum() {
   const n = memories.reduce((a, m) => a + m.media.length, 0);
   $('mem-count').textContent = n ? n + (n === 1 ? ' photo' : ' photos and videos') : '';
   $('mem-album').innerHTML = items.length ? items.join('') : '<p class="mono cap">Nothing yet. Be the first.</p>';
+}
+
+const SHOTS = { Friday: 'Your first look at the fair', Saturday: 'Golden hour on the boat', Sunday: 'Sand to Wynwood', Monday: 'The last view before you fly' };
+
+// Same spot, every day: newest group photo per day fills the 4-up strip.
+function renderDaily(list) {
+  const el = $('daily'); if (!el) return;
+  const byDay = {};
+  list.forEach((m) => { const x = (m.media || []).find((y) => y.type !== 'video'); if (x && m.day) byDay[m.day] = x.url; });
+  el.innerHTML = ['Friday', 'Saturday', 'Sunday', 'Monday'].map((d) => byDay[d]
+    ? `<figure class="has"><span class="mono cap">${d.slice(0, 3)}</span><img src="${esc(byDay[d])}" alt="Group photo, ${d}" loading="lazy"></figure>`
+    : `<figure><span class="mono cap">${d.slice(0, 3)}</span></figure>`).join('');
 }
 
 function renderFits(fits) {
@@ -63,10 +76,10 @@ function renderFits(fits) {
 }
 
 function open(mode) {
-  kind = mode === 'fit' ? 'fit' : 'memory';
+  kind = mode === 'fit' ? 'fit' : mode === 'daily' ? 'daily' : 'memory';
   const panel = $('mem-panel');
   panel.hidden = false;
-  $('mem-title').textContent = mode === 'fit' ? 'Add today’s fit' : mode === 'note' ? 'Send a memory' : 'Add to the album';
+  $('mem-title').textContent = mode === 'fit' ? 'Add today’s fit' : mode === 'daily' ? 'Add the daily group photo' : mode === 'note' ? 'Send a memory' : 'Add to the album';
   $('mem-pw-row').hidden = !!pw || authed;
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   setTimeout(() => {
@@ -87,6 +100,8 @@ function showThumbs() {
 
 function setDay(v) {
   day = day === v ? '' : v;
+  const hint = $('mem-shot');
+  if (hint) { hint.hidden = !day || kind === 'daily'; hint.textContent = day ? 'Today’s shot · ' + SHOTS[day] : ''; }
   [...$('mem-day').children].forEach((b) => { b.className = b.dataset.v === day ? 'pill on' : 'pill'; });
 }
 
@@ -99,6 +114,7 @@ async function share(e) {
   if (!pw) pw = f.password.value;
   const note = f.note.value.trim();
   if (!files.length && !note) return msg('Add a photo or a few words.');
+  if (kind === 'daily' && (!files.length || !day)) return msg('Pick the day and add the group photo.');
   btn.disabled = true; btn.textContent = 'Sharing…';
   try {
     if (!files.length) await api('GET'); // check the password before anything else
@@ -135,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
   $('mem-open-album').addEventListener('click', () => open('album'));
   $('mem-open-note').addEventListener('click', () => open('note'));
   if ($('fit-open')) $('fit-open').addEventListener('click', () => open('fit'));
+  if ($('daily-open')) $('daily-open').addEventListener('click', () => open('daily'));
   $('mem-close').addEventListener('click', () => { $('mem-panel').hidden = true; });
   $('mem-day').addEventListener('click', (e) => { if (e.target.dataset && e.target.dataset.v) setDay(e.target.dataset.v); });
   const input = $('mem-panel').files, drop = $('mem-drop');

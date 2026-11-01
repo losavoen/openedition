@@ -51,3 +51,12 @@ The house address is not in the page or this repo. It's stored in the `HOUSE_ADD
 ## The tape
 
 `/tape` is a sideways, VHS-and-film-style reel of everyone's uploaded photos, videos and favourite moments, grouped into Friday to Monday. Scroll, drag, use the arrow keys, or press Play to run through it. Before the trip it shows a preview built from the site's own photos.
+
+## Trip tools
+
+- **Today's shot**: one photo prompt per day on the itinerary and in the upload form.
+- **Same spot, every day**: a daily group photo (`kind: daily`), shown as a four-up strip in Memories.
+- **Ride groups**: the arrivals board groups people by day, airport and landing window, and names who calls the Uber.
+- **The tab** (`api/tab.js`): shared costs logged during the trip, settled into who owes who.
+- **Calendar**: `openedition.ics` is built from the itinerary by `scripts/build.py`.
+- **Screening mode** on `/tape`: full screen, sound on, plays from the start. `/tape?sample` shows a finished sample.

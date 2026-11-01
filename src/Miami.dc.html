@@ -328,6 +328,24 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .hbar{display:flex;justify-content:space-between;padding-inline:27px}
 @media (max-width:760px){.hbar{display:none}.sh>span:nth-child(2){padding-left:12px}.board figure,.cards .cimg,.sheet .fb{border-width:5px}}
 @media (prefers-reduced-motion:reduce){.grain,.rec i{animation:none}}
+
+/* shot list, daily strip, tab */
+.shot{color:#1C1C1A;opacity:0.75;margin-top:-6px}
+.daily{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:20px}
+.daily figure{margin:0;aspect-ratio:4/5;background:var(--mist);position:relative;overflow:hidden;border:8px solid #FFFFFF;box-shadow:0 18px 38px rgba(28,28,26,0.12)}
+.daily figure>span{position:absolute;left:10px;top:10px;z-index:1}
+.daily img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.04);transition:filter 0.8s var(--ease)}
+.daily figure:hover img{filter:none}
+.daily figure.has>span{color:#FFFFFF;text-shadow:0 1px 8px rgba(0,0,0,0.5)}
+.tab{margin-top:64px;padding-top:20px;border-top:1px solid #1C1C1A}
+.tab-bal{display:flex;flex-direction:column;gap:6px}
+.tab-bal p{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(28,28,26,0.14);padding:8px 0;max-width:460px}
+.tab-list{margin-top:28px}
+.tab-row{display:grid;grid-template-columns:minmax(0,1.4fr) 100px minmax(0,1fr) minmax(0,1.4fr) auto;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(28,28,26,0.14)}
+.tab-row button{background:none;border:0;font:inherit;font-size:11px;text-decoration:underline;cursor:pointer;color:#55524F}
+.ride{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:8px 0;align-items:baseline}
+.ride + .ride{border-top:1px dashed rgba(28,28,26,0.18)}
+@media (max-width:760px){.daily{grid-template-columns:repeat(2,minmax(0,1fr))}.tab-row{grid-template-columns:minmax(0,1fr) 80px;}.tab-row>:nth-child(3),.tab-row>:nth-child(4){grid-column:1 / -1}.ride{grid-template-columns:1fr}}
 </style>
 </helmet>
 <div class="site">
@@ -437,7 +455,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="sh mono lbl"><span class="room">Room 04</span><span>Itinerary</span><span>Three days, plus Monday</span></div>
 <div class="two" style="align-items: end; row-gap: 24px; margin-bottom: 48px">
 <h2 class="big trk">Itinerary</h2>
-<p class="mono lbl sv" style="justify-self: end; max-width: 340px">Times can move. Anything marked <span class="ir">book</span> gets booked once we know who’s coming.</p>
+<div class="sv" style="justify-self: end; max-width: 340px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start"><p class="mono lbl">Times can move. Anything marked <span class="ir">book</span> gets booked once we know who’s coming.</p><a class="pill" href="/openedition.ics" download>Add to my calendar</a></div>
 </div>
 
 <nav class="cards" aria-label="Days">
@@ -453,6 +471,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="page" style="background: var(--mist)">
 <p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="ip">Day 01</span><span>Fri · Dec 4</span></p>
 <h3 class="big">Friday</h3>
+<p class="mono cap shot">Today’s shot · Your first look at the fair</p>
 <p style="max-width: 400px; font-size: 16px; line-height: 1.4">We drop our bags, go to the fair, then have dinner by the river. After that, we go out.</p>
 <div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="/_blob/c4eb66219cdb3bccb6a3bd147e0dcdea" alt="Palm trees and Brickell towers at night"></div>
 </div>
@@ -473,6 +492,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="page" style="background: var(--peri)">
 <p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="ir">Day 02</span><span>Sat · Dec 5</span></p>
 <h3 class="big">Saturday</h3>
+<p class="mono cap shot">Today’s shot · Golden hour on the boat</p>
 <p style="max-width: 400px; font-size: 16px; line-height: 1.4">Our busiest day. Art in the morning, a rest, the boat at sunset, then a night out.</p>
 <div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="/_blob/11a1b42b2656fccd82af0047a0a10060" alt="Friends walking up lit stairs at night"></div>
 </div>
@@ -495,6 +515,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="page" style="background: var(--sage)">
 <p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="is">Day 03</span><span>Sun · Dec 6</span></p>
 <h3 class="big">Sunday</h3>
+<p class="mono cap shot">Today’s shot · Sand to Wynwood</p>
 <p style="max-width: 400px; font-size: 16px; line-height: 1.4">Church and matcha on the same street, the beach club in the afternoon, then dinner on a rooftop for anyone still here.</p>
 <div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="/_blob/f74d28082aed0a2416fb3f59121b5f88" alt="Loungers under fringed umbrellas on the sand, facing the Miami skyline" style="object-position: 50% 55%"></div>
 </div>
@@ -515,6 +536,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="page" style="background: var(--blush)">
 <p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="ip">Day 04</span><span>Mon · Dec 7</span></p>
 <h3 class="big">Monday</h3>
+<p class="mono cap shot">Today’s shot · The last view before you fly</p>
 <p style="max-width: 400px; font-size: 16px; line-height: 1.4">I’m working from Miami and flying out around 9. You can work with me, take the day off, or both.</p>
 <div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="/_blob/f63505a42750c5a52910c41fafde0526" alt="Sunset through a plane window on the way home" style="object-position: 55% 55%"></div>
 </div>
@@ -695,6 +717,27 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 <p class="cap" style="max-width: 280px; font-size: 13px">Rough cost per person in USD, plus about $160 CAD for the house. Rides, cars and lunches are extra. If it’s too much, tell me in the RSVP and we’ll change the plan.</p>
 </div>
+<div class="tab sv" id="tab">
+<div class="two" style="align-items: start; row-gap: 28px; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<p class="mono lbl ip">The tab</p>
+<p class="lead" style="margin: 0">During the trip, log anything one person pays for the group. It works out who owes who, so nobody does maths on Monday.</p>
+<div id="tab-balances" class="tab-bal"><p class="mono cap">Nothing on the tab yet.</p></div>
+</div>
+<form id="tab-form" class="gform" autocomplete="off">
+<p class="mono lbl ip">Add to the tab</p>
+<div class="duo">
+<label class="fld"><span class="lbl mono">What for</span><input type="text" name="what" maxlength="60" placeholder="Boat deposit, Uber, groceries" required></label>
+<label class="fld"><span class="lbl mono">Amount (USD)</span><input type="number" name="amount" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required></label>
+</div>
+<label class="fld"><span class="lbl mono">Paid by</span><input type="text" name="paidBy" maxlength="60" list="tab-names" placeholder="Name" required></label>
+<div class="fld"><span class="lbl mono">Split between</span><div class="pills" id="tab-split"><span class="mono cap">Everyone coming</span></div></div>
+<datalist id="tab-names"></datalist>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><p class="mono cap" id="tab-msg" role="status"></p><button type="submit" class="btn">Add it</button></div>
+</form>
+</div>
+<div id="tab-list" class="tab-list"></div>
+</div>
 </div>
 </section>
 
@@ -860,6 +903,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div style="display: flex; gap: 10px; flex-wrap: wrap">
 <button type="button" class="btn" id="mem-open-album">Add to the album</button>
 <button type="button" class="pill" id="mem-open-note">Send a memory</button>
+<button type="button" class="pill" id="daily-open">Add the daily group photo</button>
 <a class="pill" href="/tape">Watch the tape</a>
 <a class="pill" href="/recap">See the recap</a>
 </div>
@@ -872,12 +916,17 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <label class="fld"><span class="lbl mono">Your name</span><input type="text" name="name" maxlength="60" placeholder="First name is fine"></label>
 <div class="fld"><span class="lbl mono">Which day?</span><div class="pills" id="mem-day"><button type="button" class="pill" data-v="Friday">Fri</button><button type="button" class="pill" data-v="Saturday">Sat</button><button type="button" class="pill" data-v="Sunday">Sun</button><button type="button" class="pill" data-v="Monday">Mon</button></div></div>
 </div>
+<p class="mono cap shot" id="mem-shot" hidden></p>
 <label class="mdrop" id="mem-drop"><span class="mono lbl">Photos and videos</span><span class="cap">Tap to choose, or drop them here.</span><input type="file" name="files" accept="image/*,video/*" multiple></label>
 <div class="mthumbs" id="mem-thumbs"></div>
 <label class="fld"><span class="lbl mono">Your favourite moment</span><textarea rows="3" name="note" maxlength="600" placeholder="The part you’ll still talk about next year"></textarea></label>
 <div class="mbar" id="mem-bar" hidden><i></i></div>
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><p class="mono cap" id="mem-msg" role="status"></p><button type="submit" class="btn" id="mem-save">Share</button></div>
 </form>
+<div class="daily-wrap" id="daily-wrap" style="margin-bottom: 56px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; border-top: 1px solid #1C1C1A; padding-top: 14px"><p class="mono lbl ip">Same spot, every day</p><p class="mono cap">One group photo each morning, same place, same pose</p></div>
+<div class="daily" id="daily"><figure><span class="mono cap">Fri</span></figure><figure><span class="mono cap">Sat</span></figure><figure><span class="mono cap">Sun</span></figure><figure><span class="mono cap">Mon</span></figure></div>
+</div>
 <div class="sheet">
 <figure class="fr sv"><span class="mono cap ip">01 · Fri</span><span class="fb"><img src="/_blob/f63505a42750c5a52910c41fafde0526" alt="Plane window at sunrise"></span><figcaption class="cap">Wheels down</figcaption></figure>
 <figure class="fr sv"><span class="mono cap ip">02 · Fri</span><span class="fb"><img src="/_blob/c4eb66219cdb3bccb6a3bd147e0dcdea" alt="Palms and towers at night"></span><figcaption class="cap">First night</figcaption></figure>

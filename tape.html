@@ -99,6 +99,7 @@ header,footer{position:relative;z-index:5;display:flex;justify-content:space-bet
 <button type="button" id="play" aria-pressed="false">▶ Play</button>
 <button type="button" id="next" aria-label="Fast forward">▶▶</button>
 <button type="button" id="sound" aria-pressed="false" class="hide-sm">Sound off</button>
+<button type="button" id="screen">Screen it</button>
 </div>
 <span class="vcr counter" id="counter">00:00:00</span>
 </footer>
@@ -249,6 +250,15 @@ header,footer{position:relative;z-index:5;display:flex;justify-content:space-bet
   document.getElementById('sound').onclick = function () {
     soundOn = !soundOn; this.textContent = soundOn ? 'Sound on' : 'Sound off'; this.setAttribute('aria-pressed', String(soundOn));
     reel.querySelectorAll('.frame.live video').forEach(function (v) { v.muted = !soundOn; });
+  };
+
+  // Screening mode: full screen, sound on, from the top, playing on its own.
+  document.getElementById('screen').onclick = function () {
+    var el = document.documentElement;
+    (el.requestFullscreen ? el.requestFullscreen() : Promise.resolve()).catch(function () {});
+    if (!soundOn) document.getElementById('sound').click();
+    stop(); reel.scrollTo({ left: 0, behavior: 'smooth' });
+    setTimeout(start, 900);
   };
 
   // film grain

@@ -54,10 +54,24 @@
     var byDay = {};
     list.forEach(function (a) { var k = a.arriveDay || 'Day not set'; (byDay[k] = byDay[k] || []).push(a); });
     var days = Object.keys(byDay).sort(function (a, b) { return (DAY_ORDER.indexOf(a) + 1 || 99) - (DAY_ORDER.indexOf(b) + 1 || 99); });
+    // Ride groups: same day + same airport + same landing window share one Uber.
+    // The first person listed is the ride captain (they call the car).
     el.innerHTML = days.map(function (day) {
-      var rows = byDay[day].sort(function (a, b) { return (a.airport || '').localeCompare(b.airport || '') || (LAND_ORDER.indexOf(a.landing) - LAND_ORDER.indexOf(b.landing)); });
-      return '<div class="arr-day"><p style="font-weight: 550">' + esc(day) + '</p><div>' + rows.map(function (a) {
-        return '<div class="arr-row"><span class="mono cap">' + esc(a.inTime || a.landing || '—') + '</span><span>' + esc(a.name) + '</span><span class="mono cap">' + esc(a.airport || '') + '</span><span class="cap">' + esc([a.inFlight, a.houseTime ? 'house ~' + a.houseTime : ''].filter(Boolean).join(' · ')) + '</span></div>';
+      var groups = {};
+      byDay[day].forEach(function (a) { var k = (a.airport || 'Airport TBC') + ' · ' + (a.landing || 'Time TBC'); (groups[k] = groups[k] || []).push(a); });
+      var keys = Object.keys(groups).sort(function (x, y) {
+        var ax = x.split(' · '), ay = y.split(' · ');
+        return ax[0].localeCompare(ay[0]) || (LAND_ORDER.indexOf(ax[1]) - LAND_ORDER.indexOf(ay[1]));
+      });
+      var rideNo = 0;
+      return '<div class="arr-day"><p style="font-weight: 550">' + esc(day) + '</p><div>' + keys.map(function (k, gi) {
+        var people = groups[k];
+        var who = people.map(function (a, i) {
+          var bits = [a.inTime, a.inFlight].filter(Boolean).join(', ');
+          return '<span>' + esc(a.name) + (i === 0 && people.length > 1 ? ' <span class="mono cap">(calls the Uber)</span>' : '') + (bits ? ' <span class="mono cap">' + esc(bits) + '</span>' : '') + '</span>';
+        }).join('<br>');
+        var label = people.length > 1 ? 'Ride ' + (++rideNo) + ' · ' + people.length + ' people' : 'Solo for now';
+        return '<div class="ride"><span class="mono cap">' + esc(k) + '<br>' + esc(label) + '</span><span>' + who + '</span></div>';
       }).join('') + '</div></div>';
     }).join('');
   }
@@ -126,10 +140,79 @@
     nav.addEventListener('focusout', function () { timer = setTimeout(hide, 1200); });
   }
 
-  function rsvpData() { api('/api/rsvps').then(function (d) { board(d); songs(d); }).catch(function () {}); }
+
+  // The tab: shared costs logged during the trip, settled into who-owes-who.
+  var tabNames = [], tabSplit = null;
+  function money(n) { return '$' + (Math.round(n * 100) / 100).toFixed(2); }
+  function tabTokens() { try { return JSON.parse(localStorage.getItem('oe-tab') || '{}'); } catch (e) { return {}; } }
+  function saveToken(id, t) { try { var o = tabTokens(); o[id] = t; localStorage.setItem('oe-tab', JSON.stringify(o)); } catch (e) {} }
+  function settle(items) {
+    var bal = {};
+    items.forEach(function (it) {
+      var people = it.split && it.split.length ? it.split : tabNames;
+      if (!people.length) return;
+      var share = it.amount / people.length;
+      bal[it.paidBy] = (bal[it.paidBy] || 0) + it.amount;
+      people.forEach(function (p) { bal[p] = (bal[p] || 0) - share; });
+    });
+    // greedy: biggest debtor pays biggest creditor
+    var cred = [], debt = [];
+    Object.keys(bal).forEach(function (k) { var v = Math.round(bal[k] * 100) / 100; if (v > 0.009) cred.push([k, v]); else if (v < -0.009) debt.push([k, -v]); });
+    cred.sort(function (a, b) { return b[1] - a[1]; }); debt.sort(function (a, b) { return b[1] - a[1]; });
+    var out = [], i = 0, j = 0;
+    while (i < debt.length && j < cred.length) {
+      var amt = Math.min(debt[i][1], cred[j][1]);
+      out.push({ from: debt[i][0], to: cred[j][0], amount: amt });
+      debt[i][1] -= amt; cred[j][1] -= amt;
+      if (debt[i][1] < 0.01) i++; if (cred[j][1] < 0.01) j++;
+    }
+    return out;
+  }
+  function renderSplit() {
+    var box = $('tab-split'); if (!box) return;
+    if (!tabNames.length) { box.innerHTML = '<span class="mono cap">Everyone coming</span>'; return; }
+    if (!tabSplit) tabSplit = tabNames.slice();
+    box.innerHTML = tabNames.map(function (n) { var on = tabSplit.indexOf(n) > -1; return '<button type="button" class="pill' + (on ? ' on' : '') + '" data-n="' + esc(n) + '" aria-pressed="' + on + '">' + esc(n) + '</button>'; }).join('');
+    $('tab-names').innerHTML = tabNames.map(function (n) { return '<option value="' + esc(n) + '">'; }).join('');
+  }
+  function loadTab() {
+    if (!$('tab')) return;
+    api('/api/tab').then(function (j) {
+      var items = j.items || [], mine = tabTokens();
+      var plan = settle(items);
+      $('tab-balances').innerHTML = plan.length ? plan.map(function (p) { return '<p><span>' + esc(p.from) + ' → ' + esc(p.to) + '</span><span class="mono cap">' + money(p.amount) + '</span></p>'; }).join('') : '<p class="mono cap">' + (items.length ? 'All square.' : 'Nothing on the tab yet.') + '</p>';
+      var total = items.reduce(function (a, it) { return a + it.amount; }, 0);
+      $('tab-list').innerHTML = items.length ? '<p class="mono cap" style="margin-bottom: 6px">' + items.length + ' items · ' + money(total) + ' total</p>' + items.map(function (it) {
+        return '<div class="tab-row"><span>' + esc(it.what) + '</span><span class="mono cap">' + money(it.amount) + '</span><span class="cap">Paid by ' + esc(it.paidBy) + '</span><span class="cap">Split: ' + esc((it.split && it.split.length ? it.split : ['everyone']).join(', ')) + '</span>' + (mine[it.id] ? '<button type="button" data-del="' + esc(it.id) + '">Remove</button>' : '<span></span>') + '</div>';
+      }).join('') : '';
+    }).catch(function () {});
+  }
+  function tabSetup() {
+    var f = $('tab-form'); if (!f) return;
+    $('tab-split').addEventListener('click', function (e) {
+      var n = e.target.getAttribute && e.target.getAttribute('data-n'); if (!n) return;
+      tabSplit = tabSplit.indexOf(n) > -1 ? tabSplit.filter(function (x) { return x !== n; }) : tabSplit.concat(n);
+      renderSplit();
+    });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var body = { what: f.what.value, amount: parseFloat(f.amount.value), paidBy: f.paidBy.value, split: tabNames.length ? tabSplit : [] };
+      if (tabNames.length && !body.split.length) { $('tab-msg').textContent = 'Pick at least one person.'; return; }
+      fetch('/api/tab', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || 'Try again'); return j; }); })
+        .then(function (j) { saveToken(j.id, j.token); f.what.value = ''; f.amount.value = ''; $('tab-msg').textContent = 'Added.'; loadTab(); })
+        .catch(function (err) { $('tab-msg').textContent = err.message; });
+    });
+    $('tab-list').addEventListener('click', function (e) {
+      var id = e.target.getAttribute && e.target.getAttribute('data-del'); if (!id) return;
+      fetch('/api/tab', { method: 'DELETE', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id, token: tabTokens()[id] }) }).then(loadTab);
+    });
+  }
+
+  function rsvpData() { api('/api/rsvps').then(function (d) { board(d); songs(d); tabNames = (d.arrivals || []).map(function (a) { return a.name; }).filter(Boolean); renderSplit(); }).catch(function () {}); }
 
   document.addEventListener('DOMContentLoaded', function () {
-    countdown(); liveItinerary(); config(); kit(); house(); dock(); rsvpData();
+    countdown(); liveItinerary(); config(); kit(); house(); dock(); tabSetup(); rsvpData(); loadTab();
     document.addEventListener('oe-rsvp-saved', rsvpData);
     setInterval(function () { if (!document.hidden) { countdown(); rsvpData(); } }, 60000);
   });
