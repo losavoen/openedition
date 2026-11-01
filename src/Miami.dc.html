@@ -60,7 +60,10 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .pola a{display:flex;flex-direction:column;gap:10px;width:150px;flex:none;background:#FFFFFF;padding:9px 9px 14px;box-shadow:0 14px 34px rgba(28,28,26,0.14);transform:rotate(var(--r)) translateY(0);transition:transform 0.7s var(--ease),box-shadow 0.7s var(--ease);color:#1C1C1A}
 .pola a:nth-child(odd){--r:-3deg}.pola a:nth-child(even){--r:2.5deg}.pola a:nth-child(3n){--r:-1.5deg}
 .pola .ph{display:block;aspect-ratio:4/5;overflow:hidden;background:#E6E6DF}
-.pola img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.pola img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(0.35) contrast(1.04) brightness(1.02);transition:transform 1s var(--ease),filter 0.8s var(--ease)}
+.pola a:hover img,.pola a:focus-visible img{filter:none}
+.gcard .gph img{filter:grayscale(1) sepia(0.35) contrast(1.04) brightness(1.02);transition:filter 0.8s var(--ease)}
+.gcard:hover .gph img{filter:none}
 .pola .pc{display:flex;justify-content:space-between;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.4s var(--ease)}
 .pola a:hover{transform:rotate(0deg) translateY(-12px);box-shadow:0 24px 50px rgba(28,28,26,0.22)}
 .pola a:hover img{transform:scale(1.08)}
