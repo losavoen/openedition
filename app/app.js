@@ -419,34 +419,43 @@
     var ride = myRide(), bal = settle();
     var developing = S.memories.filter(function (m) { return !developed(m, t.n); }).length;
 
+    var row = function (act, title, sub, value) {
+      return '<button class="row" data-act="' + act + '"><span><b>' + title + '</b><span class="rs">' + sub + '</span></span><span class="mono rv">' + value + '</span><span class="ra">→</span></button>';
+    };
+    var crewNames = ride && ride.crew.filter(function (c) { return c !== ride.me; }).map(function (c) { return c.name.split(' ')[0]; }).join(', ');
     el.innerHTML =
-      '<div class="top"><span class="mono">Day ' + (t.i + 1) + ' of 4 · ' + clock(t.n.min) + ' in Miami</span><button class="x" data-act="settings" aria-label="Settings">⚙</button></div>' +
-      (store.get('coach', true) ? '<div class="card" id="coach" style="margin:0 20px 16px"><p class="mono muted" style="margin-bottom:10px">How this works</p><p style="font-size:15px;line-height:1.55">1. Tap the <b>round button</b> to take a photo. You get 24 a day.<br>2. Your photos appear in <b>Photos</b> the next morning at 9.<br>3. <b>Schedule</b> has every plan. <b>People</b> has everyone coming.</p><button class="btn ghost" id="coach-ok" style="min-height:40px;margin-top:12px;font-size:13px">Got it</button></div>' : '') +
-      '<div class="hello"><p class="mono muted" style="margin-bottom:8px">' + hello + (S.name ? ', ' + esc(S.name) : '') + '</p><h1 class="big">' + esc(d.day) + '</h1></div>' +
-      '<div class="now-card" style="background:' + d.color + '"><div class="inner">' +
-        '<div class="when"><span class="mono">' + (nowRow ? 'Now · ' + esc(nowRow.time) : 'Coming up') + '</span><span class="mono">' + esc(d.date.slice(5).replace('-', '/')) + '</span></div>' +
-        '<h2>' + esc(nowRow ? nowRow.title : (next ? next.title : 'Free time')) + '</h2>' +
-        '<p style="font-size:14px;opacity:0.8">' + esc(nowRow ? nowRow.desc : (next ? next.desc : '')) + '</p>' +
-        (next && nowRow ? '<div class="next"><span class="mono">Next · ' + esc(next.time) + '</span><span style="font-weight:550;text-align:right">' + esc(next.title) + '</span></div>' : '') +
-      '</div></div>' +
-      '<div class="shot-card"><img src="' + DAY_HERO[d.day] + '" alt=""><div class="in">' +
-        '<p class="mono" style="opacity:0.8">Today’s photo challenge</p><p style="font-size:26px;line-height:1.05;letter-spacing:-0.02em;font-weight:550">' + esc(d.shot) + '</p>' +
-        '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span class="mono">' + (ROLL - used) + ' of ' + ROLL + ' photos left today</span><button class="btn" id="now-shoot" style="min-height:42px;padding:0 18px;font-size:13px">Take a photo</button></div>' +
+      // one coloured band: where we are, what's on now, what's next
+      '<header class="band" style="--c:' + d.color + '">' +
+        '<div class="bandtop"><span class="mono">Day ' + (t.i + 1) + ' of 4 · ' + clock(t.n.min) + ' in Miami</span><button class="x onband" data-act="settings" aria-label="Settings">⚙</button></div>' +
+        '<p class="mono" style="opacity:0.7">' + hello + (S.name ? ', ' + esc(S.name) : '') + '</p>' +
+        '<h1 class="big">' + esc(d.day) + '</h1>' +
+        '<div class="nowblock"><p class="mono">' + (nowRow ? 'Now · ' + esc(nowRow.time) : 'Coming up · ' + esc(next ? next.time : '')) + '</p>' +
+          '<h2>' + esc(nowRow ? nowRow.title : (next ? next.title : 'Free time')) + '</h2>' +
+          '<p class="nd">' + esc(nowRow ? nowRow.desc : (next ? next.desc : '')) + '</p></div>' +
+        (next && nowRow ? '<div class="nextline"><span class="mono">Next · ' + esc(next.time) + '</span><span>' + esc(next.title) + '</span></div>' : '') +
+      '</header>' +
+      (store.get('coach', true) ? '<section class="sect" id="coach"><div class="sh"><span class="mono">First time here?</span><button class="mono linkbtn" id="coach-ok">Got it</button></div>' +
+        '<ol class="how"><li>Tap the round button to take a photo. You get 24 a day.</li><li>Your photos appear in Photos the next morning at 9.</li><li>Schedule has every plan. People has everyone coming.</li></ol></section>' : '') +
+      // today's photo
+      '<section class="sect"><div class="sh"><span class="mono">Today’s photo challenge</span><span class="mono muted">' + (ROLL - used) + ' of ' + ROLL + ' left</span></div>' +
+        '<div class="shotimg"><img src="' + DAY_HERO[d.day] + '" alt=""></div>' +
+        '<h3 class="shot-title">' + esc(d.shot) + '</h3>' +
         '<div class="roll">' + Array.apply(null, Array(ROLL)).map(function (_, i) { return '<i class="' + (i < used ? 'used' : '') + '"></i>'; }).join('') + '</div>' +
-      '</div></div>' +
-      '<div class="tiles">' +
-        '<button class="tile wide play-tile" data-act="play"><span class="mono">The trip game · Spotted</span><b>' + (me().squares || 0) + ' of 16 spotted · ' + (me().points || 0) + ' points</b><span class="mono">' + (S.game.players.length ? 'Leader: ' + esc(S.game.players[0].name.split(' ')[0]) + ' · ' + S.game.players[0].points + ' pts' : 'Tap to play') + '</span></button>' +
-        '<button class="tile" data-act="dark"><span class="mono muted">Photos</span><b>' + (developing ? developing + ' coming tomorrow' : 'See everyone’s') + '</b><span class="mono muted">' + (developing ? 'Appear at 9am' : 'Open') + '</span></button>' +
-        '<button class="tile" data-act="tape"><span class="mono muted">The tape</span><b>Watch the video</b><span class="mono muted">' + S.memories.length + ' posts</span></button>' +
-        (ride ? '<button class="tile wide" data-act="ride"><span class="mono muted">Your ride · ' + esc(ride.me.airport || '') + ' · ' + esc(ride.me.arriveDay || '') + '</span><b>' + (ride.crew.length > 1 ? 'Sharing with ' + esc(ride.crew.filter(function (c) { return c !== ride.me; }).map(function (c) { return c.name; }).join(', ')) : 'Solo for now') + '</b><span class="mono muted">' + esc(ride.crew[0] === ride.me && ride.crew.length > 1 ? 'You call the Uber' : ride.crew.length > 1 ? ride.crew[0].name + ' calls the Uber' : 'Check the board on the site') + '</span></button>' : '') +
-        '<button class="tile" data-act="house"><span class="mono muted">The house</span><b>' + (S.house ? 'Directions' : 'Little River') + '</b><span class="mono muted">' + (S.house ? 'Opens Maps' : 'Sign in on the site') + '</span></button>' +
-        '<button class="tile" data-act="tab"><span class="mono muted">The tab</span><b>' + (bal == null ? 'Log a cost' : bal > 0.009 ? 'You’re owed $' + bal.toFixed(2) : bal < -0.009 ? 'You owe $' + (-bal).toFixed(2) : 'All square') + '</b><span class="mono muted">' + S.tab.length + ' items</span></button>' +
-        '<button class="tile wide" data-act="chat"><span class="mono muted">Group chat</span><b>Send a message or photo</b><span class="mono muted">iMessage or WhatsApp</span></button>' +
-        '<button class="tile" data-act="music"><span class="mono muted">Soundtrack</span><b>On the aux</b><span class="mono muted">Spotify</span></button>' +
-        '<button class="tile" data-act="kit"><span class="mono muted">The kit</span><b>' + (S.kit ? 'Opened' : 'Sealed') + '</b><span class="mono muted">' + (S.kit ? S.kit.length + ' things' : 'Opens Friday') + '</span></button>' +
-      '</div>';
+        '<button class="btn full" id="now-shoot" style="margin-top:14px">Take a photo</button></section>' +
+      // everything else as one list
+      '<section class="sect"><div class="sh"><span class="mono">The trip</span><span class="mono muted">Tap to open</span></div><div class="rows">' +
+        row('play', 'Spotted', 'The trip game', (me().points || 0) + ' pts') +
+        row('dark', 'Photos', developing ? developing + ' appear tomorrow at 9am' : 'Everyone’s photos so far', String(S.memories.length)) +
+        row('tape', 'The tape', 'Everyone’s photos as one video', '▶') +
+        (ride ? row('ride', 'Your ride', esc(ride.me.airport || '') + ' · ' + (ride.crew.length > 1 ? 'with ' + esc(crewNames) : 'solo for now'), ride.crew[0] === ride.me && ride.crew.length > 1 ? 'You call' : '') : '') +
+        row('tab', 'The tab', 'Shared costs', bal == null ? 'Add' : bal > 0.009 ? '+$' + bal.toFixed(0) : bal < -0.009 ? '−$' + (-bal).toFixed(0) : 'Square') +
+        row('chat', 'Group chat', 'iMessage or WhatsApp', '') +
+        row('house', 'The house', S.house ? 'Directions in Maps' : 'Little River', '') +
+        row('music', 'Soundtrack', 'On Spotify', '') +
+        row('kit', 'The kit', S.kit ? S.kit.length + ' things inside' : 'Opens Friday', S.kit ? 'Open' : 'Sealed') +
+      '</div></section>';
     $('#now-shoot').onclick = openCam;
-    var co = $('#coach-ok'); if (co) co.onclick = function () { store.set('coach', false); $('#coach').remove(); };
+    var co = $('#coach-ok'); if (co) co.onclick = function () { store.set('coach', false); var c = $('#coach'); if (c) c.remove(); };
     $$('[data-act]', el).forEach(function (b) { b.onclick = function () { act(b.getAttribute('data-act')); }; });
   }
 
