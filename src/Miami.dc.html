@@ -539,7 +539,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div style="background: var(--mist); padding: 40px 27px 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 56px; min-height: 520px">
 <div style="display: flex; flex-direction: column; gap: 22px; align-items: flex-start">
 <p class="mono lbl sv" style="max-width: 360px; line-height: 1.5">Mostly three step. Afrobeats for the beach club, Frank Ocean for the boat, Michael for Monday.</p>
-<a class="btn sv" href="{{ playlistUrl }}">Open the playlist</a>
+<a class="btn sv" href="{{ playlistUrl }}" target="_blank" rel="noopener">Open in Spotify</a>
+<iframe class="sv" title="Open Edition soundtrack on Spotify" src="https://open.spotify.com/embed/playlist/6nVE5YsGJgZkczU6wE9S9C?utm_source=generator&amp;theme=0" width="100%" height="352" style="border: 0; border-radius: 12px; max-width: 520px; display: block" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 </div>
 <h2 class="big trk">Soundtrack</h2>
 </div>
@@ -639,11 +640,13 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="step">
 <p class="mono lbl ip">02 · Getting there</p>
 <div class="fld"><span class="lbl">Flying into</span><div class="pills"><sc-for list="{{ airportOpts }}" as="o" hint-placeholder-count="3"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
-<div class="fld"><span class="lbl">Landing Friday</span><div class="pills"><sc-for list="{{ landOpts }}" as="o" hint-placeholder-count="3"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
+<div class="fld"><span class="lbl">Arriving on</span><div class="pills"><sc-for list="{{ dayOpts }}" as="o" hint-placeholder-count="4"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
+<div class="fld"><span class="lbl">Landing</span><div class="pills"><sc-for list="{{ landOpts }}" as="o" hint-placeholder-count="4"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
 <div class="duo">
 <label class="fld"><span class="lbl">Arrival flight</span><input type="text" value="{{ inFlight }}" onChange="{{ setInFlight }}" placeholder="e.g. AC 1234"></label>
 <label class="fld"><span class="lbl">Lands at</span><input type="text" value="{{ inTime }}" onChange="{{ setInTime }}" placeholder="e.g. 10:55am"></label>
 </div>
+<label class="fld"><span class="lbl">Getting to the house around</span><input type="text" value="{{ houseTime }}" onChange="{{ setHouseTime }}" placeholder="e.g. 2pm, or after the fair"></label>
 <div class="nav"><button type="button" class="back" onClick="{{ back }}">Back</button><button type="button" class="btn" onClick="{{ next2 }}" disabled="{{ block2 }}">Next</button></div>
 </div>
 </sc-if>
@@ -779,7 +782,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 class Component extends DCLogic {
 constructor(props) {
 super(props);
-this.state = { step: 1, name: '', attending: '', airport: '', landing: '', inFlight: '', inTime: '', leaving: '', monday: '', outFlight: '', outTime: '', extras: [], tee: '', songs: '', questions: '', note: '' };
+this.state = { step: 1, name: '', attending: '', airport: '', arriveDay: '', landing: '', inFlight: '', houseTime: '', inTime: '', leaving: '', monday: '', outFlight: '', outTime: '', extras: [], tee: '', songs: '', questions: '', note: '' };
 }
 renderVals() {
 const s = this.state;
@@ -798,7 +801,8 @@ const rows = declined
 { k: 'Name', v: s.name || '—' },
 { k: 'Coming', v: s.attending || '—' },
 { k: 'Flying into', v: s.airport || '—' },
-{ k: 'Arriving', v: [s.landing, s.inFlight, s.inTime].filter(Boolean).join(' · ') || '—' },
+{ k: 'Arriving', v: [s.arriveDay, s.landing, s.inFlight, s.inTime].filter(Boolean).join(' · ') || '—' },
+{ k: 'At the house', v: s.houseTime || '—' },
 { k: 'Leaving', v: [s.leaving, s.outFlight, s.outTime].filter(Boolean).join(' · ') || '—' },
 { k: 'Monday', v: s.leaving === 'Monday night' ? (s.monday || '—') : 'Not staying' },
 { k: 'Count me in', v: s.extras.length ? s.extras.join(', ') : 'Nothing extra yet' },
@@ -819,13 +823,15 @@ tee: s.tee, setTee: set('tee'), songs: s.songs, setSongs: set('songs'),
 questions: s.questions, setQuestions: set('questions'), note: s.note, setNote: set('note'),
 attendOpts: opts('attending', ['I’m in', 'Probably', 'Can’t make it']),
 airportOpts: opts('airport', ['MIA', 'FLL', 'Other']),
-landOpts: opts('landing', ['Before noon', 'Afternoon', 'Later']),
+dayOpts: opts('arriveDay', ['Thursday', 'Friday', 'Saturday', 'Sunday']),
+landOpts: opts('landing', ['Morning', 'Afternoon', 'Evening', 'Late night']),
+houseTime: s.houseTime, setHouseTime: set('houseTime'),
 leaveOpts: opts('leaving', ['Sunday night', 'Monday night']),
 mondayOpts: opts('monday', ['Working with you', 'Taking the day off']),
 extraOpts: extrasList.map((v) => ({ label: v, pressed: s.extras.includes(v) ? 'true' : 'false', cls: s.extras.includes(v) ? 'pill on' : 'pill', pick: toggle(v) })),
 stayingMonday: s.leaving === 'Monday night',
 block1: !s.name.trim() || !s.attending,
-block2: !s.airport,
+block2: !s.airport || !s.arriveDay,
 block3: !s.leaving,
 next1: declined ? go(5) : go(2), next2: go(3), next3: go(4), next4: go(5), back,
 summary: rows, mailto,
