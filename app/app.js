@@ -105,7 +105,8 @@
       api('/api/rsvps').then(function (j) { S.arrivals = j.arrivals || []; }).catch(function () {}),
       api('/api/house').then(function (j) { S.house = j.address ? j : null; }).catch(function () {}),
       api('/api/tab').then(function (j) { S.tab = j.items || []; }).catch(function () {}),
-      api('/api/kit').then(function (j) { S.kit = j.open ? j.items : null; }).catch(function () {})
+      api('/api/kit').then(function (j) { S.kit = j.open ? j.items : null; }).catch(function () {}),
+      loadGame()
     ];
     if (SAMPLE) S.memories = sampleMemories();
     else jobs.push(api('/api/memories').then(function (j) { S.memories = j.memories || []; }).catch(function () {}));
@@ -125,7 +126,7 @@
     var el = $('#s-' + id); el.classList.add('on');
     current = id;
     $$('.tabs [data-go]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-go') === id); });
-    ({ now: renderNow, rooms: renderRooms, dark: renderDark, guests: renderGuests })[id] && ({ now: renderNow, rooms: renderRooms, dark: renderDark, guests: renderGuests })[id]();
+    var R_ = { now: renderNow, rooms: renderRooms, dark: renderDark, guests: renderGuests, play: renderPlay }; if (R_[id]) R_[id]();
     window.scrollTo(0, 0);
   }
 
@@ -268,6 +269,129 @@
     $('#chat-set').onclick = sheetSettings;
   }
 
+
+  // ---------- Spotted: the trip game ----------
+  var SQ = [
+    'A banana taped to a wall', 'Head-to-toe white linen', 'A Lambo or a Rolls on Collins', 'A neon sign with a quote',
+    'A dog dressed better than us', 'Art or a fire exit?', 'An artist at their own booth', 'Two of us in matching outfits',
+    'A pink building', 'A flamingo, real or not', 'Someone filming a “day in my life”', 'A celebrity sighting',
+    'A piece that costs more than a house', 'A stranger compliments your fit', 'Cafecito at a ventanita', 'Sunset from the water'
+  ];
+  var COUNTERS = [
+    { id: 'giving', label: 'Times someone said “it’s giving”' }, { id: 'lost', label: 'Times we lost someone at the fair' },
+    { id: 'lambo', label: 'Lambos spotted' }, { id: 'uber', label: 'Ubers called' },
+    { id: 'skip', label: 'Songs skipped on the aux' }, { id: 'banana', label: 'Bananas on walls' }
+  ];
+  var LINES = (function () { var L = [], r, c; for (r = 0; r < 4; r++) L.push([0, 1, 2, 3].map(function (x) { return r * 4 + x; })); for (c = 0; c < 4; c++) L.push([0, 1, 2, 3].map(function (x) { return x * 4 + c; })); L.push([0, 5, 10, 15], [3, 6, 9, 12]); return L; })();
+  S.game = { players: [], tallies: {} };
+  function sampleGame() {
+    var sp = function (ids) { var o = {}; ids.forEach(function (i) { o[i] = { photo: '' }; }); return o; };
+    var players = [
+      { name: 'Ada Okafor', spotted: sp([0, 1, 2, 3, 5, 9, 14]) }, { name: 'Ilelosa', spotted: sp([0, 4, 8, 12, 6, 15]) },
+      { name: 'Tomi', spotted: sp([2, 7, 10, 13]) }, { name: 'Kemi', spotted: sp([1, 11]) }
+    ];
+    players.forEach(function (p) { var sc = scoreOf(p.spotted); p.squares = sc.squares; p.bingos = sc.bingos; p.points = sc.points; });
+    players.sort(function (a, b) { return b.points - a.points; });
+    return { players: players, tallies: { giving: 14, lost: 3, lambo: 22, uber: 9, skip: 31, banana: 2 } };
+  }
+  function scoreOf(sp) { var ids = Object.keys(sp || {}).map(Number), has = {}; ids.forEach(function (i) { has[i] = 1; }); var b = LINES.filter(function (l) { return l.every(function (i) { return has[i]; }); }).length; return { squares: ids.length, bingos: b, points: ids.length + b * 3 }; }
+  function me() { var k = (S.name || '').toLowerCase().split(' ')[0]; return S.game.players.filter(function (p) { return p.name.toLowerCase().split(' ')[0] === k; })[0] || { name: S.name, spotted: {}, squares: 0, bingos: 0, points: 0 }; }
+  function loadGame() { if (SAMPLE) { if (!S.game.players.length) S.game = sampleGame(); return Promise.resolve(); } return api('/api/game').then(function (j) { S.game = j; }).catch(function () {}); }
+
+  function renderPlay() {
+    var el = $('#s-play'), mine = me(), sp = mine.spotted || {};
+    var rank = S.game.players.indexOf(S.game.players.filter(function (p) { return p === mine; })[0]) + 1;
+    var lit = {}; LINES.forEach(function (l) { if (l.every(function (i) { return sp[i]; })) l.forEach(function (i) { lit[i] = 1; }); });
+    el.innerHTML = '<div class="top"><button class="x" data-back aria-label="Back to today">←</button><span class="mono muted">The trip game</span></div>' +
+      '<div class="hello"><h1 class="big">Spotted</h1><p style="font-size:15px;margin-top:12px;max-width:340px">See it, snap it, tap it. One point a square, three extra for every full line. The winner gets crowned at the Sunday screening.</p></div>' +
+      '<div class="scorebar"><div><b>' + (mine.squares || 0) + '<span>/16</span></b><span class="mono muted">Spotted</span></div><div><b>' + (mine.bingos || 0) + '</b><span class="mono muted">Lines</span></div><div><b>' + (mine.points || 0) + '</b><span class="mono muted">Points</span></div><div><b>' + (rank > 0 ? '#' + rank : '—') + '</b><span class="mono muted">Place</span></div></div>' +
+      '<div class="bingo">' + SQ.map(function (t, i) {
+        var hit = sp[i], photo = hit && hit.photo;
+        return '<button data-sq="' + i + '" class="' + (hit ? 'hit' : '') + (lit[i] ? ' lit' : '') + '">' + (photo ? '<img src="' + esc(photo) + '" alt="">' : '') + '<span class="n mono">' + String(i + 1).padStart(2, '0') + '</span><span class="t">' + esc(t) + '</span>' + (hit ? '<span class="ok">✓</span>' : '') + '</button>';
+      }).join('') + '</div>' +
+      '<div class="sub"><span class="mono">The board</span><span class="mono muted">Live</span></div>' +
+      '<div class="board-list">' + (S.game.players.length ? S.game.players.map(function (p, i) {
+        return '<div class="lb' + (p === mine ? ' me' : '') + '"><span class="mono">' + String(i + 1).padStart(2, '0') + '</span><span style="font-weight:550">' + esc(p.name) + '</span><span class="mono muted">' + p.squares + ' sq · ' + p.bingos + ' lines</span><b>' + p.points + '</b></div>';
+      }).join('') : '<p class="muted" style="font-size:14px">Nobody’s on the board yet. Spot something.</p>') + '</div>' +
+      '<div class="sub"><span class="mono">Keep count</span><span class="mono muted">Everyone adds to these</span></div>' +
+      '<div class="counters">' + COUNTERS.map(function (c) {
+        return '<div class="counter"><p style="font-size:14px;line-height:1.25">' + c.label + '</p><div class="crow"><b>' + (S.game.tallies[c.id] || 0) + '</b><span style="display:flex;gap:6px"><button class="x" data-undo="' + c.id + '" aria-label="Undo">↺</button><button class="plus" data-plus="' + c.id + '" aria-label="Add one">+1</button></span></div></div>';
+      }).join('') + '</div>';
+    $('[data-back]', el).onclick = function () { show('now'); };
+    $$('[data-sq]', el).forEach(function (b) { b.onclick = function () { spotSheet(+b.getAttribute('data-sq')); }; });
+    $$('[data-plus]', el).forEach(function (b) { b.onclick = function () { tally(b.getAttribute('data-plus'), b); }; });
+    $$('[data-undo]', el).forEach(function (b) { b.onclick = function () { untally(b.getAttribute('data-undo')); }; });
+  }
+
+  function spotSheet(i) {
+    var mine = me(), hit = (mine.spotted || {})[i];
+    if (hit) {
+      sheet('<p class="mono muted">Square ' + String(i + 1).padStart(2, '0') + ' · spotted</p><h2 style="font-size:28px;margin:12px 0 16px;letter-spacing:-0.03em">' + esc(SQ[i]) + '</h2>' +
+        (hit.photo ? '<img src="' + esc(hit.photo) + '" alt="" style="width:100%;border-radius:18px;margin-bottom:14px">' : '') +
+        '<div style="display:flex;flex-direction:column;gap:10px">' + (hit.photo ? '<button class="btn full" id="sq-send">Send to the group chat</button>' : '') + '<button class="btn ghost full" id="sq-un">Unmark this square</button></div>');
+      if (hit.photo) $('#sq-send').onclick = function () { shareMedia(hit.photo, 'Spotted: ' + SQ[i]); };
+      $('#sq-un').onclick = function () { saveSpot(i, 'unspot'); };
+      return;
+    }
+    sheet('<p class="mono muted">Square ' + String(i + 1).padStart(2, '0') + '</p><h2 style="font-size:28px;margin:12px 0 8px;letter-spacing:-0.03em">' + esc(SQ[i]) + '</h2><p class="muted" style="font-size:14px;margin-bottom:18px">Add a photo as proof. It goes on your card and in the tape. Photos here don’t count against your 24.</p>' +
+      '<div style="display:flex;flex-direction:column;gap:10px"><label class="btn full">Take a photo<input type="file" accept="image/*" capture="environment" id="sq-cam" hidden></label>' +
+      '<label class="btn ghost full">Choose from library<input type="file" accept="image/*" id="sq-lib" hidden></label>' +
+      '<button class="btn ghost full" id="sq-trust">I saw it, no photo</button></div>');
+    ['#sq-cam', '#sq-lib'].forEach(function (sel) { $(sel).onchange = function (e) { var f = e.target.files && e.target.files[0]; if (f) proof(i, f); }; });
+    $('#sq-trust').onclick = function () { saveSpot(i, 'spot'); };
+  }
+  function proof(i, f) {
+    if (!S.name) { toast('Add your name in Settings first'); return; }
+    toast('Uploading…');
+    var img = new Image();
+    img.onload = function () {
+      var k = Math.min(1, 1400 / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas');
+      c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      c.toBlob(function (blob) {
+        var up = SAMPLE ? Promise.resolve({ url: URL.createObjectURL(blob) }) : window.OEUpload('album/spotted-' + Date.now() + '.jpg', blob, { access: 'public', handleUploadUrl: '/api/upload', clientPayload: '{}', contentType: 'image/jpeg' });
+        up.then(function (b) {
+          if (!SAMPLE) api('/api/memories', { method: 'POST', body: JSON.stringify({ kind: 'memory', name: S.name, day: today().day ? today().day.day : '', note: 'Spotted: ' + SQ[i], media: [{ url: b.url, type: 'image/jpeg' }] }) }).catch(function () {});
+          saveSpot(i, 'spot', b.url);
+        }).catch(function (err) { toast(err.message || 'Upload failed'); });
+      }, 'image/jpeg', 0.86);
+    };
+    img.src = URL.createObjectURL(f);
+  }
+  function saveSpot(i, action, photo) {
+    if (!S.name) { toast('Add your name in Settings first'); return; }
+    var done = function () {
+      closeSheet();
+      var sc = scoreOf(me().spotted);
+      toast(action === 'spot' ? (sc.bingos > (me().bingos || 0) ? 'Line! +3' : 'Spotted. +1') : 'Unmarked');
+      renderPlay();
+    };
+    if (SAMPLE) {
+      var m = me(); if (S.game.players.indexOf(m) < 0) S.game.players.push(m);
+      var before = m.bingos || 0;
+      if (action === 'spot') m.spotted[i] = { photo: photo || '' }; else delete m.spotted[i];
+      var sc = scoreOf(m.spotted); m.squares = sc.squares; m.points = sc.points;
+      S.game.players.sort(function (a, b) { return b.points - a.points; });
+      closeSheet(); toast(action === 'spot' ? (sc.bingos > before ? 'Line! +3' : 'Spotted. +1') : 'Unmarked'); m.bingos = sc.bingos; renderPlay(); return;
+    }
+    api('/api/game', { method: 'POST', body: JSON.stringify({ action: action, name: S.name, id: i, photo: photo || '' }) })
+      .then(function () { return loadGame(); }).then(done).catch(function (err) { toast(err.message); });
+  }
+  function tally(id, btn) {
+    S.game.tallies[id] = (S.game.tallies[id] || 0) + 1;
+    var b = btn.closest('.counter').querySelector('b'); b.textContent = S.game.tallies[id]; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
+    if (SAMPLE) return;
+    api('/api/game', { method: 'POST', body: JSON.stringify({ action: 'tally', counter: id }) }).then(function (j) { var k = store.get('taps', {}); (k[id] = k[id] || []).push(j.key); store.set('taps', k); }).catch(function () { toast('Couldn’t save that one'); });
+  }
+  function untally(id) {
+    var k = store.get('taps', {}), key = (k[id] || []).pop();
+    if (!key && !SAMPLE) { toast('Nothing of yours to undo'); return; }
+    S.game.tallies[id] = Math.max(0, (S.game.tallies[id] || 0) - 1); renderPlay();
+    if (SAMPLE) return;
+    store.set('taps', k);
+    api('/api/game', { method: 'POST', body: JSON.stringify({ action: 'untally', counter: id, key: key }) }).catch(function () {});
+  }
+
   // ---------- now ----------
   function rollUsed() { return store.get('roll-' + today().n.date, 0); }
   function myRide() {
@@ -310,6 +434,7 @@
         '<div class="roll">' + Array.apply(null, Array(ROLL)).map(function (_, i) { return '<i class="' + (i < used ? 'used' : '') + '"></i>'; }).join('') + '</div>' +
       '</div></div>' +
       '<div class="tiles">' +
+        '<button class="tile wide play-tile" data-act="play"><span class="mono">The trip game · Spotted</span><b>' + (me().squares || 0) + ' of 16 spotted · ' + (me().points || 0) + ' points</b><span class="mono">' + (S.game.players.length ? 'Leader: ' + esc(S.game.players[0].name.split(' ')[0]) + ' · ' + S.game.players[0].points + ' pts' : 'Tap to play') + '</span></button>' +
         '<button class="tile" data-act="dark"><span class="mono muted">Photos</span><b>' + (developing ? developing + ' coming tomorrow' : 'See everyone’s') + '</b><span class="mono muted">' + (developing ? 'Appear at 9am' : 'Open') + '</span></button>' +
         '<button class="tile" data-act="tape"><span class="mono muted">The tape</span><b>Watch the video</b><span class="mono muted">' + S.memories.length + ' posts</span></button>' +
         (ride ? '<button class="tile wide" data-act="ride"><span class="mono muted">Your ride · ' + esc(ride.me.airport || '') + ' · ' + esc(ride.me.arriveDay || '') + '</span><b>' + (ride.crew.length > 1 ? 'Sharing with ' + esc(ride.crew.filter(function (c) { return c !== ride.me; }).map(function (c) { return c.name; }).join(', ')) : 'Solo for now') + '</b><span class="mono muted">' + esc(ride.crew[0] === ride.me && ride.crew.length > 1 ? 'You call the Uber' : ride.crew.length > 1 ? ride.crew[0].name + ' calls the Uber' : 'Check the board on the site') + '</span></button>' : '') +
@@ -326,6 +451,7 @@
 
   function act(a) {
     if (a === 'dark') return show('dark');
+    if (a === 'play') return loadGame().then(function () { show('play'); });
     if (a === 'settings') return sheetSettings();
     if (a === 'chat') return openChat();
     if (a === 'tape') return location.href = '/tape' + (SAMPLE ? '?sample' : '');
@@ -585,6 +711,6 @@
     else enter();
   });
   setInterval(function () { if (!document.hidden && $('#tabs') && !$('#tabs').classList.contains('hide') && !$('#cam').classList.contains('on') && !$('#sheet').classList.contains('on')) {
-    (SAMPLE ? Promise.resolve() : api('/api/memories').then(function (j) { S.memories = j.memories || []; })).catch(function () {}).then(function () { if ((current === 'now' || current === 'dark') && window.scrollY < 40) show(current); });
+    (SAMPLE ? Promise.resolve() : api('/api/memories').then(function (j) { S.memories = j.memories || []; })).catch(function () {}).then(function () { if ((current === 'now' || current === 'dark') && window.scrollY < 40) show(current); if (current === 'play') loadGame().then(function () { if (window.scrollY < 40) renderPlay(); }); });
   } }, 60000);
 })();

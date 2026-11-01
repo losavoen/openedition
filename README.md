@@ -72,3 +72,7 @@ An installable app (add to home screen) for the four days in Miami. It stays loc
 - **Guests**: everyone's wall label and their frames.
 
 Preview switches: `/app/?preview` (open early), `/app/?at=sat-16:45` (pretend time), `/app/?sample` (sample photos), `/app/?welcome` (replay onboarding).
+
+## Spotted (the trip game)
+
+In the app: a 16-square Art Week bingo card (photo proof optional, proof photos also go to the album), a live leaderboard (1 point a square, 3 per full line), and six shared tally counters anyone can add to. Data lives in Blob under `game/` (`api/game.js`). Preview with `/app/?sample`.
