@@ -16,6 +16,7 @@
   var PREVIEW = Q.has('preview') || SAMPLE || Q.has('at');
   var ROLL = 24;
   var A = '/assets/';
+  var INVITED = ['Ilelosa', 'Simi', 'Nero', 'Sayo', 'Nicole', 'Chiara'];
   var PLAYLIST = 'https://open.spotify.com/playlist/6nVE5YsGJgZkczU6wE9S9C';
 
   var LENSES = [
@@ -86,15 +87,15 @@
     var mk = function (name, day, date, h, kind, img, note) { return { id: name + h + date, name: name, day: day, kind: kind, note: note || '', createdAt: t(date, h), media: [{ url: A + img, type: /\.mp4$/.test(img) ? 'video' : 'image' }] }; };
     return [
       mk('Ilelosa', 'Friday', '2026-12-04', '11:05', 'memory', 'f63505a42750c5a52910c41fafde0526.jpg', 'Wheels down.'),
-      mk('Ada', 'Friday', '2026-12-04', '12:40', 'daily', '33b2dca8bf23bad75dc01309e0e0694f.jpg'),
-      mk('Ada', 'Friday', '2026-12-04', '15:10', 'memory', 'ce9c479ce68a77630ab0c0e8cee3ed96.jpg', 'Lost everyone within five minutes.'),
-      mk('Tomi', 'Friday', '2026-12-04', '22:30', 'memory', '45d3085f470d21e1b85bcaedd49351e5.jpg'),
-      mk('Kemi', 'Friday', '2026-12-04', '19:40', 'fit', 'd6d17608513a701b079d98bc3ec87c83.jpg'),
-      mk('Zee', 'Saturday', '2026-12-05', '10:20', 'daily', 'a84798b4498739329e65cf17fed751f2.jpg'),
-      mk('Kemi', 'Saturday', '2026-12-05', '12:15', 'memory', '6d5b2c5b16a2856583fe6d970384b8b9.jpg'),
+      mk('Simi', 'Friday', '2026-12-04', '12:40', 'daily', '33b2dca8bf23bad75dc01309e0e0694f.jpg'),
+      mk('Simi', 'Friday', '2026-12-04', '15:10', 'memory', 'ce9c479ce68a77630ab0c0e8cee3ed96.jpg', 'Lost everyone within five minutes.'),
+      mk('Nero', 'Friday', '2026-12-04', '22:30', 'memory', '45d3085f470d21e1b85bcaedd49351e5.jpg'),
+      mk('Sayo', 'Friday', '2026-12-04', '19:40', 'fit', 'd6d17608513a701b079d98bc3ec87c83.jpg'),
+      mk('Nicole', 'Saturday', '2026-12-05', '10:20', 'daily', 'a84798b4498739329e65cf17fed751f2.jpg'),
+      mk('Sayo', 'Saturday', '2026-12-05', '12:15', 'memory', '6d5b2c5b16a2856583fe6d970384b8b9.jpg'),
       mk('Ilelosa', 'Saturday', '2026-12-05', '17:20', 'memory', 'sample/boat.mp4', 'Nobody talked for ten minutes.'),
-      mk('Zee', 'Saturday', '2026-12-05', '18:05', 'memory', '1c8c9309193976c9a4e1ebbffde5c892.jpg'),
-      mk('Tomi', 'Saturday', '2026-12-05', '20:00', 'fit', '04489c978cf8f115fbac43843951a9a7.jpg')
+      mk('Chiara', 'Saturday', '2026-12-05', '18:05', 'memory', '1c8c9309193976c9a4e1ebbffde5c892.jpg'),
+      mk('Nero', 'Saturday', '2026-12-05', '20:00', 'fit', '04489c978cf8f115fbac43843951a9a7.jpg')
     ];
   }
 
@@ -287,8 +288,8 @@
   function sampleGame() {
     var sp = function (ids) { var o = {}; ids.forEach(function (i) { o[i] = { photo: '' }; }); return o; };
     var players = [
-      { name: 'Ada Okafor', spotted: sp([0, 1, 2, 3, 5, 9, 14]) }, { name: 'Ilelosa', spotted: sp([0, 4, 8, 12, 6, 15]) },
-      { name: 'Tomi', spotted: sp([2, 7, 10, 13]) }, { name: 'Kemi', spotted: sp([1, 11]) }
+      { name: 'Simi', spotted: sp([0, 1, 2, 3, 5, 9, 14]) }, { name: 'Ilelosa', spotted: sp([0, 4, 8, 12, 6, 15]) },
+      { name: 'Nero', spotted: sp([2, 7, 10, 13]) }, { name: 'Sayo', spotted: sp([1, 11]) }, { name: 'Nicole', spotted: sp([3, 8, 15]) }, { name: 'Chiara', spotted: sp([0, 6]) }
     ];
     players.forEach(function (p) { var sc = scoreOf(p.spotted); p.squares = sc.squares; p.bingos = sc.bingos; p.points = sc.points; });
     players.sort(function (a, b) { return b.points - a.points; });
@@ -555,12 +556,15 @@
   // ---------- guests ----------
   function renderGuests() {
     var el = $('#s-guests');
-    var list = S.guests.length ? S.guests : S.arrivals.map(function (a) { return { name: a.name, status: 'I’m in', from: '' }; });
+    // Everyone invited shows up; profiles fill in as people add them on the site.
+    var first = function (n) { return String(n || '').toLowerCase().split(' ')[0]; };
+    var list = S.guests.slice();
+    INVITED.forEach(function (n) { if (!list.some(function (g) { return first(g.name) === first(n); })) list.push({ name: n, status: '', from: '', pending: true }); });
     el.innerHTML = '<div class="top"><span class="mono">People · ' + list.length + ' coming</span><button class="x" data-act="chat" aria-label="Open the group chat">✉</button></div>' +
       '<div class="hello"><h1 class="big">Who’s<br>coming</h1><p class="muted" style="font-size:14px;margin-top:10px">Tap someone to see their profile and photos.</p></div>' +
       (list.length ? '<div class="glist">' + list.map(function (g, i) {
         var count = S.memories.filter(function (m) { return m.name && g.name && m.name.split(' ')[0].toLowerCase() === g.name.split(' ')[0].toLowerCase(); }).length;
-        return '<button class="gitem" data-g="' + i + '"><span class="ph">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="">' : esc((g.name || '?').charAt(0))) + '</span><span><p style="font-weight:550;font-size:17px">' + esc(g.name) + '</p><p class="muted" style="font-size:13px">' + esc(g.from ? 'Lives and works in ' + g.from : g.status || '') + '</p></span><span class="mono muted">' + count + ' photos</span></button>';
+        return '<button class="gitem" data-g="' + i + '"><span class="ph">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="">' : esc((g.name || '?').charAt(0))) + '</span><span><p style="font-weight:550;font-size:17px">' + esc(g.name) + '</p><p class="muted" style="font-size:13px">' + esc(g.pending ? 'Hasn’t added a profile yet' : g.from ? 'Lives and works in ' + g.from : g.status || '') + '</p></span><span class="mono muted">' + count + ' photos</span></button>';
       }).join('') + '</div>' : '<p class="empty-note">Guests show up here once they add a profile on the site.</p>') +
       '<div style="padding:20px"><a class="btn ghost full" href="/#guests">Edit my wall label</a></div>';
     $$('[data-act]', el).forEach(function (b) { b.onclick = function () { act(b.getAttribute('data-act')); }; });

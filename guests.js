@@ -26,7 +26,6 @@
 
   function render() {
     var list = $('guest-list');
-    if (!guests.length) { list.innerHTML = '<p class="mono cap" style="grid-column: 1 / -1">No one yet. Be the first.</p>'; return; }
     // Each guest is hung like a work in a show: framed photo + museum wall label.
     // The label says "Acquired" (I'm in) or "On hold" (Probably).
     list.innerHTML = guests.map(function (g, i) {
@@ -43,6 +42,17 @@
         '<p class="cap gmed">Mixed media: a carry-on, sunscreen, three outfits a day.</p>' +
         '<p class="gmeta mono cap"><span>' + (inn ? 'Acquired' : 'On hold') + '</span>' + ig + '</p>' +
         '</div></article>';
+    }).join('') + pending();
+  }
+
+  // Everyone invited gets an empty frame until they hang their own portrait.
+  function pending() {
+    var invited = (window.OE_CONFIG && window.OE_CONFIG.invited) || [];
+    var first = function (n) { return String(n || '').toLowerCase().split(' ')[0]; };
+    return invited.filter(function (n) { return !guests.some(function (g) { return first(g.name) === first(n); }); }).map(function (n) {
+      return '<article class="gcard pending"><span class="gph"><span class="gini">' + esc(n.charAt(0)) + '</span></span>' +
+        '<div class="glabel"><p class="gmeta mono cap"><span>Coming soon</span></p><p class="gname">' + esc(n) + '</p>' +
+        '<p class="cap gmed">Portrait not hung yet.</p></div></article>';
     }).join('');
   }
 

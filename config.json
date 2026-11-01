@@ -11,5 +11,13 @@
     "backupContact": "e.g. Ada, +1 647 555 0101",
     "payMethods": "Replaces the default payment line, e.g. Interac e-Transfer to hello@losaeguavoen.com",
     "rooms": "[{\"room\": \"Main bedroom\", \"beds\": \"King\", \"people\": \"Ilelosa, Ada\"}]"
-  }
+  },
+  "invited": [
+    "Ilelosa",
+    "Simi",
+    "Nero",
+    "Sayo",
+    "Nicole",
+    "Chiara"
+  ]
 }

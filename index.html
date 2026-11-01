@@ -282,6 +282,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .gcard:hover{transform:none;box-shadow:none}
 .gcard .gph{box-shadow:0 18px 40px rgba(28,28,26,0.14);border:10px solid #FFFFFF;outline:1px solid rgba(28,28,26,0.08);transition:transform 0.8s var(--ease)}
 .gcard:hover .gph{transform:translateY(-6px)}
+.gcard.pending .gph{opacity:0.45}
+.gcard.pending .glabel{opacity:0.6;border-style:dashed}
 .glabel{display:flex;flex-direction:column;gap:4px;background:#FFFFFF;border:1px solid rgba(28,28,26,0.14);padding:12px 12px 14px;max-width:220px}
 .glabel .gname{font-size:16px}
 .glabel .gline,.glabel .gmed{font-size:12px;line-height:1.35}
@@ -351,7 +353,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
 <script src="memories.js" defer></script>
-<script>window.OE_CONFIG = {"hostName": "Ilelosa", "hostPhone": "", "backupContact": "", "rooms": [], "payMethods": ""};</script>
+<script>window.OE_CONFIG = {"hostName": "Ilelosa", "hostPhone": "", "backupContact": "", "rooms": [], "payMethods": "", "invited": ["Ilelosa", "Simi", "Nero", "Sayo", "Nicole", "Chiara"]};</script>
 <script src="extras.js" defer></script>
 <script src="edition.js" defer></script>
 </head>
