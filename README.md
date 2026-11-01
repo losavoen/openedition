@@ -47,3 +47,7 @@ After the trip, people unlock the album with the same password, then upload phot
 ## Privacy
 
 The house address is not in the page or this repo. It's stored in the `HOUSE_ADDRESS` env var on Vercel and only sent to signed-in guests (`api/house.js`).
+
+## The tape
+
+`/tape` is a sideways, VHS-and-film-style reel of everyone's uploaded photos, videos and favourite moments, grouped into Friday to Monday. Scroll, drag, use the arrow keys, or press Play to run through it. Before the trip it shows a preview built from the site's own photos.

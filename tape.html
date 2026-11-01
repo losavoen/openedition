@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Tape — Open Edition (miami art week)</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&family=Cutive+Mono&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Aspekta';src:url('/assets/fonts/Aspekta-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Aspekta';src:url('/assets/fonts/Aspekta-550.woff2') format('woff2');font-weight:550;font-display:swap}
+:root{--bg:#0E0E0D;--paper:#F2F2EE;--blush:#F8ECEA;--red:#E0332F;--ease:cubic-bezier(.2,.7,0,1)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--paper);overflow:hidden;font-family:'Aspekta',Helvetica,Arial,sans-serif}
+a{color:inherit}
+.mono{font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase}
+.vcr{font-family:'Cutive Mono','Azeret Mono',monospace;letter-spacing:0.04em;text-shadow:1.5px 0 rgba(255,40,40,0.75),-1.5px 0 rgba(40,140,255,0.75),0 0 6px rgba(255,255,255,0.35)}
+
+/* layout */
+.app{position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr auto}
+header,footer{position:relative;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 24px}
+.rec{display:inline-flex;align-items:center;gap:8px}
+.rec i{width:10px;height:10px;border-radius:50%;background:var(--red);animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* the reel: horizontal */
+.reel{position:relative;overflow-x:auto;overflow-y:hidden;display:flex;align-items:center;gap:0;padding:0 40vw 0 8vw;scroll-snap-type:x proximity;scrollbar-width:none;cursor:grab}
+.reel::-webkit-scrollbar{display:none}
+.reel.drag{cursor:grabbing;scroll-snap-type:none}
+.strip{display:flex;align-items:center;height:min(74vh,640px);background:#151513;padding:44px 0;position:relative}
+/* sprocket holes, top and bottom */
+.strip::before,.strip::after{content:"";position:absolute;left:0;right:0;height:18px;background:repeating-linear-gradient(90deg,transparent 0 14px,#3a3833 14px 30px,transparent 30px 44px);opacity:0.9}
+.strip::before{top:13px}.strip::after{bottom:13px}
+
+.frame{position:relative;height:100%;flex:none;margin:0 10px;scroll-snap-align:center;overflow:hidden;background:#000;border-radius:3px}
+.frame img,.frame video{display:block;height:100%;width:auto;max-width:none;filter:sepia(0.28) saturate(0.85) contrast(1.12) brightness(0.96);transition:filter 0.6s var(--ease)}
+.frame:hover img,.frame:hover video,.frame.live img,.frame.live video{filter:sepia(0.12) saturate(1.05) contrast(1.08)}
+.frame .stamp{position:absolute;right:14px;bottom:12px;font-size:clamp(14px,1.6vw,20px);color:#FFE9C9}
+.frame .who{position:absolute;left:14px;top:12px;font-size:clamp(12px,1.2vw,15px);color:#FFE9C9}
+.frame .play{position:absolute;left:14px;bottom:12px;font-size:clamp(12px,1.2vw,15px);color:#FFE9C9;opacity:0;transition:opacity 0.3s}
+.frame.live .play{opacity:1}
+/* light leak on some frames */
+.frame.leak::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 0% 0%,rgba(255,120,60,0.38),transparent 55%);mix-blend-mode:screen;pointer-events:none;animation:leak 6s ease-in-out infinite alternate}
+@keyframes leak{to{opacity:0.35}}
+/* chromatic jitter on hover */
+.frame:hover{animation:jitter 0.25s steps(2) 2}
+@keyframes jitter{50%{transform:translateX(1px) skewX(-0.4deg)}}
+
+.title-card{height:100%;flex:none;width:min(56vh,480px);margin:0 10px;display:flex;flex-direction:column;justify-content:space-between;padding:28px;background:var(--paper);color:#1C1C1A;scroll-snap-align:center;border-radius:3px}
+.title-card .big{font-size:clamp(40px,6vh,72px);line-height:0.86;letter-spacing:-0.04em;text-transform:uppercase;font-weight:550}
+.title-card .side{font-family:'Cutive Mono',monospace;font-size:20px}
+.title-card.dark{background:#1C1C1A;color:var(--paper);border:1px solid #2a2925}
+
+.note{height:100%;flex:none;width:min(46vh,380px);margin:0 10px;display:flex;flex-direction:column;justify-content:flex-end;gap:14px;padding:26px;background:var(--blush);color:#1C1C1A;scroll-snap-align:center;border-radius:3px}
+.note p:first-child{font-size:clamp(20px,2.6vh,28px);line-height:1.2;letter-spacing:-0.01em}
+
+/* screen effects over everything */
+.fx{position:fixed;inset:0;pointer-events:none;z-index:4}
+.scan{background:repeating-linear-gradient(0deg,rgba(0,0,0,0.22) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+.vignette{background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.65) 100%)}
+.flicker{background:rgba(255,255,255,0.025);animation:flick 0.12s steps(2) infinite}
+@keyframes flick{50%{opacity:0.4}}
+.track{background:linear-gradient(180deg,transparent 0,rgba(255,255,255,0.06) 48%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0.06) 52%,transparent 100%);height:120px;animation:roll 7s linear infinite;inset:auto 0 auto 0}
+@keyframes roll{from{top:-120px}to{top:100%}}
+#grain{opacity:0.13;mix-blend-mode:screen;width:100%;height:100%}
+
+/* controls */
+.controls{display:flex;gap:6px;align-items:center}
+.controls button{font:inherit;font-family:'Azeret Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--paper);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);border-radius:999px;padding:9px 14px;cursor:pointer;transition:background-color 0.3s}
+.controls button:hover,.controls button[aria-pressed="true"]{background:var(--paper);color:#1C1C1A}
+.counter{min-width:120px;text-align:right}
+.progress{position:absolute;left:24px;right:24px;top:0;height:2px;background:rgba(255,255,255,0.12)}
+.progress i{position:absolute;inset:0 auto 0 0;background:var(--red);width:0}
+.empty{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;z-index:3;display:flex;flex-direction:column;gap:10px}
+
+/* tracking glitch when switching */
+.app.glitch .reel{animation:glitch 0.35s steps(3)}
+@keyframes glitch{0%{filter:none;transform:none}33%{filter:hue-rotate(40deg) saturate(2);transform:translateY(-3px) skewX(2deg)}66%{filter:invert(0.08);transform:translateY(2px)}100%{filter:none;transform:none}}
+
+@media (max-width:760px){.frame{max-width:82vw}.frame img,.frame video{width:100%;object-fit:cover}header,footer{padding:12px 14px}.strip{height:62vh;padding:36px 0}.reel{padding:0 20vw 0 6vw}.controls button{padding:8px 10px}.hide-sm{display:none}}
+@media (prefers-reduced-motion:reduce){.flicker,.track,.rec i,.frame.leak::after{animation:none}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+<header>
+<span class="mono rec"><i></i>Rec</span>
+<span class="vcr" style="font-size:clamp(16px,2vw,22px)">OPEN EDITION — THE TAPE</span>
+<a class="mono hide-sm" href="/#memories">Add footage</a>
+</header>
+
+<div class="reel" id="reel" tabindex="0" aria-label="The tape: everyone’s footage, side to side"></div>
+
+<footer>
+<div class="progress"><i id="bar"></i></div>
+<div class="controls">
+<button type="button" id="prev" aria-label="Rewind">◀◀</button>
+<button type="button" id="play" aria-pressed="false">▶ Play</button>
+<button type="button" id="next" aria-label="Fast forward">▶▶</button>
+<button type="button" id="sound" aria-pressed="false" class="hide-sm">Sound off</button>
+</div>
+<span class="vcr counter" id="counter">00:00:00</span>
+</footer>
+</div>
+
+<div class="fx"><canvas id="grain"></canvas></div>
+<div class="fx scan"></div>
+<div class="fx flicker"></div>
+<div class="fx track"></div>
+<div class="fx vignette"></div>
+
+<script>
+(function () {
+  var reel = document.getElementById('reel'), app = document.getElementById('app');
+  var DAYS = ['Friday', 'Saturday', 'Sunday', 'Monday'];
+  var DATES = { Friday: 'DEC 04', Saturday: 'DEC 05', Sunday: 'DEC 06', Monday: 'DEC 07' };
+  var SIDES = { Friday: 'Side A', Saturday: 'Side B', Sunday: 'Side C', Monday: 'Side D' };
+  var soundOn = false, playing = false, timer = null;
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function stamp(day, i) {
+    var h = 10 + (i * 3) % 12, m = (i * 17) % 60;
+    var ap = h >= 12 ? 'PM' : 'AM', hh = h > 12 ? h - 12 : h;
+    return (DATES[day] || 'DEC 2026') + ' 2026  ' + hh + ':' + String(m).padStart(2, '0') + ' ' + ap;
+  }
+
+  // Before the trip there's no footage yet: preview the look with the site's own photos.
+  var PREVIEW = [
+    { name: 'Preview', day: 'Friday', media: [{ url: '/assets/f63505a42750c5a52910c41fafde0526.jpg', type: 'image' }, { url: '/assets/c4eb66219cdb3bccb6a3bd147e0dcdea.jpg', type: 'image' }] },
+    { name: 'Preview', day: 'Saturday', note: 'This is where your favourite moments go.', media: [{ url: '/assets/6d5b2c5b16a2856583fe6d970384b8b9.jpg', type: 'image' }, { url: '/assets/1c8c9309193976c9a4e1ebbffde5c892.jpg', type: 'image' }, { url: '/assets/d95dbf2f141cda43394cd25cdb42755f.jpg', type: 'image' }] },
+    { name: 'Preview', day: 'Sunday', media: [{ url: '/assets/f74d28082aed0a2416fb3f59121b5f88.jpg', type: 'image' }, { url: '/assets/45d3085f470d21e1b85bcaedd49351e5.jpg', type: 'image' }] },
+    { name: 'Preview', day: 'Monday', media: [{ url: '/assets/a84798b4498739329e65cf17fed751f2.jpg', type: 'image' }] }
+  ];
+
+  function build(memories, preview) {
+    var byDay = {};
+    memories.forEach(function (m) { var d = DAYS.indexOf(m.day) > -1 ? m.day : 'Friday'; (byDay[d] = byDay[d] || []).push(m); });
+    var html = '<div class="strip">';
+    html += '<div class="title-card"><span class="mono">' + (preview ? 'Preview · footage starts Dec 4' : 'Everyone’s footage') + '</span><span class="big">Open<br>Edition</span><span class="side">(miami art week) — the tape</span></div>';
+    var n = 0;
+    DAYS.forEach(function (day) {
+      if (!byDay[day]) return;
+      html += '<div class="title-card dark"><span class="mono">' + esc(SIDES[day]) + '</span><span class="big">' + esc(day) + '</span><span class="side vcr">' + esc(DATES[day]) + ' 2026</span></div>';
+      byDay[day].forEach(function (m) {
+        (m.media || []).forEach(function (x) {
+          n++;
+          var leak = n % 4 === 2 ? ' leak' : '';
+          var who = '<span class="who vcr">' + esc(m.name) + '</span>';
+          var st = '<span class="stamp vcr">' + stamp(day, n) + '</span>';
+          if (x.type === 'video') html += '<figure class="frame' + leak + '" data-kind="video" style="margin:0 10px"><video src="' + esc(x.url) + '" muted playsinline preload="metadata"></video>' + who + '<span class="play vcr">▶ PLAY</span>' + st + '</figure>';
+          else html += '<figure class="frame' + leak + '" data-kind="image" style="margin:0 10px"><img src="' + esc(x.url) + '" alt="Footage from ' + esc(m.name) + '" loading="lazy" draggable="false">' + who + st + '</figure>';
+        });
+        if (m.note) html += '<div class="note"><p>“' + esc(m.note) + '”</p><p class="mono">' + esc(m.name) + ' · ' + esc(day) + '</p></div>';
+      });
+    });
+    html += '<div class="title-card"><span class="mono">End of tape</span><span class="big">See you<br>next<br>edition</span><a class="side" href="/#memories">+ add your footage</a></div>';
+    html += '</div>';
+    reel.innerHTML = html;
+    watch();
+  }
+
+  // Videos play while in the middle of the screen
+  var io;
+  function watch() {
+    if (io) io.disconnect();
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var f = e.target, v = f.querySelector('video');
+        f.classList.toggle('live', e.intersectionRatio > 0.6);
+        if (!v) return;
+        if (e.intersectionRatio > 0.6) { v.muted = !soundOn; v.play().catch(function () {}); }
+        else v.pause();
+      });
+    }, { root: reel, threshold: [0, 0.6, 1] });
+    reel.querySelectorAll('.frame').forEach(function (f) { io.observe(f); });
+  }
+
+  // vertical wheel -> sideways
+  reel.addEventListener('wheel', function (e) {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { reel.scrollLeft += e.deltaY; e.preventDefault(); }
+  }, { passive: false });
+
+  // drag to scrub
+  var down = false, sx = 0, sl = 0;
+  reel.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') return; down = true; sx = e.clientX; sl = reel.scrollLeft; reel.classList.add('drag'); });
+  window.addEventListener('pointermove', function (e) { if (down) reel.scrollLeft = sl - (e.clientX - sx) * 1.4; });
+  window.addEventListener('pointerup', function () { down = false; reel.classList.remove('drag'); });
+
+  // counter + progress
+  function tick() {
+    var max = reel.scrollWidth - reel.clientWidth || 1, p = reel.scrollLeft / max;
+    document.getElementById('bar').style.width = (p * 100).toFixed(2) + '%';
+    var secs = Math.round(p * 1800), h = Math.floor(secs / 3600), m = Math.floor(secs / 60) % 60, s = secs % 60;
+    document.getElementById('counter').textContent = [h, m, s].map(function (x) { return String(x).padStart(2, '0'); }).join(':');
+  }
+  reel.addEventListener('scroll', tick, { passive: true });
+
+  function items() { return Array.prototype.slice.call(reel.querySelectorAll('.frame,.title-card,.note')); }
+  function centerIndex() {
+    var mid = reel.getBoundingClientRect().left + reel.clientWidth / 2, best = 0, d = Infinity;
+    items().forEach(function (el, i) { var r = el.getBoundingClientRect(), c = r.left + r.width / 2; if (Math.abs(c - mid) < d) { d = Math.abs(c - mid); best = i; } });
+    return best;
+  }
+  function go(i) {
+    var list = items(); if (!list.length) return;
+    i = Math.max(0, Math.min(list.length - 1, i));
+    app.classList.remove('glitch'); void app.offsetWidth; app.classList.add('glitch');
+    list[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    return list[i];
+  }
+  document.getElementById('prev').onclick = function () { stop(); go(centerIndex() - 1); };
+  document.getElementById('next').onclick = function () { stop(); go(centerIndex() + 1); };
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { stop(); go(centerIndex() + 1); }
+    if (e.key === 'ArrowLeft') { stop(); go(centerIndex() - 1); }
+    if (e.key === ' ') { e.preventDefault(); toggle(); }
+  });
+
+  // Play: walk the tape. Photos hold 3s, videos play to the end (max 20s).
+  function step() {
+    var list = items(), i = centerIndex();
+    if (i >= list.length - 1) { stop(); return; }
+    var el = go(i + 1), v = el && el.querySelector('video');
+    var hold = v ? Math.min(20000, ((v.duration || 6) * 1000) + 600) : (el && el.classList.contains('frame') ? 3000 : 2200);
+    timer = setTimeout(step, hold);
+  }
+  function toggle() { playing ? stop() : start(); }
+  function start() { playing = true; var b = document.getElementById('play'); b.textContent = '❚❚ Pause'; b.setAttribute('aria-pressed', 'true'); timer = setTimeout(step, 600); }
+  function stop() { playing = false; clearTimeout(timer); var b = document.getElementById('play'); b.textContent = '▶ Play'; b.setAttribute('aria-pressed', 'false'); }
+  document.getElementById('play').onclick = toggle;
+  reel.addEventListener('pointerdown', function () { if (playing) stop(); });
+
+  document.getElementById('sound').onclick = function () {
+    soundOn = !soundOn; this.textContent = soundOn ? 'Sound on' : 'Sound off'; this.setAttribute('aria-pressed', String(soundOn));
+    reel.querySelectorAll('.frame.live video').forEach(function (v) { v.muted = !soundOn; });
+  };
+
+  // film grain
+  var g = document.getElementById('grain'), gx = g.getContext('2d');
+  function sizeGrain() { g.width = Math.ceil(innerWidth / 3); g.height = Math.ceil(innerHeight / 3); }
+  sizeGrain(); addEventListener('resize', sizeGrain);
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function grain() {
+    var img = gx.createImageData(g.width, g.height), d = img.data;
+    for (var i = 0; i < d.length; i += 4) { var v = Math.random() * 255 | 0; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; }
+    gx.putImageData(img, 0, 0);
+    if (!still) setTimeout(function () { requestAnimationFrame(grain); }, 70);
+  }
+  grain();
+
+  fetch('/api/memories', { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.json() : { memories: [] }; })
+    .then(function (j) {
+      var mem = (j.memories || []).filter(function (m) { return (m.media && m.media.length) || m.note; });
+      build(mem.length ? mem : PREVIEW, !mem.length); tick();
+    })
+    .catch(function () { build(PREVIEW, true); tick(); });
+})();
+</script>
+</body>
+</html>
