@@ -654,7 +654,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
 <div class="step">
 <p class="mono lbl ip">03 · Heading home</p>
-<div class="fld"><span class="lbl">Leaving</span><div class="pills"><sc-for list="{{ leaveOpts }}" as="o" hint-placeholder-count="2"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
+<div class="fld"><span class="lbl">Leaving on</span><div class="pills"><sc-for list="{{ leaveOpts }}" as="o" hint-placeholder-count="4"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
+<div class="fld"><span class="lbl">Flight time</span><div class="pills"><sc-for list="{{ leaveTimeOpts }}" as="o" hint-placeholder-count="4"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
 <sc-if value="{{ stayingMonday }}" hint-placeholder-val="{{ false }}">
 <div class="fld"><span class="lbl">Monday</span><div class="pills"><sc-for list="{{ mondayOpts }}" as="o" hint-placeholder-count="2"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
 </sc-if>
@@ -782,7 +783,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 class Component extends DCLogic {
 constructor(props) {
 super(props);
-this.state = { step: 1, name: '', attending: '', airport: '', arriveDay: '', landing: '', inFlight: '', houseTime: '', inTime: '', leaving: '', monday: '', outFlight: '', outTime: '', extras: [], tee: '', songs: '', questions: '', note: '' };
+this.state = { step: 1, name: '', attending: '', airport: '', arriveDay: '', landing: '', inFlight: '', houseTime: '', inTime: '', leaving: '', leaveTime: '', monday: '', outFlight: '', outTime: '', extras: [], tee: '', songs: '', questions: '', note: '' };
 }
 renderVals() {
 const s = this.state;
@@ -803,8 +804,8 @@ const rows = declined
 { k: 'Flying into', v: s.airport || '—' },
 { k: 'Arriving', v: [s.arriveDay, s.landing, s.inFlight, s.inTime].filter(Boolean).join(' · ') || '—' },
 { k: 'At the house', v: s.houseTime || '—' },
-{ k: 'Leaving', v: [s.leaving, s.outFlight, s.outTime].filter(Boolean).join(' · ') || '—' },
-{ k: 'Monday', v: s.leaving === 'Monday night' ? (s.monday || '—') : 'Not staying' },
+{ k: 'Leaving', v: [s.leaving, s.leaveTime, s.outFlight, s.outTime].filter(Boolean).join(' · ') || '—' },
+{ k: 'Monday', v: (s.leaving === 'Monday' || s.leaving === 'Tuesday') ? (s.monday || '—') : 'Not staying' },
 { k: 'Count me in', v: s.extras.length ? s.extras.join(', ') : 'Nothing extra yet' },
 { k: 'Size', v: s.tee || '—' },
 { k: 'Songs', v: s.songs || '—' },
@@ -826,10 +827,11 @@ airportOpts: opts('airport', ['MIA', 'FLL', 'Other']),
 dayOpts: opts('arriveDay', ['Thursday', 'Friday', 'Saturday', 'Sunday']),
 landOpts: opts('landing', ['Morning', 'Afternoon', 'Evening', 'Late night']),
 houseTime: s.houseTime, setHouseTime: set('houseTime'),
-leaveOpts: opts('leaving', ['Sunday night', 'Monday night']),
+leaveOpts: opts('leaving', ['Saturday', 'Sunday', 'Monday', 'Tuesday']),
+leaveTimeOpts: opts('leaveTime', ['Morning', 'Afternoon', 'Evening', 'Late night']),
 mondayOpts: opts('monday', ['Working with you', 'Taking the day off']),
 extraOpts: extrasList.map((v) => ({ label: v, pressed: s.extras.includes(v) ? 'true' : 'false', cls: s.extras.includes(v) ? 'pill on' : 'pill', pick: toggle(v) })),
-stayingMonday: s.leaving === 'Monday night',
+stayingMonday: s.leaving === 'Monday' || s.leaving === 'Tuesday',
 block1: !s.name.trim() || !s.attending,
 block2: !s.airport || !s.arriveDay,
 block3: !s.leaving,

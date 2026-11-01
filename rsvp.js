@@ -4,7 +4,7 @@
 (function () {
   var RSVP_EMAIL = 'hello@losaeguavoen.com';
 
-  var state = { step: 1, name: '', attending: '', airport: '', arriveDay: '', landing: '', inFlight: '', houseTime: '', inTime: '', leaving: '', monday: '', outFlight: '', outTime: '', extras: [], tee: '', songs: '', questions: '', note: '' };
+  var state = { step: 1, name: '', attending: '', airport: '', arriveDay: '', landing: '', inFlight: '', houseTime: '', inTime: '', leaving: '', leaveTime: '', monday: '', outFlight: '', outTime: '', extras: [], tee: '', songs: '', questions: '', note: '' };
 
   function setState(patch) { Object.assign(state, patch); render(); }
 
@@ -29,8 +29,8 @@
           { k: 'Flying into', v: s.airport || '—' },
           { k: 'Arriving', v: [s.arriveDay, s.landing, s.inFlight, s.inTime].filter(Boolean).join(' · ') || '—' },
           { k: 'At the house', v: s.houseTime || '—' },
-          { k: 'Leaving', v: [s.leaving, s.outFlight, s.outTime].filter(Boolean).join(' · ') || '—' },
-          { k: 'Monday', v: s.leaving === 'Monday night' ? (s.monday || '—') : 'Not staying' },
+          { k: 'Leaving', v: [s.leaving, s.leaveTime, s.outFlight, s.outTime].filter(Boolean).join(' · ') || '—' },
+          { k: 'Monday', v: (s.leaving === 'Monday' || s.leaving === 'Tuesday') ? (s.monday || '—') : 'Not staying' },
           { k: 'Count me in', v: s.extras.length ? s.extras.join(', ') : 'Nothing extra yet' },
           { k: 'Size', v: s.tee || '—' },
           { k: 'Songs', v: s.songs || '—' },
@@ -52,10 +52,11 @@
       dayOpts: opts('arriveDay', ['Thursday', 'Friday', 'Saturday', 'Sunday']),
       landOpts: opts('landing', ['Morning', 'Afternoon', 'Evening', 'Late night']),
       houseTime: s.houseTime, setHouseTime: set('houseTime'),
-      leaveOpts: opts('leaving', ['Sunday night', 'Monday night']),
+      leaveOpts: opts('leaving', ['Saturday', 'Sunday', 'Monday', 'Tuesday']),
+      leaveTimeOpts: opts('leaveTime', ['Morning', 'Afternoon', 'Evening', 'Late night']),
       mondayOpts: opts('monday', ['Working with you', 'Taking the day off']),
       extraOpts: extrasList.map(function (v) { var on = s.extras.indexOf(v) > -1; return { label: v, pressed: on ? 'true' : 'false', cls: on ? 'pill on' : 'pill', pick: toggle(v) }; }),
-      stayingMonday: s.leaving === 'Monday night',
+      stayingMonday: s.leaving === 'Monday' || s.leaving === 'Tuesday',
       block1: !s.name.trim() || !s.attending,
       block2: !s.airport || !s.arriveDay,
       block3: !s.leaving,
