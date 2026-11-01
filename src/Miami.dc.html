@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Open Edition — Our trip to Miami Art Week, December 4–7</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&amp;family=Cutive+Mono&amp;display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Aspekta';src:url('/_blob/0f74346aba8ea7c3d33cf3de90043f0c') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Aspekta';src:url('/_blob/e873dd4be31e13bab633b0f24c83403d') format('woff2');font-weight:550;font-style:normal;font-display:swap}
+@font-face{font-family:'PP Neue Machina';src:local('PPNeueMachina-Regular'),local('PP Neue Machina Regular');font-weight:400;font-style:normal}
+body{margin:0;background:#F2F2EE}
+a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
+.site,.site *{font-style:normal;font-synthesis:none;box-sizing:border-box}
+.site{font-family:'Aspekta',Helvetica,Arial,sans-serif;color:#1C1C1A;background:#F2F2EE;font-size:16px;line-height:1.45;--ease:cubic-bezier(.2,.7,0,1);--peri:#A2AEDA;--sage:#DCE2BE;--mist:#D8E2DC;--blush:#F8ECEA;--sand:#EDE6DD;--peri-ink:#4F5DA8;--sage-ink:#66702A;--rose-ink:#B0456C;overflow-x:clip}
+.site p,.site h1,.site h2,.site h3,.site ul,.site ol,.site dl,.site dd,.site figure{margin:0}
+.mono{font-family:'Azeret Mono',ui-monospace,monospace}
+.disp{font-family:'PP Neue Machina','Aspekta',Helvetica,Arial,sans-serif;font-weight:400}
+.im{display:block;width:100%;height:100%;object-fit:cover}
+.lbl{font-size:12px;line-height:1.3;text-transform:uppercase;letter-spacing:0.02em}
+.cap{font-size:12px;line-height:1.4}
+.wrap{padding-inline:27px}
+.sec{padding-top:120px}
+.ip,.is,.ir{color:inherit}
+.ros .ir{color:var(--rose-ink)}
+.card .mono.lbl{color:var(--peri-ink)}
+.sh{display:grid;grid-template-columns:1fr auto 1fr;align-items:baseline;gap:16px;padding-top:14px;border-top:1px solid #1C1C1A;margin-bottom:40px}
+.sh>:first-child{color:var(--peri-ink)}
+.sh>:last-child{text-align:right}
+.top3{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+.top3>:last-child{justify-self:end}
+.big{font-size:clamp(48px,5.6vw,84px);line-height:0.86;letter-spacing:-0.04em;text-transform:uppercase;font-weight:550}
+.lead{font-size:clamp(20px,1.8vw,27px);line-height:1.2;letter-spacing:-0.01em;max-width:620px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:27px}
+.btn,.pill,.back{font:inherit;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;min-height:44px;padding:0 20px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background-color 0.4s var(--ease),color 0.4s var(--ease),border-color 0.4s var(--ease),transform 0.4s var(--ease)}
+.btn{background:#1C1C1A;color:#F2F2EE;border:1px solid #1C1C1A;font-weight:550}
+.btn:hover{background:var(--peri);border-color:var(--peri);color:#1C1C1A;transform:translateY(-2px)}
+.btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;background:#1C1C1A;color:#F2F2EE}
+.pill{background:transparent;color:#1C1C1A;border:1px solid #1C1C1A}
+.pill:hover{background:var(--sage);color:#1C1C1A}
+.pill.on{background:#1C1C1A;color:#F2F2EE}
+.hd .pill:hover{background:#FFFFFF}
+.hd .nl::after{background:#1C1C1A}
+.back{background:transparent;border:0;color:#1C1C1A;padding:0;text-decoration:underline;text-underline-offset:4px}
+.back:hover{color:var(--rose-ink)}
+.nl{position:relative;transition:color 0.4s var(--ease)}
+.nl::after{content:'';position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:var(--peri);transform:scaleX(0);transform-origin:right;transition:transform 0.6s var(--ease)}
+.nl:hover{color:var(--peri-ink)}
+.nl:hover::after{transform:scaleX(1);transform-origin:left}
+.navlinks{display:flex;gap:22px;flex-wrap:wrap;justify-content:center}
+
+/* hero polaroid navigation */
+.band{background:var(--mist);padding:40px 27px 0;position:relative;z-index:2}
+.pola{display:flex;justify-content:center;align-items:flex-start;gap:20px;flex-wrap:nowrap}
+.pola a{display:flex;flex-direction:column;gap:10px;width:150px;flex:none;background:#FFFFFF;padding:9px 9px 14px;box-shadow:0 14px 34px rgba(28,28,26,0.14);transform:rotate(var(--r)) translateY(0);transition:transform 0.7s var(--ease),box-shadow 0.7s var(--ease);color:#1C1C1A}
+.pola a:nth-child(odd){--r:-3deg}.pola a:nth-child(even){--r:2.5deg}.pola a:nth-child(3n){--r:-1.5deg}
+.pola .ph{display:block;aspect-ratio:4/5;overflow:hidden;background:#E6E6DF}
+.pola img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.pola .pc{display:flex;justify-content:space-between;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.4s var(--ease)}
+.pola a:hover{transform:rotate(0deg) translateY(-12px);box-shadow:0 24px 50px rgba(28,28,26,0.22)}
+.pola a:hover img{transform:scale(1.08)}
+.pola a:nth-child(1):hover .pc{color:var(--peri-ink)}.pola a:nth-child(2):hover .pc{color:var(--sage-ink)}.pola a:nth-child(3):hover .pc{color:var(--rose-ink)}
+.pola a:nth-child(4):hover .pc{color:var(--peri-ink)}.pola a:nth-child(5):hover .pc{color:var(--sage-ink)}.pola a:nth-child(6):hover .pc{color:var(--rose-ink)}
+.hero{background:#FFFFFF;padding:40px 27px 80px;display:flex;flex-direction:column;align-items:center;gap:56px;text-align:center}
+.hcopy{display:flex;flex-direction:column;align-items:center;gap:16px}
+
+/* itinerary */
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{display:flex;flex-direction:column;gap:12px;padding-top:14px;border-top:1px solid #1C1C1A;color:#1C1C1A;transition:background-color 0.6s var(--ease)}
+.card .cimg{display:block;aspect-ratio:4/3;overflow:hidden}
+.card img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.card:hover img{transform:scale(1.05)}
+.card:hover{color:#1C1C1A}
+.card:nth-child(1):hover .ct{color:var(--peri-ink)}.card:nth-child(2):hover .ct{color:var(--rose-ink)}.card:nth-child(3):hover .ct{color:var(--sage-ink)}.card:nth-child(4):hover .ct{color:var(--peri-ink)}
+.ct{font-size:clamp(22px,1.9vw,28px);line-height:1.05;letter-spacing:-0.02em;transition:color 0.4s var(--ease)}
+.spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0}
+.page{display:flex;flex-direction:column;gap:24px;padding:32px 28px;min-height:680px}
+.ros{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:16px;padding:14px 0;border-top:1px solid rgba(28,28,26,0.28)}
+.ros:last-child{border-bottom:1px solid rgba(28,28,26,0.28)}
+.ros.wide{grid-template-columns:200px minmax(0,1fr)}
+.ros.wide>.mono{color:#1C1C1A}
+.ros>.mono{color:#55524F}
+
+/* boat */
+.boat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;min-height:760px}
+
+/* wardrobe moodboard */
+.board{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;align-items:start}
+.board figure{position:relative;overflow:hidden}
+.board img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.board figure:hover img{transform:scale(1.04)}
+.board figcaption{position:absolute;left:10px;bottom:10px;right:10px;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:2px}
+
+/* kit */
+.kit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.kit .tile{aspect-ratio:4/3;display:flex;align-items:flex-end;justify-content:space-between;padding:18px;transition:transform 0.6s var(--ease)}
+.kit>div:hover .tile{transform:translateY(-6px)}
+
+/* soundtrack */
+.trk-row{display:grid;grid-template-columns:40px minmax(0,1.2fr) minmax(0,1fr) 130px;column-gap:16px;align-items:baseline;padding:13px 0;border-top:1px solid rgba(28,28,26,0.28);transition:padding-left 0.5s var(--ease),background-color 0.5s var(--ease)}
+.trk-row:hover{padding-left:10px;background:var(--blush)}
+.trk-row>:last-child{text-align:right}
+
+.cost{display:grid;grid-template-columns:minmax(0,1fr) auto auto;column-gap:32px;padding:13px 0;border-top:1px solid rgba(28,28,26,0.28);align-items:baseline}
+.qa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:64px;row-gap:36px}
+.ess{font-size:clamp(20px,2.3vw,34px);line-height:0.98;text-transform:uppercase;text-align:justify;text-align-last:justify;letter-spacing:-0.01em}
+
+/* rsvp */
+.step{display:flex;flex-direction:column;gap:26px;animation:fadeUp 0.6s var(--ease) both}
+.fld{display:flex;flex-direction:column;gap:10px}
+.fld input,.fld textarea{font:inherit;font-size:16px;color:#1C1C1A;background:transparent;border:0;border-bottom:1px solid #1C1C1A;padding:10px 0;border-radius:0;resize:vertical;width:100%}
+.fld input:focus,.fld textarea:focus{outline:none;border-bottom:2px solid var(--peri-ink)}
+.fld input::placeholder,.fld textarea::placeholder{color:#76736F}
+.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px}
+.bar{display:block;height:2px;background:rgba(28,28,26,0.2)}
+.bar.on{background:var(--peri-ink)}
+
+/* memories */
+.sheet{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.sheet .fr{display:flex;flex-direction:column;gap:8px}
+.sheet .fb{display:block;aspect-ratio:4/5;overflow:hidden;background:#E6E6DF}
+.sheet img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter 0.8s var(--ease),transform 1.2s var(--ease)}
+.sheet .fr:hover img{filter:none;transform:scale(1.04)}
+
+.stops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.stops>div{padding-top:14px;border-top:1px solid #1C1C1A;display:flex;flex-direction:column;gap:6px;transition:color 0.4s var(--ease)}
+.stops>div:hover{color:var(--rose-ink)}
+.foot{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:27px}
+.foot a{color:#F2F2EE}.foot a:hover{color:var(--peri)}
+
+
+/* hero composition: polaroids scattered around the title */
+.hero{position:relative;min-height:820px;justify-content:center;overflow:hidden}
+.hcopy{position:relative;z-index:2;gap:18px}
+.hcue{position:absolute;left:0;right:0;bottom:26px;z-index:2}
+@media (min-width:761px){
+.pola{position:absolute;inset:0;display:block;pointer-events:none;z-index:1}
+.pola a{position:absolute;width:clamp(118px,12.5vw,196px);pointer-events:auto}
+.pola a:hover{z-index:5}
+.pola a:nth-child(1){left:5%;top:8%;--r:-6deg}
+.pola a:nth-child(2){left:18%;top:34%;--r:5deg}
+.pola a:nth-child(3){left:6%;top:57%;--r:2.5deg}
+.pola a:nth-child(4){right:6%;top:6%;--r:5deg}
+.pola a:nth-child(5){right:19%;top:36%;--r:-4deg}
+.pola a:nth-child(6){right:5%;top:58%;--r:-6.5deg}
+}
+/* motion */
+@keyframes rise{from{transform:translateY(110%)}to{transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes curtain{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes dropIn{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes dealIn{from{opacity:0;transform:translateY(-60px) rotate(0deg)}to{opacity:1;transform:rotate(var(--r))}}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes track{from{letter-spacing:0.18em;opacity:0}to{opacity:1}}
+@keyframes line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.mask{display:block;overflow:hidden;padding-bottom:0.06em}
+.mask>span{display:inline-block;animation:rise 1.3s var(--ease) both}
+.hd{animation:dropIn 0.9s var(--ease) 0.1s both}
+.pola a{animation:dealIn 1s var(--ease) both}
+.pola a:nth-child(1){animation-delay:0.25s}.pola a:nth-child(2){animation-delay:0.35s}.pola a:nth-child(3){animation-delay:0.45s}.pola a:nth-child(4){animation-delay:0.55s}.pola a:nth-child(5){animation-delay:0.65s}.pola a:nth-child(6){animation-delay:0.75s}
+.pop{animation:fadeUp 1s var(--ease) both}
+.ticker{overflow:hidden;white-space:nowrap}
+.ticker>div{display:inline-flex;width:max-content;animation:marq 60s linear infinite}
+.ticker:hover>div{animation-play-state:paused}
+@supports (animation-timeline: view()){
+.sv{animation:fadeUp linear both;animation-timeline:view();animation-range:entry 0% cover 24%}
+.sc{animation:curtain linear both;animation-timeline:view();animation-range:entry 0% cover 38%}
+.trk{animation:track linear both;animation-timeline:view();animation-range:entry 0% cover 32%}
+.sh{border-top-color:transparent;position:relative}
+.sh::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:#1C1C1A;transform-origin:left;animation:line linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+}
+@media (prefers-reduced-motion:reduce){.site *,.site *::after,.site *::before{animation:none!important;transition:none!important}}
+
+/* mobile */
+@media (max-width:900px){
+.cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+.board{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.board figure{grid-column:auto!important;grid-row:auto!important;margin-top:0!important;aspect-ratio:3/4!important}
+.foot{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+.wrap{padding-inline:16px}
+.sec{padding-top:80px}
+.navlinks{display:none}
+.top3{grid-template-columns:1fr auto}
+.pola{justify-content:flex-start;overflow-x:auto;padding:8px 16px 24px;gap:14px;scroll-snap-type:x mandatory;align-self:stretch;margin:0 -16px}
+.pola a{width:118px;scroll-snap-align:start}
+.hero{padding:16px 16px 56px;gap:36px;min-height:0}
+.hcue{display:none}
+.two,.spread,.boat,.duo,.qa{grid-template-columns:minmax(0,1fr)}
+.cards{grid-template-columns:minmax(0,1fr)}
+.page{min-height:0;padding:24px 16px}
+.kit,.stops{grid-template-columns:minmax(0,1fr)}
+.sheet{grid-template-columns:repeat(2,minmax(0,1fr))}
+.trk-row{grid-template-columns:30px minmax(0,1fr)}
+.ros.wide{grid-template-columns:minmax(0,1fr);row-gap:6px}
+.trk-row>:nth-child(3){grid-column:2}
+.trk-row>:nth-child(4){display:none}
+.sh{grid-template-columns:1fr 1fr}
+.sh>:nth-child(2){display:none}
+.ess{text-align-last:auto}
+.rsvp{border-left:0!important;padding:32px 16px!important}
+.foot{grid-template-columns:minmax(0,1fr)}
+.boat>div{min-height:0!important}
+}
+</style>
+</helmet>
+<div class="site">
+
+
+
+<main id="top" style="max-width: 1440px; margin: 0 auto">
+
+<!-- BANNER -->
+<div class="ticker" aria-label="Miami Art Week, Friday to Sunday. Stay Monday if you can. RSVP by Tuesday, November 10." style="background: var(--sage); padding: 11px 0; font-size: 13px; border-bottom: 1px solid rgba(28,28,26,0.18)">
+<div aria-hidden="true"><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" aria-label="Miami Art Week">
+<nav class="pola" aria-label="Jump to a section">
+<a href="#itinerary"><span class="ph"><img src="/_blob/f63505a42750c5a52910c41fafde0526" alt="" style="object-position: 55% 55%"></span><span class="pc mono"><span>01</span><span>Itinerary</span></span></a>
+<a href="#stay"><span class="ph"><img src="/_blob/33b2dca8bf23bad75dc01309e0e0694f" alt=""></span><span class="pc mono"><span>02</span><span>The house</span></span></a>
+<a href="#boat"><span class="ph"><img src="/_blob/9208bb2aa1b5568c58d43073ad5e76c6" alt=""></span><span class="pc mono"><span>03</span><span>Boat</span></span></a>
+<a href="#wardrobe"><span class="ph"><img src="/_blob/88f0eb29b662472738110e66db71790d" alt=""></span><span class="pc mono"><span>04</span><span>Wardrobe</span></span></a>
+<a href="#soundtrack"><span class="ph"><img src="/_blob/11a1b42b2656fccd82af0047a0a10060" alt=""></span><span class="pc mono"><span>05</span><span>Soundtrack</span></span></a>
+<a href="#rsvp"><span class="ph"><img src="/_blob/c4eb66219cdb3bccb6a3bd147e0dcdea" alt=""></span><span class="pc mono"><span>06</span><span>RSVP</span></span></a>
+</nav>
+
+<p class="hcue mono lbl pop" style="animation-delay: 1.2s">(Scroll)</p>
+<div class="hcopy">
+<h1 style="display: flex; flex-direction: column; align-items: center; gap: 14px; color: #1C1C1A; font-size: 48px"><span class="mask"><span class="big" style="animation-delay: 0.3s">Open <br>Edition</span></span><span class="mask"><span style="animation-delay: 0.42s; font-family: &quot;Cutive Mono&quot;, &quot;Azeret Mono&quot;, monospace; font-weight: 400; font-size: clamp(18px, 1.9vw, 28px); line-height: 1.1; letter-spacing: 0.01em">(our trip to miami art week)</span></span></h1>
+<p class="mono lbl pop" style="animation-delay: 0.5s; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center"><span>Plans, costs and RSVP for the trip</span><span>·</span><span>December 4–7, 2026</span></p>
+</div></section>
+
+<!-- 01 · THE PLAN -->
+<section id="plan" class="sec wrap" aria-label="The plan" style="scroll-margin-top: 60px">
+<div class="sh mono lbl"><span>(01)</span><span>The plan</span><span>Dec 4–7</span></div>
+<div class="two" style="row-gap: 40px">
+<div class="sv" style="display: flex; flex-direction: column; gap: 14px">
+<p class="mono lbl is">The weekend</p>
+<p class="lead">Art Week is close to my birthday, and this is how I’d love to spend it. Before I book anything, I want to make sure it works for <span class="ir">everyone’s budget</span>.</p>
+</div>
+<div class="sv" style="display: flex; flex-direction: column; gap: 14px">
+<p class="mono lbl is">What I need from you</p>
+<p class="lead">A yes or no by <span class="ip">Tuesday, November 10</span>. Then I’ll know if we keep this Airbnb, find another place, or cancel. Flights from Toronto are going up, so the sooner the better.</p>
+</div>
+</div>
+</section>
+
+<!-- ARRIVALS STATEMENT -->
+<section aria-label="Arrivals and departures" style="margin-top: 120px; padding: 96px 27px 80px; background: var(--blush)">
+<p class="ess sv">Most of us land Friday around 11, at <span class="ip">MIA</span> or <span class="ip">Fort Lauderdale</span>. Some people fly home Sunday night. The rest stay Monday and fly out around 9. Both work.</p>
+<div class="lbl mono" style="display: flex; justify-content: space-between; gap: 16px; margin-top: 48px; font-size: 11px"><span>In — Fri, 11am</span><span class="ir">RSVP by Tue, Nov 10</span><span>Out — Sun or Mon</span></div>
+</section>
+
+<!-- 02 · STAY -->
+<section id="stay" class="sec" aria-label="Where we're staying" style="scroll-margin-top: 60px">
+<div class="wrap"><div class="sh mono lbl"><span>(02)</span><span>Where we’re staying</span><span>Little River</span></div></div>
+<div style="background: var(--mist)">
+<div class="two wrap" style="padding-top: 88px; padding-bottom: 48px; row-gap: 32px">
+<div class="sv" style="display: flex; flex-direction: column; justify-content: flex-end">
+<h2 class="big">Where<br>we’re<br>staying</h2>
+</div>
+<div class="sv" style="display: flex; flex-direction: column; gap: 24px">
+<p style="font-size: clamp(18px, 1.5vw, 22px); line-height: 1.32; text-align: justify">A white house under big trees in Little River, 10 minutes from the Design District. It’s about <span class="ip">$160 CAD each</span>. I’ll update you if that changes once we know who’s coming.</p>
+<div class="mono" style="display: grid; grid-template-columns: auto 1fr; column-gap: 40px; row-gap: 6px; font-size: 12px; text-transform: uppercase">
+<span class="ip">Address</span><span>262 NW 75th St, Miami, FL 33150</span>
+<span class="ip">Cost</span><span>About $160 CAD each</span>
+<span class="ip">From MIA</span><span>About 20 minutes</span>
+<span class="ip">From FLL</span><span>About 40–50 minutes</span>
+</div>
+</div>
+</div>
+<div class="two" style="gap: 0">
+<div class="sc" style="height: clamp(320px, 42vw, 560px); overflow: hidden"><img class="im" src="/_blob/33b2dca8bf23bad75dc01309e0e0694f" alt="The front of the house and the driveway"></div>
+<div class="sc" style="position: relative; height: clamp(320px, 42vw, 560px); overflow: hidden">
+<img class="im" src="/_blob/9839b35cc0a19e6c28087d20bc1d638b" alt="The living room, with a wood-beam ceiling">
+<img src="/_blob/b859f6c0031d675accdb8ffbed7d5b23" alt="Map of the house in Little River" style="position: absolute; right: 16px; bottom: 16px; width: min(220px, 45%); aspect-ratio: 220/142; object-fit: cover; border: 6px solid #F2F2EE">
+</div>
+</div>
+</div>
+</section>
+
+<!-- 03 · GETTING AROUND -->
+<section id="around" class="sec wrap" aria-label="Getting around" style="scroll-margin-top: 60px">
+<div class="sh mono lbl"><span>(03)</span><span>Getting around</span><span>Rides, boats, a car</span></div>
+<div class="two" style="align-items: start; row-gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<h2 class="big trk">Getting around</h2>
+<p class="lead sv">Traffic is bad during Art Week. Here’s how we’ll get around. Nobody drives after dinner.</p>
+<div class="sc" style="aspect-ratio: 4/5; max-height: 560px; overflow: hidden"><img class="im" src="/_blob/487dd456b4007dab547d2dbdda5fdc60" alt="Downtown Miami traffic at dusk under pink-lit buildings" style="object-position: 50% 45%"></div>
+</div>
+<div>
+<div class="ros wide sv"><span class="mono lbl">Uber and Lyft</span><div><p style="font-weight: 550">For nights out and short hops</p><p class="cap">What we’ll use at night. An XL fits six. Prices go up near the fair and late at night, so we’ll split rides and leave early.</p></div></div>
+<div class="ros wide sv"><span class="mono lbl">Rental or Turo</span><div><p style="font-weight: 550">One or two cars for the daytime</p><p class="cap">Saturday and Sunday have a lot of stops, so one or two cars will cost less than lots of rides. Turo or a rental at MIA both work. I’ll check parking at the house. Parking on Miami Beach costs more this week.</p></div></div>
+<div class="ros wide sv"><span class="mono lbl">Water taxi</span><div><p style="font-weight: 550">The scenic way to the fair</p><p class="cap">Free boats go from the Venetian Marina in Miami to Maurice Gibb Park in Miami Beach. Free shuttles go from there to the fair. Last year they ran every day from 10am. I’ll confirm this year’s times.</p></div></div>
+<div class="ros wide sv"><span class="mono lbl">Brightline</span><div><p style="font-weight: 550">For anyone landing at FLL</p><p class="cap">A train from Fort Lauderdale to downtown Miami, from about $15. Then a short ride to the house. Check the airport shuttle to the station first.</p></div></div>
+<div class="ros wide sv"><span class="mono lbl">Trolley and shuttles</span><div><p style="font-weight: 550">Free, if the timing works</p><p class="cap">The Miami Beach trolley and fair shuttles go between the fair, South Beach, Mid-Beach and the Design District.</p></div></div>
+<div class="ros wide sv"><span class="mono lbl ir">Traffic</span><div><p style="font-weight: 550">What to avoid</p><p class="cap">The MacArthur and Julia Tuttle causeways get busy in the afternoon. Last year the Venetian bridge also closed in the late afternoon. Go early or after dark.</p></div></div>
+</div>
+</div>
+</section>
+
+<!-- 04 · ITINERARY -->
+<section id="itinerary" class="sec wrap" aria-label="Itinerary" style="scroll-margin-top: 60px">
+<div class="sh mono lbl"><span>(04)</span><span>Itinerary</span><span>Three days, plus Monday</span></div>
+<div class="two" style="align-items: end; row-gap: 24px; margin-bottom: 48px">
+<h2 class="big trk">Itinerary</h2>
+<p class="mono lbl sv" style="justify-self: end; max-width: 340px">Times can move. Anything marked <span class="ir">book</span> gets booked once we know who’s coming.</p>
+</div>
+
+<nav class="cards" aria-label="Days">
+<a class="card sv" href="#fri"><span class="cimg"><img src="/_blob/33b2dca8bf23bad75dc01309e0e0694f" alt="The house in Little River"></span><span class="mono lbl ip">Fri / Dec 4</span><span class="ct">Land and go</span><span class="cap">Drop bags, the fair, dinner by the river</span></a>
+<a class="card sv" href="#sat"><span class="cimg"><img src="/_blob/6d5b2c5b16a2856583fe6d970384b8b9" alt="Jet skis heading toward the skyline at dusk"></span><span class="mono lbl ir">Sat / Dec 5</span><span class="ct">Art, then water</span><span class="cap">Brunch, art, the boat, a night out</span></a>
+<a class="card sv" href="#sun"><span class="cimg"><img src="/_blob/f74d28082aed0a2416fb3f59121b5f88" alt="Loungers under fringed umbrellas facing the Miami skyline" style="object-position: 50% 60%"></span><span class="mono lbl is">Sun / Dec 6</span><span class="ct">Slow Sunday</span><span class="cap">Church, matcha, the beach club, dinner</span></a>
+<a class="card sv" href="#mon"><span class="cimg"><img src="/_blob/a84798b4498739329e65cf17fed751f2" alt="Pool loungers under palm trees" style="object-position: 50% 70%"></span><span class="mono lbl ip">Mon / Dec 7</span><span class="ct">Stay or fly</span><span class="cap">Work or explore, fly out at 9</span></a>
+</nav>
+
+<div style="display: flex; flex-direction: column; gap: 56px; margin-top: 88px">
+
+<article id="fri" class="spread sv" aria-label="Friday" style="scroll-margin-top: 80px">
+<div class="page" style="background: var(--mist)">
+<p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="ip">Day 01</span><span>Fri · Dec 4</span></p>
+<h3 class="big">Friday</h3>
+<p style="max-width: 400px; font-size: 16px; line-height: 1.4">We drop our bags, go to the fair, then have dinner by the river. After that, we go out.</p>
+<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="/_blob/c4eb66219cdb3bccb6a3bd147e0dcdea" alt="Palm trees and Brickell towers at night"></div>
+</div>
+<div class="page" style="background: #FFFFFF">
+<p class="mono cap" style="text-transform: uppercase">Run of show</p>
+<div>
+<div class="ros"><span class="mono cap">11:00</span><div><p style="font-weight: 550">Land</p><p class="cap">MIA or FLL. We’ll share cars by airport: MIA is about 20 minutes from the house, FLL about 40–50 (or the Brightline train).</p></div></div>
+<div class="ros"><span class="mono cap">12:30</span><div><p style="font-weight: 550">Bags down, quick lunch</p><p class="cap">I’ll ask the host about dropping bags early. Then a quick lunch nearby.</p></div></div>
+<div class="ros"><span class="mono cap">14:00</span><div><p style="font-weight: 550">Art Basel Miami Beach</p><p class="cap">Miami Beach Convention Center, open until 6. Day ticket $92. Ride over, or try the free water taxi.</p></div></div>
+<div class="ros"><span class="mono cap">18:30</span><div><p style="font-weight: 550">Check in, shower, get ready</p><p class="cap">Time to get ready.</p></div></div>
+<div class="ros"><span class="mono cap">20:30</span><div><p style="font-weight: 550">Welcome dinner, Casa Neos</p><p class="cap">On the Miami River. About $100–150 each. <span class="ir">Book.</span></p></div></div>
+<div class="ros"><span class="mono cap">22:30</span><div><p style="font-weight: 550">Out</p><p class="cap">Easiest option: unKommon Art Week at Little River Studios, a few blocks from the house. Tickets on DICE.</p></div></div>
+</div>
+</div>
+</article>
+
+<article id="sat" class="spread sv" aria-label="Saturday" style="scroll-margin-top: 80px">
+<div class="page" style="background: var(--sand)">
+<p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="ir">Day 02</span><span>Sat · Dec 5</span></p>
+<h3 class="big">Saturday</h3>
+<p style="max-width: 400px; font-size: 16px; line-height: 1.4">Our busiest day. Art in the morning, a rest, the boat at sunset, then a night out.</p>
+<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="/_blob/11a1b42b2656fccd82af0047a0a10060" alt="Friends walking up lit stairs at night"></div>
+</div>
+<div class="page" style="background: #FFFFFF">
+<p class="mono cap" style="text-transform: uppercase">Run of show</p>
+<div>
+<div class="ros"><span class="mono cap">10:00</span><div><p style="font-weight: 550">Brunch, Coconut Grove Farmers Market</p><p class="cap">3300 Grand Ave. Saturdays only.</p></div></div>
+<div class="ros"><span class="mono cap">12:00</span><div><p style="font-weight: 550">Superblue: James Turrell’s Blue Sea Sky</p><p class="cap">1101 NW 23rd St. $42 on weekends. <span class="ir">Book a time.</span></p></div></div>
+<div class="ros"><span class="mono cap">13:30</span><div><p style="font-weight: 550">Design District, ICA Miami, Edgewater</p><p class="cap">ICA is free. Galleries, shops and a walk by the water.</p></div></div>
+<div class="ros"><span class="mono cap">15:00</span><div><p style="font-weight: 550">Rest</p><p class="cap">Back to the house for a break.</p></div></div>
+<div class="ros"><span class="mono cap">16:30</span><div><p style="font-weight: 550">The boat</p><p class="cap">About $120 USD each, fuel included. We leave before sunset and come back after dark. <span class="ir">Book.</span></p></div></div>
+<div class="ros"><span class="mono cap">19:30</span><div><p style="font-weight: 550">Quick dinner in Wynwood</p><p class="cap">Near the next stop.</p></div></div>
+<div class="ros"><span class="mono cap">21:00</span><div><p style="font-weight: 550">Everyday People</p><p class="cap">The Art Week party. The 2026 date isn’t out yet. Last year it was on Saturday and cost $35.</p></div></div>
+<div class="ros"><span class="mono cap">Late</span><div><p style="font-weight: 550">Circoloco, if you want it</p><p class="cap">Factory Town, Hialeah. Doors at 10, from $211.</p></div></div>
+</div>
+</div>
+</article>
+
+<article id="sun" class="spread sv" aria-label="Sunday" style="scroll-margin-top: 80px">
+<div class="page" style="background: var(--sage)">
+<p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="is">Day 03</span><span>Sun · Dec 6</span></p>
+<h3 class="big">Sunday</h3>
+<p style="max-width: 400px; font-size: 16px; line-height: 1.4">Church and matcha on the same street, the beach club in the afternoon, then dinner on a rooftop for anyone still here.</p>
+<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="/_blob/f74d28082aed0a2416fb3f59121b5f88" alt="Loungers under fringed umbrellas on the sand, facing the Miami skyline" style="object-position: 50% 55%"></div>
+</div>
+<div class="page" style="background: #FFFFFF">
+<p class="mono cap" style="text-transform: uppercase">Run of show</p>
+<div>
+<div class="ros"><span class="mono cap">10:00</span><div><p style="font-weight: 550">VOUS Church</p><p class="cap">Design District, 77 NE 40th St. Services at 10 and 12.</p></div></div>
+<div class="ros"><span class="mono cap">11:30</span><div><p style="font-weight: 550">Matcha at Bigface</p><p class="cap">40 NE 40th St, across the street.</p></div></div>
+<div class="ros"><span class="mono cap">12:30</span><div><p style="font-weight: 550">Wynwood Walls</p><p class="cap">Around $12–15. An hour is plenty.</p></div></div>
+<div class="ros"><span class="mono cap">14:00</span><div><p style="font-weight: 550">Beach club: Nikki Beach or Joia Beach</p><p class="cap">Four hours in the sun. About $100–150 each. Flying home today? Pack your bags in the morning and go to the airport from here. <span class="ir">Book.</span></p></div></div>
+<div class="ros"><span class="mono cap">18:00</span><div><p style="font-weight: 550">Home to change</p><p class="cap">If you’re staying Monday.</p></div></div>
+<div class="ros"><span class="mono cap">20:30</span><div><p style="font-weight: 550">Dinner at MILA</p><p class="cap">Rooftop on Lincoln Road, smart casual. About $100–150 each. <span class="ir">Book.</span></p></div></div>
+</div>
+</div>
+</article>
+
+<article id="mon" class="spread sv" aria-label="Monday" style="scroll-margin-top: 80px">
+<div class="page" style="background: var(--blush)">
+<p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="ip">Day 04</span><span>Mon · Dec 7</span></p>
+<h3 class="big">Monday</h3>
+<p style="max-width: 400px; font-size: 16px; line-height: 1.4">I’m working from Miami and flying out around 9. You can work with me, take the day off, or both.</p>
+<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="/_blob/f63505a42750c5a52910c41fafde0526" alt="Sunset through a plane window on the way home" style="object-position: 55% 55%"></div>
+</div>
+<div class="page" style="background: #FFFFFF">
+<p class="mono cap" style="text-transform: uppercase">Run of show</p>
+<div>
+<div class="ros"><span class="mono cap">09:00</span><div><p style="font-weight: 550">Coffee, then pack</p><p class="cap">Check out by 11, time to confirm with the host. Bags come with us.</p></div></div>
+<div class="ros"><span class="mono cap">11:00</span><div><p style="font-weight: 550">Work from Miami</p><p class="cap">A coworking space in Wynwood or a café with good Wi-Fi. We’ll pick one closer to the date.</p></div></div>
+<div class="ros"><span class="mono cap">11:00</span><div><p style="font-weight: 550">Or take the day</p><p class="cap">A last swim, anything we missed, or a long lunch.</p></div></div>
+<div class="ros"><span class="mono cap">18:00</span><div><p style="font-weight: 550">Airport</p><p class="cap">For flights around 9. Leave extra time for FLL.</p></div></div>
+</div>
+</div>
+</article>
+
+<!-- ALSO ON -->
+<div class="sv" style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 27px; padding-top: 20px; border-top: 1px solid #1C1C1A">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<p class="mono lbl ir">Also on during Art Week</p>
+<p style="font-size: clamp(22px, 2vw, 30px); line-height: 1.1; font-weight: 550; letter-spacing: -0.02em">Other things we can add if we have time.</p>
+</div>
+<div>
+<div class="ros"><span class="mono cap">Fri–Sun</span><div><p style="font-weight: 550">Art Miami and CONTEXT</p><p class="cap">One Herald Plaza, Downtown. Through December 6.</p></div></div>
+<div class="ros"><span class="mono cap">Fri–Sun</span><div><p style="font-weight: 550">Aqua Art Miami</p><p class="cap">Aqua Hotel, 1530 Collins Ave. Close to the fair, easy to add on Friday.</p></div></div>
+<div class="ros"><span class="mono cap">Daily</span><div><p style="font-weight: 550">Faena Art Week</p><p class="cap">Free beach bars, DJ sets and installations at Faena, Mid-Beach.</p></div></div>
+<div class="ros"><span class="mono cap">Sat 12–4</span><div><p style="font-weight: 550">W Miami × Rojas Leon</p><p class="cap">Live painting and a DJ at TULUM Rooftop, Brickell.</p></div></div>
+<div class="ros"><span class="mono cap">Sat 5pm</span><div><p style="font-weight: 550">III Points Basel: Michael Bibi</p><p class="cap">Hialeah Park, open-air. From about $65.</p></div></div>
+<div class="ros"><span class="mono cap">Sun</span><div><p style="font-weight: 550">Art Basel, last day</p><p class="cap">Open 10 to 6 if anyone missed Friday.</p></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 04 · BOAT -->
+<section id="boat" class="sec" aria-label="The boat" style="scroll-margin-top: 60px">
+<div class="wrap"><div class="sh mono lbl"><span>(05)</span><span>The boat</span><span>Sat · 4:30pm</span></div></div>
+<div class="boat">
+<div class="wrap" style="display: flex; flex-direction: column; justify-content: space-between; gap: 40px; padding-top: 32px; padding-bottom: 28px; min-height: 760px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">
+<p class="cap sv" style="max-width: 300px">We meet at the marina around 4:30, leave before sunset and come back after dark. Bring a jacket, a swimsuit if you want, and music.</p>
+<p class="mono lbl sv" style="max-width: 460px; font-size: 14px; line-height: 1.4">“Out before sunset,<br>back after <span class="ir">dark</span>.”</p>
+<p class="cap sv" style="max-width: 300px">About $120 USD each, fuel included. I’ll share the marina and exact time.</p>
+<figure class="sc" style="width: 140px"><img src="/_blob/1c8c9309193976c9a4e1ebbffde5c892" alt="Pink cabin lights over the wake" style="display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover"><figcaption class="mono cap" style="padding-top: 6px; text-transform: uppercase"><span class="ir">(Above)</span> Lights on</figcaption></figure>
+</div>
+<div>
+<h2 class="big trk" style="text-align: center">Boat</h2>
+<div class="mono cap" style="display: flex; justify-content: space-between; border-top: 1px solid #1C1C1A; margin-top: 20px; padding-top: 12px; text-transform: uppercase"><span>Miami Art Week</span><span>2026</span><span>Saturday</span></div>
+</div>
+</div>
+<div style="background: var(--sage); display: flex; align-items: center; justify-content: center; padding: 64px 27px; min-height: 760px">
+<figure class="sc" style="background: #F2F2EE; padding: 18px 18px 14px; width: min(420px, 100%)"><img src="/_blob/9208bb2aa1b5568c58d43073ad5e76c6" alt="Sunset over the wake from a pink-lit boat" style="display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover"><figcaption class="mono cap" style="padding-top: 10px; text-transform: uppercase"><span class="is">(Above)</span> Golden hour, back of the boat</figcaption></figure>
+</div>
+</div>
+</section>
+
+<!-- 05 · WARDROBE -->
+<section id="wardrobe" class="sec" aria-label="Wardrobe" style="scroll-margin-top: 60px">
+<div class="wrap"><div class="sh mono lbl"><span>(06)</span><span>Wardrobe</span><span>Loose ideas</span></div></div>
+<div style="background: var(--blush); padding: 56px 27px 64px">
+<div class="two" style="align-items: start; row-gap: 24px; margin-bottom: 48px">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<h2 class="big trk">Wardrobe</h2>
+<p class="lead sv" style="max-width: 520px">Ideas, not rules. A look for each part of the trip: <span class="is">green</span>, <span class="ir">red</span>, animal print, satin and gold.</p>
+</div>
+<div class="mono cap sv" style="justify-self: end; display: grid; grid-template-columns: auto auto; column-gap: 28px; row-gap: 4px; text-transform: uppercase">
+<span>Trip</span><span>Miami Art Week</span><span>Edit</span><span>Wardrobe</span><span>Year</span><span>2026</span>
+</div>
+</div>
+<div class="board">
+<figure class="sc" style="grid-column: 1 / span 4; aspect-ratio: 3/4"><img src="/_blob/ea779c2ca30ecbc6d23bf9da96b75bd7" alt="Oversized blue shirt with a white ruffle skirt" style="object-position: 50% 30%"><figcaption><span class="mono cap">Saturday · The fair</span><span class="cap" style="font-weight: 550">Crisp shirting, comfy shoes</span></figcaption></figure>
+<figure class="sc" style="grid-column: 5 / span 3; aspect-ratio: 3/4; margin-top: 64px"><img src="/_blob/b623c243cec2470ab93878bfe7d2a8d6" alt="Red and black polka-dot dress"><figcaption><span class="mono cap">Friday night · Casa Neos</span><span class="cap" style="font-weight: 550">Red and satin</span></figcaption></figure>
+<figure class="sc" style="grid-column: 8 / span 2; aspect-ratio: 3/5"><img src="/_blob/655077faec7526d79f067b045fa33331" alt="Chartreuse ruffle mini dress" style="object-position: 50% 30%"><figcaption><span class="mono cap">Saturday · Superblue</span><span class="cap" style="font-weight: 550">A bright mini</span></figcaption></figure>
+<figure class="sc" style="grid-column: 10 / span 3; aspect-ratio: 4/5; margin-top: 120px"><img src="/_blob/510c825130cd998c859381d9f157f10e" alt="Black top and floral wrap skirt at sunset"><figcaption><span class="mono cap">Saturday · On the water</span><span class="cap" style="font-weight: 550">A wrap over swim</span></figcaption></figure>
+<figure class="sc" style="grid-column: 2 / span 3; aspect-ratio: 3/4"><img src="/_blob/f5c5a091e9af32afc7746a8036899c27" alt="Zebra-print halter with a green sequin skirt" style="object-position: 50% 30%"><figcaption><span class="mono cap">Saturday · Late</span><span class="cap" style="font-weight: 550">Print and sequins</span></figcaption></figure>
+<figure class="sc" style="grid-column: 5 / span 3; aspect-ratio: 1"><img src="/_blob/88f0eb29b662472738110e66db71790d" alt="Four pairs of statement heels"><figcaption><span class="mono cap">Every night</span><span class="cap" style="font-weight: 550">One statement heel</span></figcaption></figure>
+<figure class="sc" style="grid-column: 8 / span 3; aspect-ratio: 3/4; margin-top: 40px"><img src="/_blob/4526c458362b2ddf060bc5dc0df3cc9c" alt="Cheetah-print halter maxi dress" style="object-position: 50% 30%"><figcaption><span class="mono cap">Sunday · Beach club</span><span class="cap" style="font-weight: 550">A printed slip</span></figcaption></figure>
+<figure class="sc" style="grid-column: 11 / span 2; aspect-ratio: 3/5"><img src="/_blob/830d005a80498e5ed3c28d50b719a619" alt="Flat lay: blue top, zebra skirt, red heels"><figcaption><span class="mono cap">In the suitcase</span><span class="cap" style="font-weight: 550">Zebra and a red heel</span></figcaption></figure>
+<figure class="sc" style="grid-column: 1 / span 3; aspect-ratio: 3/4; margin-top: -40px"><img src="/_blob/4162d8da2fed462358edbdeed8c6e5f1" alt="Orange ruffle top with a leopard skirt" style="object-position: 50% 30%"><figcaption><span class="mono cap">Sunday · MILA</span><span class="cap" style="font-weight: 550">Statement top, midi</span></figcaption></figure>
+<figure class="sc" style="grid-column: 4 / span 4; aspect-ratio: 4/3"><img src="/_blob/b4aac791aef9cee6353068dc6be5861f" alt="Yellow scarf with wide-leg jeans" style="object-position: 40% 40%"><figcaption><span class="mono cap">Monday · Wheels up</span><span class="cap" style="font-weight: 550">Denim, one bright piece</span></figcaption></figure>
+<figure class="sc" style="grid-column: 8 / span 3; aspect-ratio: 4/5; margin-top: 40px"><img src="/_blob/7f4ac3b6abcd570b56f20d804e7046e3" alt="Black halter top with long denim shorts and flip flops" style="object-position: 50% 40%"><figcaption><span class="mono cap">Saturday · Wynwood</span><span class="cap" style="font-weight: 550">Halter, long denim shorts</span></figcaption></figure>
+<figure class="sc" style="grid-column: 11 / span 2; aspect-ratio: 3/5"><img src="/_blob/ce9c479ce68a77630ab0c0e8cee3ed96" alt="Feather top and white trousers in a gallery" style="object-position: 45% 50%"><figcaption><span class="mono cap">Friday · ICA</span><span class="cap" style="font-weight: 550">One bit of texture</span></figcaption></figure>
+<figure class="sc" style="grid-column: 1 / span 3; aspect-ratio: 3/5"><img src="/_blob/129874ecaee1daab39ba1658abed4daa" alt="Olive draped top with wide-leg jeans" style="object-position: 50% 30%"><figcaption><span class="mono cap">Friday · Check-in</span><span class="cap" style="font-weight: 550">Drape and denim</span></figcaption></figure>
+<figure class="sc" style="grid-column: 4 / span 3; aspect-ratio: 3/4; margin-top: 64px"><img src="/_blob/d6d17608513a701b079d98bc3ec87c83" alt="Silver knit cape top with black capri leggings" style="object-position: 50% 35%"><figcaption><span class="mono cap">Saturday · Circoloco</span><span class="cap" style="font-weight: 550">A little shimmer</span></figcaption></figure>
+<figure class="sc" style="grid-column: 7 / span 3; aspect-ratio: 4/5"><img src="/_blob/982880e2200e74c486dbc6610cd84e2f" alt="Striped bandeau with a chartreuse skirt and purple heels" style="object-position: 50% 40%"><figcaption><span class="mono cap">Monday · Long lunch</span><span class="cap" style="font-weight: 550">Stripes, a bright skirt</span></figcaption></figure>
+<figure class="sc" style="grid-column: 10 / span 3; aspect-ratio: 3/5; margin-top: 40px"><img src="/_blob/04489c978cf8f115fbac43843951a9a7" alt="Teal satin corset top with a brown fringe skirt" style="object-position: 50% 30%"><figcaption><span class="mono cap">Saturday · Dinner</span><span class="cap" style="font-weight: 550">Satin and fringe</span></figcaption></figure>
+</div>
+</div>
+</section>
+
+<!-- 06 · THE KIT -->
+<section id="kit" class="sec wrap" aria-label="The kit" style="scroll-margin-top: 60px">
+<div class="sh mono lbl"><span>(07)</span><span>The kit</span><span>Opens Friday</span></div>
+<div class="two" style="align-items: end; row-gap: 24px; padding-top: 8px">
+<h2 class="big trk">The kit</h2>
+<div class="sv" style="justify-self: end; max-width: 380px; display: flex; flex-direction: column; gap: 14px">
+<p class="lead" style="margin: 0">There’s something waiting for you at the house.</p>
+<p class="mono lbl" style="color: #55524F">No hints. Open it Friday.</p>
+</div>
+</div>
+</section>
+
+<!-- 07 · SOUNDTRACK -->
+<section id="soundtrack" class="sec" aria-label="Soundtrack" style="scroll-margin-top: 60px">
+<div class="wrap"><div class="sh mono lbl"><span>(08)</span><span>Soundtrack</span><span>On the aux</span></div></div>
+<div class="two" style="gap: 0">
+<div style="background: var(--mist); padding: 40px 27px 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 56px; min-height: 520px">
+<div style="display: flex; flex-direction: column; gap: 22px; align-items: flex-start">
+<p class="mono lbl sv" style="max-width: 360px; line-height: 1.5">Mostly three step. Afrobeats for the beach club, Frank Ocean for the boat, Michael for Monday.</p>
+<a class="btn sv" href="{{ playlistUrl }}">Open the playlist</a>
+</div>
+<h2 class="big trk">Soundtrack</h2>
+</div>
+<div class="wrap sv" style="padding-top: 40px; padding-bottom: 28px">
+<div class="trk-row"><span class="mono cap ip">01</span><span style="font-weight: 550">Janice STFU</span><span class="cap">Drake</span><span class="mono cap">Getting ready</span></div>
+<div class="trk-row"><span class="mono cap ip">02</span><span style="font-weight: 550">Unyaka</span><span class="cap">Funky Qla, Dlala Thukzin, Zeh McGeba</span><span class="mono cap">Three step</span></div>
+<div class="trk-row"><span class="mono cap ip">03</span><span style="font-weight: 550">Thandaza</span><span class="cap">Sam Deep ft. Thatohatsi</span><span class="mono cap">Three step</span></div>
+<div class="trk-row"><span class="mono cap ip">04</span><span style="font-weight: 550">Ungenzani</span><span class="cap">Dlala Thukzin, MK Productions, Blaq Seed</span><span class="mono cap">Three step</span></div>
+<div class="trk-row"><span class="mono cap ip">05</span><span style="font-weight: 550">Tholukuthi (Clap Song)</span><span class="cap">JAZZWRLD, GL_Ceejay, Thukuthela ft. MaWhoo</span><span class="mono cap">At the house</span></div>
+<div class="trk-row"><span class="mono cap ip">06</span><span style="font-weight: 550">Nights In The Sun</span><span class="cap">Odeal ft. Wizkid</span><span class="mono cap">Beach club</span></div>
+<div class="trk-row"><span class="mono cap ip">07</span><span style="font-weight: 550">Stay a Little Longer</span><span class="cap">Toyé, Minz</span><span class="mono cap">Beach club</span></div>
+<div class="trk-row"><span class="mono cap ip">08</span><span style="font-weight: 550">Raindance</span><span class="cap">Dave ft. Tems</span><span class="mono cap">In the car</span></div>
+<div class="trk-row"><span class="mono cap ip">09</span><span style="font-weight: 550">Swim Good</span><span class="cap">Frank Ocean</span><span class="mono cap">The boat</span></div>
+<div class="trk-row"><span class="mono cap ip">10</span><span style="font-weight: 550">Human Nature</span><span class="cap">Michael Jackson</span><span class="mono cap">Monday</span></div>
+<div class="trk-row" style="border-bottom: 1px solid rgba(28,28,26,0.28)"><span class="mono cap ip">11</span><span style="font-weight: 550">Yours</span><span class="cap">Two songs each</span><span class="mono cap">Add in the RSVP</span></div>
+</div>
+</div>
+</section>
+
+<!-- 08 · COSTS -->
+<section id="costs" class="sec wrap" aria-label="Costs" style="scroll-margin-top: 60px">
+<div class="sh mono lbl"><span>(09)</span><span>Costs</span><span>Per person</span></div>
+<div class="sv" style="background: #FFFFFF; padding: clamp(28px, 3vw, 44px) clamp(16px, 2.4vw, 36px) 32px">
+<h2 class="big trk">Costs</h2>
+<p class="lbl" style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 550; margin-top: 28px"><span>Per person</span><span>USD unless noted</span></p>
+<div style="max-width: 820px; margin-top: 12px">
+<div class="cost sv"><span>The house, Fri–Mon</span><span class="mono cap">About $160 CAD</span><span class="mono cap is">Core</span></div>
+<div class="cost sv"><span>Art Basel day ticket</span><span class="mono cap">$92</span><span class="mono cap is">Core</span></div>
+<div class="cost sv"><span>The boat</span><span class="mono cap">About $120</span><span class="mono cap is">Core</span></div>
+<div class="cost sv"><span>Everyday People</span><span class="mono cap">About $35</span><span class="mono cap is">Core</span></div>
+<div class="cost sv"><span>Wynwood Walls</span><span class="mono cap">About $12–15</span><span class="mono cap is">Core</span></div>
+<div class="cost sv"><span>Casa Neos</span><span class="mono cap">$100–150</span><span class="mono cap ip">Estimate</span></div>
+<div class="cost sv"><span>MILA</span><span class="mono cap">$100–150</span><span class="mono cap ip">Estimate</span></div>
+<div class="cost sv"><span>Beach club, Nikki or Joia</span><span class="mono cap">$100–150</span><span class="mono cap ip">Estimate</span></div>
+<div class="cost sv"><span>Getting around: rides, a shared car</span><span class="mono cap">Split by group</span><span class="mono cap ip">To plan</span></div>
+<div class="cost sv" style="color: #55524F"><span>Superblue</span><span class="mono cap">$42</span><span class="mono cap">Optional</span></div>
+<div class="cost sv" style="color: #55524F"><span>Circoloco</span><span class="mono cap">From $211</span><span class="mono cap">Optional</span></div>
+<div class="cost sv" style="color: #55524F; border-bottom: 1px solid rgba(28,28,26,0.28)"><span>Art Basel weekend ticket</span><span class="mono cap">$170</span><span class="mono cap">Not needed</span></div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-top: 40px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<p style="font-size: clamp(48px, 6.4vw, 96px); line-height: 0.82; font-weight: 550; letter-spacing: -0.045em">$560–710</p>
+<p class="mono cap" style="text-transform: uppercase"><span class="is">Core $259–262</span> · <span class="ip">dinners and beach club $300–450</span></p>
+</div>
+<p class="cap" style="max-width: 280px; font-size: 13px">Rough cost per person in USD, plus about $160 CAD for the house. Rides, cars and lunches are extra. If it’s too much, tell me in the RSVP and we’ll change the plan.</p>
+</div>
+</div>
+</section>
+
+<!-- 09 · FAQ -->
+<section id="faq" class="sec wrap" aria-label="Questions" style="scroll-margin-top: 60px">
+<div class="sh mono lbl"><span>(10)</span><span>Questions</span><span>Before you say yes</span></div>
+<div class="two" style="align-items: start; row-gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div class="sc" style="aspect-ratio: 4/3; overflow: hidden"><img class="im" src="/_blob/9839b35cc0a19e6c28087d20bc1d638b" alt="The living room at the house" style="object-position: 50% 75%"></div>
+<h2 class="big trk">FAQ’s</h2>
+</div>
+<dl class="qa" style="grid-template-columns: minmax(0, 1fr); row-gap: 26px">
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">Which airport should I fly into?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Either one. Most of us land around 11 on Friday. MIA is 20 minutes from the house and FLL is 40–50, so we’ll share rides from each airport.</dd></div>
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">How are we getting around?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Rides at night, one or two shared cars in the day, and the free water taxi when it works. Tell me in the RSVP if you can drive.</dd></div>
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">Can I leave on Sunday?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Yes. Pack on Sunday morning, go to the beach club, and leave for the airport from there.</dd></div>
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">What’s happening Monday?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">I’m working from Miami and flying out around 9. Work with me or take the day off.</dd></div>
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">Do I need a weekend ticket?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">No. The $92 day ticket is enough for Friday.</dd></div>
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">Which beach club?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Nikki Beach or Joia Beach. We’ll choose once we know numbers and budget.</dd></div>
+<div class="sv" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px"><dt class="mono cap ip">Q.</dt><dt style="font-weight: 550">What if it’s over my budget?</dt><dd class="mono cap ip">A.</dd><dd class="cap" style="font-size: 14px">Tell me in the RSVP. Dinners and the beach club are estimates, and we can change the plan.</dd></div>
+</dl>
+</div>
+</section>
+
+<!-- 10 · RSVP -->
+<section id="rsvp" class="sec" aria-label="RSVP" style="scroll-margin-top: 60px">
+<div class="wrap"><div class="sh mono lbl"><span>(11)</span><span>RSVP</span><span>By Tue, Nov 10</span></div></div>
+<div class="two" style="gap: 0; background: var(--mist)">
+<div class="wrap" style="padding-top: 48px; padding-bottom: 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 48px; min-height: 560px">
+<div style="display: flex; flex-direction: column; gap: 22px; font-size: clamp(30px, 2.9vw, 44px); line-height: 0.95; font-weight: 550; letter-spacing: -0.02em; text-transform: uppercase">
+<p class="sv">A yes or no.</p>
+<p class="sv ip">By Tuesday,<br>November 10.</p>
+<p class="sv" style="font-size: 15px; line-height: 1.45; font-weight: 400; letter-spacing: 0; text-transform: none; max-width: 400px">Four quick steps. Your answers help me plan rides, beds and bookings.</p>
+</div>
+<h2 class="big trk">RSVP</h2>
+</div>
+<div class="rsvp" role="group" aria-label="RSVP form" style="padding: 48px 27px; background: #F2F2EE; border-left: 1px solid #1C1C1A; display: flex; flex-direction: column; gap: 32px">
+<div class="mono lbl" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{ progress }}" as="p" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; gap: 8px"><span class="{{ p.bar }}"></span><span>{{ p.label }}</span></div></sc-for>
+</div>
+
+<sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+<div class="step">
+<p class="mono lbl ip">01 · You</p>
+<label class="fld"><span class="lbl">Your name</span><input type="text" value="{{ name }}" onChange="{{ setName }}" placeholder="First and last" autocomplete="name"></label>
+<div class="fld"><span class="lbl">Are you in?</span><div class="pills"><sc-for list="{{ attendOpts }}" as="o" hint-placeholder-count="3"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
+<div class="nav"><span></span><button type="button" class="btn" onClick="{{ next1 }}" disabled="{{ block1 }}">Next</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+<div class="step">
+<p class="mono lbl ip">02 · Getting there</p>
+<div class="fld"><span class="lbl">Flying into</span><div class="pills"><sc-for list="{{ airportOpts }}" as="o" hint-placeholder-count="3"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
+<div class="fld"><span class="lbl">Landing Friday</span><div class="pills"><sc-for list="{{ landOpts }}" as="o" hint-placeholder-count="3"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
+<div class="duo">
+<label class="fld"><span class="lbl">Arrival flight</span><input type="text" value="{{ inFlight }}" onChange="{{ setInFlight }}" placeholder="e.g. AC 1234"></label>
+<label class="fld"><span class="lbl">Lands at</span><input type="text" value="{{ inTime }}" onChange="{{ setInTime }}" placeholder="e.g. 10:55am"></label>
+</div>
+<div class="nav"><button type="button" class="back" onClick="{{ back }}">Back</button><button type="button" class="btn" onClick="{{ next2 }}" disabled="{{ block2 }}">Next</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+<div class="step">
+<p class="mono lbl ip">03 · Heading home</p>
+<div class="fld"><span class="lbl">Leaving</span><div class="pills"><sc-for list="{{ leaveOpts }}" as="o" hint-placeholder-count="2"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
+<sc-if value="{{ stayingMonday }}" hint-placeholder-val="{{ false }}">
+<div class="fld"><span class="lbl">Monday</span><div class="pills"><sc-for list="{{ mondayOpts }}" as="o" hint-placeholder-count="2"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}">{{ o.label }}</button></sc-for></div></div>
+</sc-if>
+<div class="duo">
+<label class="fld"><span class="lbl">Departure flight</span><input type="text" value="{{ outFlight }}" onChange="{{ setOutFlight }}" placeholder="e.g. AC 1235"></label>
+<label class="fld"><span class="lbl">Departs at</span><input type="text" value="{{ outTime }}" onChange="{{ setOutTime }}" placeholder="e.g. 9:05pm"></label>
+</div>
+<div class="nav"><button type="button" class="back" onClick="{{ back }}">Back</button><button type="button" class="btn" onClick="{{ next3 }}" disabled="{{ block3 }}">Next</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s4 }}" hint-placeholder-val="{{ false }}">
+<div class="step">
+<p class="mono lbl ip">04 · Extras</p>
+<div class="fld"><span class="lbl">Count me in for</span><div class="pills"><sc-for list="{{ extraOpts }}" as="o" hint-placeholder-count="5"><button type="button" class="{{ o.cls }}" onClick="{{ o.pick }}" aria-pressed="{{ o.pressed }}">{{ o.label }}</button></sc-for></div></div>
+<div class="duo">
+<label class="fld"><span class="lbl">Your size (for the kit)</span><input type="text" value="{{ tee }}" onChange="{{ setTee }}" placeholder="XS, S, M, L"></label>
+<label class="fld"><span class="lbl">Two songs for the playlist</span><input type="text" value="{{ songs }}" onChange="{{ setSongs }}" placeholder="Song, artist"></label>
+</div>
+<label class="fld"><span class="lbl">Questions or concerns</span><textarea rows="3" value="{{ questions }}" onChange="{{ setQuestions }}" placeholder="Budget, timing, anything you’re unsure about"></textarea></label>
+<label class="fld"><span class="lbl">Anything else I should know?</span><textarea rows="3" value="{{ note }}" onChange="{{ setNote }}" placeholder="Allergies, dietary needs, roommate requests"></textarea></label>
+<div class="nav"><button type="button" class="back" onClick="{{ back }}">Back</button><button type="button" class="btn" onClick="{{ next4 }}">Review</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s5 }}" hint-placeholder-val="{{ false }}">
+<div class="step">
+<p class="mono lbl ip">Your RSVP</p>
+<dl style="display: grid; grid-template-columns: 130px minmax(0, 1fr); row-gap: 10px; column-gap: 16px">
+<sc-for list="{{ summary }}" as="r" hint-placeholder-count="5"><dt class="mono cap" style="text-transform: uppercase">{{ r.k }}</dt><dd class="cap" style="font-size: 14px">{{ r.v }}</dd></sc-for>
+</dl>
+<p class="cap" style="max-width: 420px">This opens an email to me with your answers. Press send and you’re done.</p>
+<div class="nav"><button type="button" class="back" onClick="{{ back }}">Edit</button><a class="btn" href="{{ mailto }}">Send my RSVP</a></div>
+</div>
+</sc-if>
+</div>
+</div>
+</section>
+
+<!-- 11 · MEMORIES -->
+<section id="memories" class="sec wrap" aria-label="Memories" style="scroll-margin-top: 60px">
+<div class="sh mono lbl"><span>(12)</span><span>Memories</span><span>After the weekend</span></div>
+<div class="two" style="align-items: end; row-gap: 28px; margin-bottom: 40px">
+<h2 class="big trk">Memories</h2>
+<div class="sv" style="display: flex; flex-direction: column; gap: 20px">
+<p class="lead" style="max-width: 520px">Add your photos and videos to one shared album. Then send me your favourite moment for the recap.</p>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<a class="btn" href="{{ albumUrl }}">Add to the album</a>
+<a class="pill" href="mailto:hello@losaeguavoen.com?subject=Miami%20memory&amp;body=My%20favourite%20part%20was%3A%20">Send a memory</a>
+</div>
+</div>
+</div>
+<div class="sheet">
+<figure class="fr sv"><span class="mono cap ip">01 · Fri</span><span class="fb"><img src="/_blob/f63505a42750c5a52910c41fafde0526" alt="Plane window at sunrise"></span><figcaption class="cap">Wheels down</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ip">02 · Fri</span><span class="fb"><img src="/_blob/c4eb66219cdb3bccb6a3bd147e0dcdea" alt="Palms and towers at night"></span><figcaption class="cap">First night</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ir">03 · Sat</span><span class="fb"><img src="/_blob/6d5b2c5b16a2856583fe6d970384b8b9" alt="Jet skis toward the skyline"></span><figcaption class="cap">On the water</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ir">04 · Sat</span><span class="fb"><img src="/_blob/d95dbf2f141cda43394cd25cdb42755f" alt="The boat at night past the skyline" style="object-position: 50% 60%"></span><figcaption class="cap">After dark</figcaption></figure>
+<figure class="fr sv"><span class="mono cap is">05 · Sun</span><span class="fb"><img src="/_blob/f74d28082aed0a2416fb3f59121b5f88" alt="Beach club loungers"></span><figcaption class="cap">Beach club</figcaption></figure>
+<figure class="fr sv"><span class="mono cap is">06 · Sun</span><span class="fb"><img src="/_blob/45d3085f470d21e1b85bcaedd49351e5" alt="Lit stairs on the way to dinner"></span><figcaption class="cap">Last dinner</figcaption></figure>
+</div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer style="max-width: 1440px; margin: 0 auto; padding: 120px 27px 28px">
+<div class="mono cap" style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid #1C1C1A; text-transform: uppercase"><span>See you in Miami</span><span>Brought to you by Roaming Haus</span></div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"albumUrl":{"editor":"text","default":"#memories"},"playlistUrl":{"editor":"text","default":"#soundtrack"},"$preview":{"width":1440,"height":8000}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { step: 1, name: '', attending: '', airport: '', landing: '', inFlight: '', inTime: '', leaving: '', monday: '', outFlight: '', outTime: '', extras: [], tee: '', songs: '', questions: '', note: '' };
+}
+renderVals() {
+const s = this.state;
+const set = (k) => (e) => this.setState({ [k]: e.target.value });
+const opts = (key, list) => list.map((v) => ({ label: v, cls: s[key] === v ? 'pill on' : 'pill', pick: () => this.setState({ [key]: v }) }));
+const extrasList = ['Art Basel day ticket', 'Superblue', 'The boat', 'Everyday People', 'Circoloco', 'Beach club', 'Dinner at MILA', 'Happy to drive a rental', 'Splitting a rental car'];
+const toggle = (v) => () => this.setState({ extras: s.extras.includes(v) ? s.extras.filter((x) => x !== v) : s.extras.concat(v) });
+const declined = s.attending === 'Can’t make it';
+const go = (n) => () => this.setState({ step: n });
+const back = () => this.setState({ step: declined && s.step === 5 ? 1 : Math.max(1, s.step - 1) });
+const labels = ['You', 'Getting there', 'Heading home', 'Extras'];
+const progress = labels.map((l, i) => ({ label: l, bar: (Math.min(s.step, 4) > i) ? 'bar on' : 'bar' }));
+const rows = declined
+? [{ k: 'Name', v: s.name || '—' }, { k: 'Coming', v: 'Can’t make it this time' }]
+: [
+{ k: 'Name', v: s.name || '—' },
+{ k: 'Coming', v: s.attending || '—' },
+{ k: 'Flying into', v: s.airport || '—' },
+{ k: 'Arriving', v: [s.landing, s.inFlight, s.inTime].filter(Boolean).join(' · ') || '—' },
+{ k: 'Leaving', v: [s.leaving, s.outFlight, s.outTime].filter(Boolean).join(' · ') || '—' },
+{ k: 'Monday', v: s.leaving === 'Monday night' ? (s.monday || '—') : 'Not staying' },
+{ k: 'Count me in', v: s.extras.length ? s.extras.join(', ') : 'Nothing extra yet' },
+{ k: 'Size', v: s.tee || '—' },
+{ k: 'Songs', v: s.songs || '—' },
+{ k: 'Questions', v: s.questions || '—' },
+{ k: 'Good to know', v: s.note || '—' }
+];
+const body = rows.map((r) => r.k + ': ' + r.v).join('\n');
+const mailto = 'mailto:hello@losaeguavoen.com?subject=' + encodeURIComponent('RSVP · Miami Art Week · ' + (s.name || 'Guest')) + '&body=' + encodeURIComponent(body);
+return {
+s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, s4: s.step === 4, s5: s.step === 5,
+progress,
+name: s.name, setName: set('name'),
+inFlight: s.inFlight, setInFlight: set('inFlight'), inTime: s.inTime, setInTime: set('inTime'),
+outFlight: s.outFlight, setOutFlight: set('outFlight'), outTime: s.outTime, setOutTime: set('outTime'),
+tee: s.tee, setTee: set('tee'), songs: s.songs, setSongs: set('songs'),
+questions: s.questions, setQuestions: set('questions'), note: s.note, setNote: set('note'),
+attendOpts: opts('attending', ['I’m in', 'Probably', 'Can’t make it']),
+airportOpts: opts('airport', ['MIA', 'FLL', 'Other']),
+landOpts: opts('landing', ['Before noon', 'Afternoon', 'Later']),
+leaveOpts: opts('leaving', ['Sunday night', 'Monday night']),
+mondayOpts: opts('monday', ['Working with you', 'Taking the day off']),
+extraOpts: extrasList.map((v) => ({ label: v, pressed: s.extras.includes(v) ? 'true' : 'false', cls: s.extras.includes(v) ? 'pill on' : 'pill', pick: toggle(v) })),
+stayingMonday: s.leaving === 'Monday night',
+block1: !s.name.trim() || !s.attending,
+block2: !s.airport,
+block3: !s.leaving,
+next1: declined ? go(5) : go(2), next2: go(3), next3: go(4), next4: go(5), back,
+summary: rows, mailto,
+albumUrl: this.props.albumUrl ?? '#memories',
+playlistUrl: this.props.playlistUrl ?? '#soundtrack'
+};
+}
+}
+</script>
+</body>
+</html>
