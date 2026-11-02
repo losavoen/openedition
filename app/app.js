@@ -312,12 +312,18 @@
   function me() { var k = (S.name || '').toLowerCase().split(' ')[0]; return S.game.players.filter(function (p) { return p.name.toLowerCase().split(' ')[0] === k; })[0] || { name: S.name, spotted: {}, squares: 0, bingos: 0, points: 0 }; }
   function loadGame() { if (SAMPLE) { if (!S.game.players.length) S.game = sampleGame(); return Promise.resolve(); } return api('/api/game').then(function (j) { S.game = j; }).catch(function () {}); }
 
+  // One header for every screen: the accent banner (where we are in the trip, one action),
+  // a small eyebrow and the big title. Anything screen-specific goes after it.
+  function head(eyebrow, title, action, extra) {
+    var t = today();
+    return '<header class="band"><div class="bandtop"><span class="mono">Day ' + (t.i + 1) + ' of 4 · ' + clock(t.n.min) + ' in Miami</span>' + (action || '') + '</div>' +
+      '<p class="mono eyebrow">' + eyebrow + '</p><h1 class="big">' + title + '</h1>' + (extra || '') + '</header>';
+  }
   function renderPlay() {
     var el = $('#s-play'), mine = me(), sp = mine.spotted || {};
     var rank = S.game.players.indexOf(S.game.players.filter(function (p) { return p === mine; })[0]) + 1;
     var lit = {}; LINES.forEach(function (l) { if (l.every(function (i) { return sp[i]; })) l.forEach(function (i) { lit[i] = 1; }); });
-    el.innerHTML = '<div class="top"><button class="x" data-back aria-label="Back to today">←</button><span class="mono muted">The trip game</span></div>' +
-      '<div class="hello"><h1 class="big">Spotted</h1><p style="font-size:15px;margin-top:12px;max-width:340px">See it, snap it, tap it. One point a square, three extra for every full line. The winner gets crowned at the Sunday screening.</p></div>' +
+    el.innerHTML = head('The trip game', 'Spotted', '<button class="x onband pill" data-back aria-label="Back to today">Done</button>', '<p class="lede">See it, snap it, tap it. One point a square, three extra for every full line. The winner gets crowned at the Sunday screening.</p>') +
       '<div class="scorebar"><div><b>' + (mine.squares || 0) + '<span>/16</span></b><span class="mono muted">Spotted</span></div><div><b>' + (mine.bingos || 0) + '</b><span class="mono muted">Lines</span></div><div><b>' + (mine.points || 0) + '</b><span class="mono muted">Points</span></div><div><b>' + (rank > 0 ? '#' + rank : '—') + '</b><span class="mono muted">Place</span></div></div>' +
       '<div class="bingo">' + SQ.map(function (t, i) {
         var hit = sp[i], photo = hit && hit.photo;
@@ -438,15 +444,11 @@
     var crewNames = ride && ride.crew.filter(function (c) { return c !== ride.me; }).map(function (c) { return c.name.split(' ')[0]; }).join(', ');
     el.innerHTML =
       // one coloured band: where we are, what's on now, what's next
-      '<header class="band">' +
-        '<div class="bandtop"><span class="mono">Day ' + (t.i + 1) + ' of 4 · ' + clock(t.n.min) + ' in Miami</span><button class="x onband" data-act="settings" aria-label="Settings">⚙</button></div>' +
-        '<p class="mono" style="opacity:0.7">' + hello + (S.name ? ', ' + esc(S.name) : '') + '</p>' +
-        '<h1 class="big">' + esc(d.day) + '</h1>' +
+      head(hello + (S.name ? ', ' + esc(S.name) : ''), esc(d.day), '<button class="x onband" data-act="settings" aria-label="Settings">⚙</button>',
         '<div class="nowblock"><p class="mono">' + (nowRow ? 'Now · ' + esc(nowRow.time) : 'Coming up · ' + esc(next ? next.time : '')) + '</p>' +
           '<h2>' + esc(nowRow ? nowRow.title : (next ? next.title : 'Free time')) + '</h2>' +
           '<p class="nd">' + esc(nowRow ? nowRow.desc : (next ? next.desc : '')) + '</p></div>' +
-        (next && nowRow ? '<div class="nextline"><span class="mono">Next · ' + esc(next.time) + '</span><span>' + esc(next.title) + '</span></div>' : '') +
-      '</header>' +
+        (next && nowRow ? '<div class="nextline"><span class="mono">Next · ' + esc(next.time) + '</span><span>' + esc(next.title) + '</span></div>' : '')) +
       (store.get('coach', true) ? '<section class="sect" id="coach"><div class="sh"><span class="mono">First time here?</span><button class="mono linkbtn" id="coach-ok">Got it</button></div>' +
         '<div class="key">' +
           '<button class="keyrow" data-key="cam"><span class="kic shut"><i></i></span><span class="kt"><b>Shoot</b><span>The round button. 24 photos a day, no retakes.</span></span></button>' +
@@ -518,8 +520,7 @@
     var d = S.days[schedDay];
     if (!d) { el.innerHTML = '<p class="empty-note">Loading…</p>'; return; }
     var frames = S.memories.filter(function (m) { return m.day === d.day && developed(m, t.n); });
-    el.innerHTML = '<div class="top"><span class="mono">Schedule · Miami time</span><button class="x" id="share-day" aria-label="Send this day’s plan">↗</button></div>' +
-      '<div class="hello"><h1 class="big">' + d.day + '</h1></div>' +
+    el.innerHTML = head('Schedule · Miami time', d.day, '<button class="x onband" id="share-day" aria-label="Send this day’s plan">↗</button>') +
       '<div class="daypick">' + S.days.map(function (x, i) {
         return '<button data-sd="' + i + '" class="' + (i === schedDay ? 'on' : '') + '" style="--c:' + x.color + '"><span class="mono">' + x.day.slice(0, 3) + '</span><b>' + x.date.slice(8) + '</b><i>' + (i === t.i ? 'today' : '&nbsp;') + '</i></button>';
       }).join('') + '</div>' +
@@ -569,8 +570,7 @@
     var done = S.memories.filter(function (m) { return developed(m, t.n); });
     var byDay = {}; done.forEach(function (m) { (byDay[m.day || 'The weekend'] = byDay[m.day || 'The weekend'] || []).push(m); });
     var nextAt = dev.length ? developsAt(dev[0]) : null;
-    el.innerHTML = '<div class="top"><span class="mono">Photos · ' + done.length + ' so far</span><a class="x" href="/tape' + (SAMPLE ? '?sample' : '') + '" aria-label="Watch the tape">▶</a></div>' +
-      '<div class="hello"><h1 class="big">Photos</h1></div>' +
+    el.innerHTML = head('Photos · ' + done.length + ' so far', 'Photos', '<a class="x onband" href="/tape' + (SAMPLE ? '?sample' : '') + '" aria-label="Watch the tape">▶</a>') +
       '<div class="redlight"><p class="mono" style="margin-bottom:8px">Coming tomorrow</p><p style="font-size:24px;font-weight:550;letter-spacing:-0.02em;line-height:1.05">' + (dev.length ? dev.length + ' photos waiting' : 'Nothing waiting') + '</p><p class="muted" style="font-size:14px;margin-top:6px">' + (dev.length ? 'They appear at ' + clock(nextAt.min) + (nextAt.date !== t.n.date ? ' tomorrow' : ' today') + ', like film. Until then they stay blurred.' : 'Photos you take today appear here the next morning at 9.') + '</p></div>' +
       (dev.length ? '<div style="padding:0 20px 8px">' + gridHTML(dev, true) + '</div>' : '') +
       ['Monday', 'Sunday', 'Saturday', 'Friday', 'The weekend'].filter(function (k) { return byDay[k]; }).map(function (k) {
@@ -587,8 +587,7 @@
     var first = function (n) { return String(n || '').toLowerCase().split(' ')[0]; };
     var list = S.guests.slice();
     INVITED.forEach(function (n) { if (!list.some(function (g) { return first(g.name) === first(n); })) list.push({ name: n, status: '', from: '', pending: true }); });
-    el.innerHTML = '<div class="top"><span class="mono">People · ' + list.length + ' coming</span><button class="x" data-act="chat" aria-label="Open the group chat">✉</button></div>' +
-      '<div class="hello"><h1 class="big">Who’s<br>coming</h1><p class="muted" style="font-size:14px;margin-top:10px">Tap someone to see their profile and photos.</p></div>' +
+    el.innerHTML = head('People · ' + list.length + ' coming', 'Who’s coming', '<button class="x onband" data-act="chat" aria-label="Open the group chat">✉</button>', '<p class="lede">Tap someone to see their profile and photos.</p>') +
       (list.length ? '<div class="glist">' + list.map(function (g, i) {
         var count = S.memories.filter(function (m) { return m.name && g.name && m.name.split(' ')[0].toLowerCase() === g.name.split(' ')[0].toLowerCase(); }).length;
         return '<button class="gitem" data-g="' + i + '"><span class="ph">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="">' : esc((g.name || '?').charAt(0))) + '</span><span><p style="font-weight:550;font-size:17px">' + esc(g.name) + '</p><p class="muted" style="font-size:13px">' + esc(g.pending ? 'Hasn’t added a profile yet' : g.from ? 'Lives and works in ' + g.from : g.status || '') + '</p></span><span class="mono muted">' + count + ' photos</span></button>';
