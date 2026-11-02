@@ -76,3 +76,9 @@ Preview switches: `/app/?preview` (open early), `/app/?at=fri-14:30` (pretend ti
 ## Spotted (the trip game)
 
 In the app: a 16-square Art Week bingo card (photo proof optional, proof photos also go to the album), a live leaderboard (1 point a square, 3 per full line), and six shared tally counters anyone can add to. Data lives in Blob under `game/` (`api/game.js`). Preview with `/app/?sample`.
+
+## Song requests
+
+The Soundtrack section has a request form. Each request is saved to Blob under `songreq/` and emailed
+to `SONG_REQUEST_TO` once `RESEND_API_KEY` is set (Resend, free tier). Without the key, requests are
+still saved; nothing is lost. Optional: `SONG_REQUEST_FROM` once a sending domain is verified in Resend.

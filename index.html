@@ -39,6 +39,12 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .lead{font-size:clamp(20px,1.8vw,27px);line-height:1.2;letter-spacing:-0.01em;max-width:620px}
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:27px}
 .btn,.pill,.back{font:inherit;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;min-height:44px;padding:0 20px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background-color 0.4s var(--ease),color 0.4s var(--ease),border-color 0.4s var(--ease),transform 0.4s var(--ease)}
+.songreq{position:relative;display:flex;flex-direction:column;gap:14px;margin-top:36px;padding-top:24px;border-top:1px solid rgba(28,28,26,0.28)}
+.sr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px}
+.sr-f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.sr-f input,.sr-f select{font:inherit;font-size:16px;color:#1C1C1A;background:transparent;border:0;border-bottom:1px solid #1C1C1A;border-radius:0;padding:8px 0;width:100%;-webkit-appearance:none;appearance:none}
+.sr-f input:focus,.sr-f select:focus{outline:none;border-bottom-color:var(--rose-ink)}
+@media (max-width:640px){.sr-grid{grid-template-columns:minmax(0,1fr)}}
 .btn{background:#1C1C1A;color:#F2F2EE;border:1px solid #1C1C1A;font-weight:550}
 .btn:hover{background:var(--peri);border-color:var(--peri);color:#1C1C1A;transform:translateY(-2px)}
 .btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;background:#1C1C1A;color:#F2F2EE}
@@ -678,7 +684,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="two" style="gap: 0">
 <div style="background: var(--mist); padding: 40px 27px 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 56px; min-height: 520px">
 <div style="display: flex; flex-direction: column; gap: 22px; align-items: flex-start">
-<p class="mono lbl sv" style="max-width: 360px; line-height: 1.5">Mostly three step. Afrobeats for the beach club, Frank Ocean for the boat, Michael for Monday.</p>
+<p class="mono lbl sv" style="max-width: 360px; line-height: 1.5">A mix for the whole weekend: three step at the house, Afrobeats for the beach club, R&amp;B in the car, Frank Ocean for the boat, Michael for Monday.</p>
 <a class="btn sv" href="https://open.spotify.com/playlist/6nVE5YsGJgZkczU6wE9S9C" target="_blank" rel="noopener">Open in Spotify</a>
 <iframe class="sv" title="Open Edition soundtrack on Spotify" src="https://open.spotify.com/embed/playlist/6nVE5YsGJgZkczU6wE9S9C?utm_source=generator&amp;theme=0" width="100%" height="352" style="border: 0; border-radius: 12px; max-width: 520px; display: block" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 </div>
@@ -695,8 +701,20 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="trk-row"><span class="mono cap ip">08</span><span style="font-weight: 550">Raindance</span><span class="cap">Dave ft. Tems</span><span class="mono cap">In the car</span></div>
 <div class="trk-row"><span class="mono cap ip">09</span><span style="font-weight: 550">Swim Good</span><span class="cap">Frank Ocean</span><span class="mono cap">The boat</span></div>
 <div class="trk-row"><span class="mono cap ip">10</span><span style="font-weight: 550">Human Nature</span><span class="cap">Michael Jackson</span><span class="mono cap">Monday</span></div>
-<div class="trk-row" style="border-bottom: 1px solid rgba(28,28,26,0.28)"><span class="mono cap ip">11</span><span style="font-weight: 550">Yours</span><span class="cap">Two songs each</span><span class="mono cap">Add in the RSVP</span></div>
+<div class="trk-row" style="border-bottom: 1px solid rgba(28,28,26,0.28)"><span class="mono cap ip">11</span><span style="font-weight: 550">Yours</span><span class="cap">The list is short, so ask below</span><span class="mono cap">By request</span></div>
 <div id="song-requests"></div>
+<form id="song-form" class="songreq" novalidate>
+<p class="mono lbl" style="margin: 0">Request a song</p>
+<p class="cap" style="margin: 0; max-width: 460px">There’s only room for a few more, so send your pick and I’ll add the ones that fit the moment.</p>
+<div class="sr-grid">
+<label class="sr-f"><span class="mono cap">Your name</span><input id="sr-name" name="name" maxlength="60" autocomplete="given-name" required></label>
+<label class="sr-f"><span class="mono cap">Song</span><input id="sr-song" name="song" maxlength="120" required></label>
+<label class="sr-f"><span class="mono cap">Artist</span><input id="sr-artist" name="artist" maxlength="120"></label>
+<label class="sr-f"><span class="mono cap">For</span><select id="sr-moment" name="moment"><option>Anytime</option><option>Getting ready</option><option>At the house</option><option>Beach club</option><option>The boat</option><option>In the car</option><option>Monday</option></select></label>
+</div>
+<input id="sr-web" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px">
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap"><button class="btn" id="sr-send" type="submit">Send request</button><span class="cap" id="sr-msg" role="status"></span></div>
+</form>
 </div>
 </div>
 </section>

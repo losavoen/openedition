@@ -209,10 +209,27 @@
     });
   }
 
+  // Song requests: saved and emailed to the host by /api/songs.
+  function songForm() {
+    var f = document.getElementById('song-form'); if (!f) return;
+    var msg = document.getElementById('sr-msg'), btn = document.getElementById('sr-send');
+    try { var who = JSON.parse(localStorage.getItem('oe-app-name') || 'null'); if (who && !f.name.value) f.name.value = who; } catch (e) {}
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var body = { name: f.name.value.trim(), song: f.song.value.trim(), artist: f.artist.value.trim(), moment: f.moment.value, website: f.website.value };
+      if (!body.name || !body.song) { msg.textContent = 'Add your name and the song.'; return; }
+      btn.disabled = true; btn.textContent = 'Sending…'; msg.textContent = '';
+      fetch('/api/songs', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || 'Couldn’t send that. Try again.'); return j; }); })
+        .then(function () { msg.textContent = 'Sent. “' + body.song + '” is in the queue.'; f.song.value = ''; f.artist.value = ''; f.moment.value = 'Anytime'; })
+        .catch(function (err) { msg.textContent = err.message; })
+        .then(function () { btn.disabled = false; btn.textContent = 'Send request'; });
+    });
+  }
   function rsvpData() { api('/api/rsvps').then(function (d) { board(d); songs(d); tabNames = (d.arrivals || []).map(function (a) { return a.name; }).filter(Boolean); renderSplit(); }).catch(function () {}); }
 
   document.addEventListener('DOMContentLoaded', function () {
-    countdown(); liveItinerary(); config(); kit(); house(); dock(); tabSetup(); rsvpData(); loadTab();
+    countdown(); liveItinerary(); config(); kit(); house(); dock(); tabSetup(); rsvpData(); loadTab(); songForm();
     document.addEventListener('oe-rsvp-saved', rsvpData);
     setInterval(function () { if (!document.hidden) { countdown(); rsvpData(); } }, 60000);
   });
