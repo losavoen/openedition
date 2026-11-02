@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Open Edition",
+    "slug": "open-edition",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.losadesign.openedition",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Open Edition uses the camera so you can add photos to the trip album.",
+        "NSPhotoLibraryUsageDescription": "Open Edition lets you pick photos for the trip album."
+      }
+    },
+    "android": {
+      "package": "com.losadesign.openedition",
+      "permissions": [
+        "CAMERA"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "scheme": "openedition",
+    "backgroundColor": "#FFFFFF",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    }
+  }
+}
