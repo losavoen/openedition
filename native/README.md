@@ -18,6 +18,11 @@ see comes from the website, so changes to the site show up here with no rebuild.
 3. Scan the QR code: iPhone → Camera app, Android → Expo Go.
 4. Sign in with the trip password the first time. It remembers you after that.
 
+**Preview PIN (limited access).** Anyone you send this to can type the 4-digit preview PIN
+instead of the password. They get the full app on sample photos and people, so they can see how it
+works. They can't see the house address, the site, real guests, real photos or the tab, and nothing
+they do is posted. The PIN lives in Vercel as `VIEW_PIN`; change or delete it there to cut access.
+
 `--tunnel` lets the phone connect even when it isn't on the same Wi-Fi as the computer.
 
 ## Share it with the group without your computer running
