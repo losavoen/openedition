@@ -354,6 +354,52 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .ride{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:8px 0;align-items:baseline}
 .ride + .ride{border-top:1px dashed rgba(28,28,26,0.18)}
 @media (max-width:760px){.daily{grid-template-columns:repeat(2,minmax(0,1fr))}.tab-row{grid-template-columns:minmax(0,1fr) 80px;}.tab-row>:nth-child(3),.tab-row>:nth-child(4){grid-column:1 / -1}.ride{grid-template-columns:1fr}}
+
+/* ---- motion pass (Tool & Tea ideas) ---- */
+/* hero ring: polaroids orbit the title on desktop; motion.js drives it */
+.pola.orbit a{left:50%!important;top:50%!important;right:auto!important;animation:none!important;transition:box-shadow .5s var(--ease);will-change:transform,opacity,filter}
+.pola.orbit a:hover{box-shadow:0 24px 50px rgba(28,28,26,0.22)}
+.pola.orbit a:hover img{filter:none}
+.hero.ringed{cursor:grab}.hero.ringed.dragging{cursor:grabbing;user-select:none}
+@keyframes heroSharpen{from{filter:blur(16px);opacity:.4}to{filter:none;opacity:1}}
+.hero.ringed h1{animation:heroSharpen 1.6s var(--ease) .2s both}
+/* headlines: words slide up when they come into view */
+.kin .kw{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.06em;margin-bottom:-.06em}
+.kin .kw>span{display:inline-block;transform:translateY(108%);transition:transform 1s var(--ease)}
+.kin.go .kw>span{transform:none}
+/* highlighter that sweeps under a key phrase */
+.hl{background:linear-gradient(var(--peri),var(--peri)) no-repeat 0 88%/0% 38%;transition:background-size 1.2s var(--ease) .2s}
+.hl.go{background-size:100% 38%}
+/* countdown dots */
+.days{margin-top:72px;display:flex;flex-direction:column;gap:18px}
+.days-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.days-n{font-size:clamp(40px,4.4vw,64px);font-weight:550;letter-spacing:-0.04em;line-height:1;font-variant-numeric:tabular-nums}
+.dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(18px,1fr));gap:10px}
+.dots i{display:block;aspect-ratio:1;border-radius:50%;border:1.5px solid #1C1C1A;background:linear-gradient(var(--peri),var(--peri)) no-repeat 0 100%/100% 0%;transition:background-size .5s var(--ease)}
+.dots i.on{background-size:100% 100%}
+.dots i.today{border-color:var(--peri-ink);box-shadow:0 0 0 3px var(--blush)}
+.dots i:last-child{border-style:dashed}
+/* the weekend on a map */
+.route{margin-top:72px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:40px;align-items:start}
+.route svg{display:block;width:100%;height:auto;background:#FFFFFF}
+.route .land{fill:#F4F3EF}.route .bay{fill:var(--mist)}.route .beach{fill:var(--sage)}
+.route .trail{fill:none;stroke:#1C1C1A;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.route .ghost{fill:none;stroke:#1C1C1A;stroke-opacity:.14;stroke-width:3;stroke-dasharray:2 9;stroke-linecap:round}
+.route .stop circle{fill:#FFFFFF;stroke:#1C1C1A;stroke-width:2.5}
+.route .stop text{font-family:'Azeret Mono',ui-monospace,monospace;font-size:17px;letter-spacing:.04em;fill:#1C1C1A}
+.route .stop .num{font-size:15px;text-anchor:middle;dominant-baseline:central}
+.route .stop.lit circle{fill:var(--peri)}
+.route .stop .lab{transition:opacity .5s var(--ease)}
+.route.armed .stop .lab{opacity:0}.route.armed .stop.lit .lab{opacity:1}
+.route .dot{fill:var(--rose-ink)}
+.route ol{list-style:none;margin:0;padding:0;counter-reset:s}
+.route li{display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:12px;padding:12px 0;border-top:1px solid rgba(28,28,26,0.28);transition:color .5s var(--ease)}
+.route li span{font-family:'Azeret Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.route li b{font-weight:550}
+.route li small{grid-column:2;font-size:13px;color:#5F5C57}
+.route.armed li{color:#9A978F}.route.armed li.lit{color:#1C1C1A}
+@media (max-width:760px){.route{grid-template-columns:minmax(0,1fr)}.route .stop .lab{display:none}}
+@media (prefers-reduced-motion:reduce){.kin .kw>span{transform:none!important}.hl{background-size:100% 38%}}
 </style>
 </helmet>
 <div class="site">
@@ -398,6 +444,11 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <p class="mono lbl"><a href="/app/" style="text-decoration: underline">The Open Edition app</a> opens on Friday, December 4. Add it to your home screen when we land.</p>
 </div>
 </div>
+<div class="days sv" id="days" aria-live="polite">
+<div class="days-top"><p class="mono lbl ip">Days to Miami</p><p class="mono cap" id="days-cap">One dot for each day of November, then we land</p></div>
+<p class="days-n" id="days-n">Soon</p>
+<div class="dots" id="dots" aria-hidden="true"></div>
+</div>
 </section>
 
 <!-- ARRIVALS STATEMENT -->
@@ -415,7 +466,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <h2 class="big">Where<br>we’re<br>staying</h2>
 </div>
 <div class="sv" style="display: flex; flex-direction: column; gap: 24px">
-<p style="font-size: clamp(18px, 1.5vw, 22px); line-height: 1.32; text-align: justify">A white house under big trees in Little River, 10 minutes from the Design District. I’m covering half of the house, so your share is about <span class="ip">$160 CAD each</span> (about $115 USD). I’ll update you if that changes once we know who’s coming.</p>
+<p style="font-size: clamp(18px, 1.5vw, 22px); line-height: 1.32; text-align: justify">A white house under big trees in Little River, 10 minutes from the Design District. <span class="hl">I’m covering half of the house</span>, so your share is about <span class="ip">$160 CAD each</span> (about $115 USD). I’ll update you if that changes once we know who’s coming.</p>
 <div class="mono" style="display: grid; grid-template-columns: auto 1fr; column-gap: 40px; row-gap: 6px; font-size: 12px; text-transform: uppercase">
 <span class="ip">Address</span><span data-house="address">Shared once you’re signed in</span>
 <span class="ip">Cost</span><span>About $160 CAD / $115 USD each, with half covered by me</span>
@@ -451,6 +502,24 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="ros wide sv"><span class="mono lbl">Trolley and shuttles</span><div><p style="font-weight: 550">Free, if the timing works</p><p class="cap">The Miami Beach trolley and fair shuttles go between the fair, South Beach, Mid-Beach and the Design District.</p></div></div>
 <div class="ros wide sv"><span class="mono lbl ir">Traffic</span><div><p style="font-weight: 550">What to avoid</p><p class="cap">The MacArthur and Julia Tuttle causeways get busy in the afternoon. Last year the Venetian bridge also closed in the late afternoon. Go early or after dark.</p></div></div>
 </div>
+</div>
+<div class="route" id="route">
+<figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+<svg viewBox="0 0 1000 640" role="img" aria-label="Sketch map of the weekend's route through Miami, not to scale">
+<rect class="land" x="0" y="0" width="1000" height="640"/>
+<path class="bay" d="M600 0 C640 160 610 300 650 420 C680 520 650 600 660 640 L760 640 C740 520 760 360 745 200 C735 100 760 40 750 0 Z"/>
+<path class="beach" d="M760 0 C775 120 760 260 780 380 C795 470 780 560 790 640 L850 640 C840 520 860 380 845 250 C835 140 850 60 840 0 Z"/>
+<path class="bay" d="M850 0 L1000 0 L1000 640 L850 640 C860 520 840 380 855 250 C865 140 845 60 850 0 Z" style="opacity:.6"/>
+<text x="635" y="560" style="font-family:'Azeret Mono',monospace;font-size:13px;letter-spacing:.12em;fill:#5F5C57" transform="rotate(-82 635 560)">biscayne bay</text>
+<text x="940" y="90" style="font-family:'Azeret Mono',monospace;font-size:13px;letter-spacing:.12em;fill:#5F5C57" transform="rotate(90 940 90)">atlantic</text>
+<path class="ghost" d="M150 330 Q486 342 810 250 Q634 291 480 385 Q407 455 360 545 Q472 368 525 165 Q594 260 690 330 Q586 274 470 255 Q623 389 812 470 Q814 383 790 300"/>
+<path class="trail" id="trail" d="M150 330 Q486 342 810 250 Q634 291 480 385 Q407 455 360 545 Q472 368 525 165 Q594 260 690 330 Q586 274 470 255 Q623 389 812 470 Q814 383 790 300"/>
+<g class="stop" data-i="0"><circle cx="150" cy="330" r="15"/><text class="num" x="150" y="330">1</text><text class="lab" x="172" y="326" text-anchor="start">mia</text><text class="lab" x="172" y="348" text-anchor="start" style="font-size:13px;fill:#5F5C57">fri · 11:00</text></g><g class="stop" data-i="1"><circle cx="810" cy="250" r="15"/><text class="num" x="810" y="250">2</text><text class="lab" x="832" y="246" text-anchor="start">art basel</text><text class="lab" x="832" y="268" text-anchor="start" style="font-size:13px;fill:#5F5C57">fri · 14:00</text></g><g class="stop" data-i="2"><circle cx="480" cy="385" r="15"/><text class="num" x="480" y="385">3</text><text class="lab" x="458" y="381" text-anchor="end">miami river</text><text class="lab" x="458" y="403" text-anchor="end" style="font-size:13px;fill:#5F5C57">fri · 20:30</text></g><g class="stop" data-i="3"><circle cx="360" cy="545" r="15"/><text class="num" x="360" y="545">4</text><text class="lab" x="382" y="541" text-anchor="start">coconut grove</text><text class="lab" x="382" y="563" text-anchor="start" style="font-size:13px;fill:#5F5C57">sat · 10:00</text></g><g class="stop" data-i="4"><circle cx="525" cy="165" r="15"/><text class="num" x="525" y="165">5</text><text class="lab" x="547" y="161" text-anchor="start">design district</text><text class="lab" x="547" y="183" text-anchor="start" style="font-size:13px;fill:#5F5C57">sat · 12:00</text></g><g class="stop" data-i="5"><circle cx="690" cy="330" r="15"/><text class="num" x="690" y="330">6</text><text class="lab" x="668" y="326" text-anchor="end">the bay</text><text class="lab" x="668" y="348" text-anchor="end" style="font-size:13px;fill:#5F5C57">sat · 16:30</text></g><g class="stop" data-i="6"><circle cx="470" cy="255" r="15"/><text class="num" x="470" y="255">7</text><text class="lab" x="448" y="251" text-anchor="end">wynwood</text><text class="lab" x="448" y="273" text-anchor="end" style="font-size:13px;fill:#5F5C57">sat · 19:30</text></g><g class="stop" data-i="7"><circle cx="812" cy="470" r="15"/><text class="num" x="812" y="470">8</text><text class="lab" x="790" y="466" text-anchor="end">beach club</text><text class="lab" x="790" y="488" text-anchor="end" style="font-size:13px;fill:#5F5C57">sun · 12:30</text></g><g class="stop" data-i="8"><circle cx="790" cy="300" r="15"/><text class="num" x="790" y="300">9</text><text class="lab" x="812" y="296" text-anchor="start">lincoln road</text><text class="lab" x="812" y="318" text-anchor="start" style="font-size:13px;fill:#5F5C57">sun · 20:30</text></g>
+<circle class="dot" id="trail-dot" r="8" cx="150" cy="330"/>
+</svg>
+<figcaption class="mono cap">A sketch, not to scale. The house isn’t on it.</figcaption>
+</figure>
+<div><p class="mono lbl ip" style="margin:0 0 12px">The weekend on a map</p><ol><li data-i="0"><span>01</span><b>MIA</b><small>Fri · 11:00 · Land, share an Uber</small></li><li data-i="1"><span>02</span><b>Art Basel</b><small>Fri · 14:00 · Miami Beach Convention Center</small></li><li data-i="2"><span>03</span><b>Miami River</b><small>Fri · 20:30 · Welcome dinner at Casa Neos</small></li><li data-i="3"><span>04</span><b>Coconut Grove</b><small>Sat · 10:00 · Brunch at the farmers market</small></li><li data-i="4"><span>05</span><b>Design District</b><small>Sat · 12:00 · Superblue, ICA, Edgewater</small></li><li data-i="5"><span>06</span><b>The bay</b><small>Sat · 16:30 · The boat, sunset to after dark</small></li><li data-i="6"><span>07</span><b>Wynwood</b><small>Sat · 19:30 · Dinner, then Everyday People</small></li><li data-i="7"><span>08</span><b>Beach club</b><small>Sun · 12:30 · Nikki Beach or Joia Beach</small></li><li data-i="8"><span>09</span><b>Lincoln Road</b><small>Sun · 20:30 · Dinner at MILA</small></li></ol></div>
 </div>
 <div class="arr sv" id="arrivals-board">
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 8px"><p class="mono lbl ip">Who lands when</p><p class="mono cap">Fills in from the RSVPs. Share rides from the same airport.</p></div>

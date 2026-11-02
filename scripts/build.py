@@ -51,6 +51,7 @@ html = f'''<!doctype html>
 <script>window.OE_CONFIG = {json.dumps({k: cfg[k] for k in ('hostName', 'hostPhone', 'backupContact', 'rooms', 'payMethods') if k in cfg})};</script>
 <script src="extras.js" defer></script>
 <script src="edition.js" defer></script>
+<script src="motion.js" defer></script>
 </head>
 <body>
 {body.strip()}

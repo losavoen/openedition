@@ -249,7 +249,7 @@
   function afterPost(waiting) {
     var url = cam.blob ? URL.createObjectURL(cam.blob) : '';
     sheet((waiting ? '<p class="mono muted">Saved on your phone</p><h2 style="font-size:28px;margin:12px 0 8px;letter-spacing:-0.03em">No signal right now. It posts by itself once you’re back online.</h2><p class="muted" style="font-size:14px;margin-bottom:8px">Keep the app open for a moment when you get signal so it can send.</p>'
-      : '<p class="mono muted">Posted</p><h2 style="font-size:28px;margin:12px 0 8px;letter-spacing:-0.03em">It’s in. Everyone sees it tomorrow at 9am.</h2>') +
+      : '<p class="mono muted okline">' + TICK + 'Posted</p><h2 style="font-size:28px;margin:12px 0 8px;letter-spacing:-0.03em">It’s in. Everyone sees it tomorrow at 9am.</h2>') +
       '<p class="muted" style="font-size:14px;margin-bottom:18px">Want to send it to the group chat now too?</p>' +
       '<div style="display:flex;flex-direction:column;gap:10px"><button class="btn full" id="send-now">Send to iMessage or WhatsApp</button><button class="btn ghost full" id="send-later">Keep it a surprise</button></div>');
     var note = $('#cam-note').value.trim();
@@ -552,13 +552,30 @@
   }
 
   // ---------- darkroom ----------
+  // Photos you haven't seen developed yet resolve out of a dot screen, once each.
+  var SEEN = store.get('seen-dev', null) || {};
+  var TICK = '<svg class="tick" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var WAIT = '<svg class="wait" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="2"/><path d="M12 3a9 9 0 0 1 9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   function gridHTML(list, dev) {
-    var out = [];
+    var out = [], fresh = 0, marked = false;
     list.forEach(function (m) { (m.media || []).forEach(function (x, j) {
       var media = x.type === 'video' ? '<video src="' + esc(x.url) + '" muted playsinline preload="metadata"></video>' : '<img src="' + esc(x.url) + '" alt="" loading="lazy">';
-      out.push('<button class="' + (dev ? 'dev' : '') + '" data-m="' + esc(m.id || '') + '" data-j="' + j + '">' + media + (dev ? '<span class="mono">' + esc(m.name) + '</span>' : '') + '</button>');
+      var key = (m.id || '') + '-' + j, cls = dev ? 'dev' : '', style = '';
+      if (!dev && !m.pending && m.id && !SEEN[key]) {
+        SEEN[key] = 1; marked = true;
+        cls = 'devin'; style = ' style="--dd:' + Math.min(fresh++ * 0.12, 1.5).toFixed(2) + 's"';
+      }
+      var badge = m.pending ? '<span class="upst" aria-label="Waiting to post">' + WAIT + '</span>' : '';
+      out.push('<button class="' + cls + '"' + style + ' data-m="' + esc(m.id || '') + '" data-j="' + j + '">' + media + badge + (dev ? '<span class="mono">' + esc(m.name) + '</span>' : '') + '</button>');
     }); });
+    if (marked) { var keys = Object.keys(SEEN); if (keys.length > 3000) keys.slice(0, keys.length - 3000).forEach(function (k) { delete SEEN[k]; }); store.set('seen-dev', SEEN); }
     return '<div class="grid3" style="padding:0">' + out.join('') + '</div>';
+  }
+  function markPosted(qid) {
+    $$('[data-m="q-' + qid + '"] .upst').forEach(function (b) {
+      b.innerHTML = TICK; b.setAttribute('aria-label', 'Posted');
+      setTimeout(function () { b.classList.add('gone'); }, 1800);
+    });
   }
   function wireGrid(root) {
     $$('[data-m]', root).forEach(function (b) {
@@ -748,6 +765,7 @@
       return api('/api/memories', { method: 'POST', body: JSON.stringify(memo) });
     }).then(function () {
       if (PENDING['q-' + it.qid]) { PENDING['q-' + it.qid].pending = false; delete PENDING['q-' + it.qid]; }
+      markPosted(it.qid);
       return OUT.del(it.qid);
     });
   }
@@ -755,12 +773,24 @@
   function flush() {
     if (SAMPLE) return Promise.resolve(0);
     if (flushing) return flushing;
+    var before = 0;
     flushing = OUT.all().then(function (items) {
+      before = items.length;
       items.sort(function (a, b) { return String(a.createdAt).localeCompare(String(b.createdAt)); });
       if (!items.length || navigator.onLine === false) return;
       return items.reduce(function (p, it) { return p.then(function () { return sendOne(it); }); }, Promise.resolve());
-    }).catch(function () {}).then(function () { flushing = null; return outboxBadge(); });
+    }).catch(function () {}).then(function () { flushing = null; return outboxBadge(); }).then(function (n) {
+      if (before > n) postedFlash(before - n);
+      return n;
+    });
     return flushing;
+  }
+  function postedFlash(k) {
+    var el = $('#outbox'); if (!el) return;
+    el.hidden = false;
+    el.innerHTML = '<span class="mono okline">' + TICK + (k === 1 ? '1 photo posted' : k + ' photos posted') + '</span>';
+    clearTimeout(postedFlash.t);
+    postedFlash.t = setTimeout(outboxBadge, 2600);
   }
   function outboxBadge() {
     return OUT.all().then(function (items) {
