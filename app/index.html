@@ -336,6 +336,15 @@ html:not([data-theme="night"]) .grain{opacity:0.04}
 .gitem .ph{width:48px;height:48px;border-radius:50%;font-size:18px}
 .count div{background:transparent;border:0;border-top:1px solid var(--paper);border-radius:0;padding:12px 4px 0}
 .shotimg,.shotimg img{border-radius:0}
+/* onboarding: filter picker, same photo four ways */
+.filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 14px}
+.fl{background:none;border:0;padding:0;text-align:left;color:var(--paper);display:flex;flex-direction:column;gap:4px;cursor:pointer;font:inherit}
+.fimg{position:relative;display:block;aspect-ratio:1;overflow:hidden;outline:1px solid var(--line);margin-bottom:6px}
+.fimg img{display:block;width:100%;height:100%;object-fit:cover}
+.fl.on .fimg{outline:3px solid var(--acc);outline-offset:3px}
+.fl.on .fimg:after{content:'✓';position:absolute;right:8px;top:8px;width:26px;height:26px;border-radius:50%;background:var(--acc);color:#1A1A18;display:grid;place-items:center;font-size:14px}
+.fn{font-weight:550;font-size:16px;letter-spacing:-0.01em}
+.fd{font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>

@@ -15,7 +15,7 @@ async function hmac(secret, label) {
   return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 const siteToken = (password) => hmac(password, 'openedition-site-v1');
-const DEMO = '/app/?sample&at=sat-16:45';
+const DEMO = '/app/?sample&at=fri-14:30';
 
 // Preview PIN holders see the app in sample mode only: no site, no API, no address.
 async function previewOnly(request, url) {

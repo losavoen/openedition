@@ -5,7 +5,7 @@
 //
 // URL switches (for previews and the launch video):
 //   ?preview          open the app before the trip, as if it's Friday at 2:10pm
-//   ?at=sat-16:45     pretend it's this day and time in Miami
+//   ?at=fri-14:30     pretend it's this day and time in Miami
 //   ?sample           fill the app with sample photos so every screen has content
 (function () {
   'use strict';
@@ -20,10 +20,10 @@
   var PLAYLIST = 'https://open.spotify.com/playlist/6nVE5YsGJgZkczU6wE9S9C';
 
   var LENSES = [
-    { id: 'gallery', name: 'Gallery', note: 'Black and white, a little contrast. For people and places.', css: 'grayscale(1) contrast(1.08)' },
-    { id: 'golden', name: 'Golden hour', note: 'Warm film colour with a soft light leak. For the boat and the beach.', css: 'sepia(0.35) saturate(1.2) contrast(1.05) brightness(1.03)' },
-    { id: 'tape', name: 'Night tape', note: 'Camcorder colour, scan lines and a date stamp. For after dark.', css: 'saturate(0.8) contrast(1.15) brightness(0.95)' },
-    { id: 'clean', name: 'Clean', note: 'Your photo exactly as you took it.', css: 'none' }
+    { id: 'gallery', name: 'Gallery', note: 'Black and white', css: 'grayscale(1) contrast(1.08)' },
+    { id: 'golden', name: 'Golden hour', note: 'Warm, sunny colour', css: 'sepia(0.55) saturate(1.45) contrast(1.05) brightness(1.08) hue-rotate(-10deg)' },
+    { id: 'tape', name: 'Night tape', note: 'Camcorder look', css: 'saturate(0.6) contrast(1.35) brightness(0.85) hue-rotate(12deg)' },
+    { id: 'clean', name: 'Clean', note: 'No filter', css: 'none' }
   ];
   var DAY_HERO = {
     Friday: A + 'c4eb66219cdb3bccb6a3bd147e0dcdea.jpg',
@@ -169,11 +169,11 @@
       '<p class="muted" style="font-size:14px">This goes on your photos and on the tape.</p></div>' + dots +
       '<button class="btn full" data-ob="2" id="ob-next">Next</button>';
     if (step === 2) body =
-      '<div class="stage" style="gap:16px"><p class="mono muted">02 · Your lens</p><h2 style="font-size:34px;line-height:1;letter-spacing:-0.03em;font-weight:550">Pick how you see the weekend</h2>' +
-      '<div class="lenses" id="ob-lenses">' + LENSES.map(function (l, i) {
-        var img = [A + '45d3085f470d21e1b85bcaedd49351e5.jpg', A + '9208bb2aa1b5568c58d43073ad5e76c6.jpg', A + '1c8c9309193976c9a4e1ebbffde5c892.jpg', A + 'f74d28082aed0a2416fb3f59121b5f88.jpg'][i];
-        return '<button class="lens' + (S.lens === l.id ? ' on' : '') + '" data-lens="' + l.id + '" style="padding:0;background:#000;cursor:pointer"><img src="' + img + '" alt="" style="filter:' + l.css + '"><span><p style="font-weight:550;font-size:20px;color:#fff;text-align:left">' + l.name + '</p><p class="mono" style="color:#ddd;text-align:left;margin-top:4px;line-height:1.5">' + l.note + '</p></span></button>';
-      }).join('') + '</div><p class="muted" style="font-size:14px">You can switch any time in the camera. Originals aren’t kept, so the lens is part of the photo.</p></div>' + dots +
+      '<div class="stage" style="gap:16px"><p class="mono muted">02 · Your filter</p><h2 style="font-size:34px;line-height:1;letter-spacing:-0.03em;font-weight:550">Choose your camera filter</h2>' +
+      '<p class="muted" style="font-size:15px;margin-top:-4px">Every photo you take is saved with it. You can change it in the camera any time.</p>' +
+      '<div class="filters" id="ob-lenses">' + LENSES.map(function (l) {
+        return '<button class="fl' + (S.lens === l.id ? ' on' : '') + '" data-lens="' + l.id + '" aria-pressed="' + (S.lens === l.id) + '"><span class="fimg"><img src="' + A + '9208bb2aa1b5568c58d43073ad5e76c6.jpg" alt="" style="filter:' + l.css + '"></span><span class="fn">' + l.name + '</span><span class="fd">' + l.note + '</span></button>';
+      }).join('') + '</div></div>' + dots +
       '<button class="btn full" data-ob="3">Next</button>';
     if (step === 3) {
       var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
@@ -194,7 +194,7 @@
         renderOb(+b.getAttribute('data-ob'));
       };
     });
-    $$('[data-lens]', el).forEach(function (b) { b.onclick = function () { S.lens = b.getAttribute('data-lens'); store.set('lens', S.lens); $$('[data-lens]', el).forEach(function (x) { x.classList.toggle('on', x === b); }); }; });
+    $$('[data-lens]', el).forEach(function (b) { b.onclick = function () { S.lens = b.getAttribute('data-lens'); store.set('lens', S.lens); $$('[data-lens]', el).forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); }); }; });
     var ins = $('#ob-install'); if (ins) ins.onclick = function () { deferredInstall.prompt(); deferredInstall.userChoice.finally(function () { deferredInstall = null; renderOb(3); }); };
     var done = $('#ob-done'); if (done) done.onclick = function () { store.set('onboarded', true); enter(); };
   }

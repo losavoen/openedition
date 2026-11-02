@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   const pin = process.env.VIEW_PIN || '';
   if (pin && !(want && same(given, want)) && same(given, pin)) {
     res.setHeader('Set-Cookie', `oe_view=${viewToken(pin)}; Path=/; Max-Age=${60 * 60 * 24 * 30}; HttpOnly; Secure; SameSite=Lax`);
-    res.setHeader('Location', '/app/?sample&at=sat-16:45');
+    res.setHeader('Location', '/app/?sample&at=fri-14:30');
     return res.status(303).end();
   }
   if (!want || !same(given, want)) {
