@@ -314,6 +314,10 @@ html:not([data-theme="night"]) .grain{opacity:0.04}
 .kt{display:flex;flex-direction:column;gap:2px}
 .kt b{font-weight:550;font-size:17px;letter-spacing:-0.01em}
 .kt span{font-size:14px;line-height:1.4;color:var(--muted)}
+/* top banner: full-bleed strip in the day's accent, like the site's banner */
+.band .bandtop{margin:calc(-1 * (var(--safe-t) + 18px)) -20px 22px;padding:calc(var(--safe-t) + 12px) 20px 12px;background:var(--acc);color:#1A1A18}
+.band .bandtop .mono{text-transform:lowercase;letter-spacing:0.04em;font-size:12px}
+.band .bandtop .x.onband{background:transparent;border-color:rgba(26,26,24,0.25);color:#1A1A18;width:34px;height:34px}
 </style>
 </head>
 <body>
