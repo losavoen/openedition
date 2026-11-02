@@ -16,7 +16,7 @@
   var PREVIEW = Q.has('preview') || SAMPLE || Q.has('at');
   var ROLL = 24;
   var A = '/assets/';
-  var INVITED = ['Ilelosa', 'Simi', 'Nero', 'Sayo', 'Nicole', 'Chiara'];
+  var INVITED = []; // only guests who made a profile appear in People
   var PLAYLIST = 'https://open.spotify.com/playlist/6nVE5YsGJgZkczU6wE9S9C';
 
   var LENSES = [
@@ -585,7 +585,7 @@
   // ---------- guests ----------
   function renderGuests() {
     var el = $('#s-guests');
-    // Everyone invited shows up; profiles fill in as people add them on the site.
+    // Only people who have made a profile on the site appear here.
     var first = function (n) { return String(n || '').toLowerCase().split(' ')[0]; };
     var list = S.guests.slice();
     INVITED.forEach(function (n) { if (!list.some(function (g) { return first(g.name) === first(n); })) list.push({ name: n, status: '', from: '', pending: true }); });

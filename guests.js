@@ -47,7 +47,7 @@
 
   // Everyone invited gets an empty frame until they hang their own portrait.
   function pending() {
-    var invited = (window.OE_CONFIG && window.OE_CONFIG.invited) || [];
+    var invited = []; // hidden for now: only guests who made a profile are shown
     var first = function (n) { return String(n || '').toLowerCase().split(' ')[0]; };
     return invited.filter(function (n) { return !guests.some(function (g) { return first(g.name) === first(n); }); }).map(function (n) {
       return '<article class="gcard pending"><span class="gph"><span class="gini">' + esc(n.charAt(0)) + '</span></span>' +
