@@ -202,17 +202,25 @@
 
   // ---------- looks (background themes, Slack-style picker) ----------
   var THEMES = [
-    { id: 'night', name: 'Night', sw: ['#0E0E0D', '#F2F2EE'] },
-    { id: 'gallery', name: 'Gallery white', sw: ['#FFFFFF', '#1C1C1A'] },
-    { id: 'blush', name: 'Blush', sw: ['#F8ECEA', '#1C1C1A'] },
-    { id: 'mist', name: 'Mist', sw: ['#D8E2DC', '#1C1C1A'] },
-    { id: 'sage', name: 'Sage', sw: ['#DCE2BE', '#1C1C1A'] },
-    { id: 'peri', name: 'Periwinkle', sw: ['#A2AEDA', '#1C1C1A'] }
+    { id: 'gallery', name: 'Light', sw: ['#FFFFFF', '#1C1C1A'] },
+    { id: 'night', name: 'Black', sw: ['#0E0E0D', '#F2F2EE'] }
+  ];
+  var ACCENTS = [
+    { id: 'day', name: 'Changes daily', c: '' },
+    { id: 'blush', name: 'Blush', c: '#F8ECEA' }, { id: 'mist', name: 'Mist', c: '#D8E2DC' },
+    { id: 'sage', name: 'Sage', c: '#DCE2BE' }, { id: 'peri', name: 'Periwinkle', c: '#A2AEDA' }
   ];
   function applyTheme(id) {
+    if (!THEMES.some(function (x) { return x.id === id; })) id = 'gallery';
     document.documentElement.setAttribute('data-theme', id);
-    var t = THEMES.filter(function (x) { return x.id === id; })[0] || THEMES[0];
+    var t = THEMES.filter(function (x) { return x.id === id; })[0];
     var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', t.sw[0]);
+  }
+  // Accent: the day's colour from the site (Fri mist, Sat periwinkle, Sun sage, Mon blush), or a fixed one.
+  function applyAccent() {
+    var pick = store.get('accent', 'day'), a = ACCENTS.filter(function (x) { return x.id === pick; })[0];
+    var c = a && a.c ? a.c : (today().day ? today().day.color : '#A2AEDA');
+    document.documentElement.style.setProperty('--acc', c);
   }
   applyTheme(store.get('theme', 'gallery'));
 
@@ -248,17 +256,21 @@
 
   // ---------- settings ----------
   function sheetSettings() {
-    var cur = store.get('theme', 'gallery');
+    var cur = store.get('theme', 'gallery'); if (!THEMES.some(function (x) { return x.id === cur; })) cur = 'gallery'; var acc = store.get('accent', 'day');
     sheet('<p class="mono muted">Settings</p><h2 style="font-size:30px;margin:12px 0 18px;letter-spacing:-0.03em">Make it yours</h2>' +
       '<p class="mono" style="margin-bottom:10px">Background</p>' +
       '<div class="themes">' + THEMES.map(function (t) {
-        return '<button data-theme-pick="' + t.id + '" class="' + (t.id === cur ? 'on' : '') + '"><span class="sw" style="background:' + t.sw[0] + '"><i style="background:' + t.sw[1] + '"></i><i style="background:' + t.sw[1] + ';width:40%"></i></span><span style="font-size:13px">' + t.name + '</span></button>';
+        return '<button data-theme-pick="' + t.id + '" class="' + (t.id === cur ? 'on' : '') + '"><span class="sw" style="background:' + t.sw[0] + '"><i style="background:' + t.sw[1] + '"></i><i style="background:var(--acc);width:40%"></i></span><span style="font-size:13px">' + t.name + '</span></button>';
+      }).join('') + '</div>' +
+      '<p class="mono" style="margin:22px 0 10px">Accent colour</p><div class="accents">' + ACCENTS.map(function (a) {
+        return '<button data-acc-pick="' + a.id + '" class="' + (a.id === acc ? 'on' : '') + '"><span class="dotc" style="background:' + (a.c || 'conic-gradient(#D8E2DC 0 25%, #A2AEDA 0 50%, #DCE2BE 0 75%, #F8ECEA 0)') + '"></span><span>' + a.name + '</span></button>';
       }).join('') + '</div>' +
       '<p class="mono" style="margin:22px 0 10px">Your name</p><input class="field" id="set-name" maxlength="40" value="' + esc(S.name) + '">' +
       '<p class="mono" style="margin:22px 0 10px">Group chat link</p><input class="field" id="set-chat" placeholder="Paste the WhatsApp group invite link" value="' + esc(store.get('chat', '')) + '">' +
       '<p class="muted" style="font-size:13px;margin-top:8px">In WhatsApp: group info → Invite via link → Copy. For iMessage, leave it blank and we’ll open Messages.</p>' +
       '<div style="display:flex;flex-direction:column;gap:10px;margin-top:22px"><button class="btn full" id="set-save">Save</button><button class="btn ghost full" id="set-how">Show me how it works again</button></div>');
     $$('[data-theme-pick]').forEach(function (b) { b.onclick = function () { var id = b.getAttribute('data-theme-pick'); store.set('theme', id); applyTheme(id); $$('[data-theme-pick]').forEach(function (x) { x.classList.toggle('on', x === b); }); }; });
+    $$('[data-acc-pick]').forEach(function (b) { b.onclick = function () { store.set('accent', b.getAttribute('data-acc-pick')); applyAccent(); $$('[data-acc-pick]').forEach(function (x) { x.classList.toggle('on', x === b); }); }; });
     $('#set-save').onclick = function () { var n = $('#set-name').value.trim(); if (n) { S.name = n; store.set('name', n); } store.set('chat', $('#set-chat').value.trim()); closeSheet(); toast('Saved'); show(current); };
     $('#set-how').onclick = function () { closeSheet(); store.set('coach', true); $('#tabs').classList.add('hide'); $$('.screen').forEach(function (x) { x.classList.remove('on'); }); $('#s-ob').classList.add('on'); renderOb(3); };
   }
@@ -316,7 +328,7 @@
       }).join('') : '<p class="muted" style="font-size:14px">Nobody’s on the board yet. Spot something.</p>') + '</div>' +
       '<div class="sub"><span class="mono">Keep count</span><span class="mono muted">Everyone adds to these</span></div>' +
       '<div class="counters">' + COUNTERS.map(function (c) {
-        return '<div class="counter"><p style="font-size:14px;line-height:1.25">' + c.label + '</p><div class="crow"><b>' + (S.game.tallies[c.id] || 0) + '</b><span style="display:flex;gap:6px"><button class="x" data-undo="' + c.id + '" aria-label="Undo">↺</button><button class="plus" data-plus="' + c.id + '" aria-label="Add one">+1</button></span></div></div>';
+        return '<div class="counter"><b>' + (S.game.tallies[c.id] || 0) + '</b><p>' + c.label + '</p><span style="display:flex;gap:6px"><button class="x" data-undo="' + c.id + '" aria-label="Undo">↺</button><button class="plus" data-plus="' + c.id + '" aria-label="Add one">+1</button></span></div>';
       }).join('') + '</div>';
     $('[data-back]', el).onclick = function () { show('now'); };
     $$('[data-sq]', el).forEach(function (b) { b.onclick = function () { spotSheet(+b.getAttribute('data-sq')); }; });
@@ -425,7 +437,7 @@
     var crewNames = ride && ride.crew.filter(function (c) { return c !== ride.me; }).map(function (c) { return c.name.split(' ')[0]; }).join(', ');
     el.innerHTML =
       // one coloured band: where we are, what's on now, what's next
-      '<header class="band" style="--c:' + d.color + '">' +
+      '<header class="band">' +
         '<div class="bandtop"><span class="mono">Day ' + (t.i + 1) + ' of 4 · ' + clock(t.n.min) + ' in Miami</span><button class="x onband" data-act="settings" aria-label="Settings">⚙</button></div>' +
         '<p class="mono" style="opacity:0.7">' + hello + (S.name ? ', ' + esc(S.name) : '') + '</p>' +
         '<h1 class="big">' + esc(d.day) + '</h1>' +
@@ -505,7 +517,7 @@
       '<div class="daypick">' + S.days.map(function (x, i) {
         return '<button data-sd="' + i + '" class="' + (i === schedDay ? 'on' : '') + '" style="--c:' + x.color + '"><span class="mono">' + x.day.slice(0, 3) + '</span><b>' + x.date.slice(8) + '</b><i>' + (i === t.i ? 'today' : '&nbsp;') + '</i></button>';
       }).join('') + '</div>' +
-      '<div class="daybar" style="background:' + d.color + '"><span class="mono">Day ' + (schedDay + 1) + ' of 4 · ' + d.rows.length + ' plans</span><span style="font-size:14px">Photo challenge: ' + esc(d.shot) + '</span></div>' +
+      '<div class="daybar" style="--acc:' + d.color + '"><span class="mono">Day ' + (schedDay + 1) + ' of 4 · ' + d.rows.length + ' plans</span><span style="font-size:14px">Photo challenge: ' + esc(d.shot) + '</span></div>' +
       timeline(d, t) +
       '<div class="sub"><span class="mono">' + d.day + '’s photos</span><span class="mono muted">' + frames.length + '</span></div>' +
       '<div style="padding:0 20px">' + (frames.length ? gridHTML(frames) : '<p class="muted" style="font-size:14px">' + (schedDay >= t.i ? 'Photos from this day appear the next morning at 9.' : 'No photos from this day.') + '</p>') + '</div>';
@@ -525,7 +537,7 @@
     var frames = S.memories.filter(function (m) { return m.day === d.day && developed(m, t.n); });
     sheet('<p class="mono muted">Room 0' + (i + 1) + ' · Side ' + d.side + '</p><h2 class="big" style="margin:10px 0 6px">' + d.day + '</h2><p class="muted" style="margin-bottom:16px">Today’s shot · ' + esc(d.shot) + '</p>' +
       timeline(d, t).replace('class="timeline"', 'class="timeline" style="padding:0"') +
-      '<div class="sub" style="padding:22px 0 10px"><span class="mono">On the wall</span><span class="mono muted">' + frames.length + ' frames</span></div>' +
+      '<div class="sub" style="margin:22px 0 12px"><span class="mono">On the wall</span><span class="mono muted">' + frames.length + ' frames</span></div>' +
       (frames.length ? gridHTML(frames) : '<p class="muted" style="font-size:14px">Nothing developed from this room yet.</p>'));
     wireGrid($('#sheet-body'));
   }
@@ -588,7 +600,7 @@
         (g.line ? '<p style="font-size:14px;margin-top:4px">Would buy: “' + esc(g.line) + '”</p>' : '') +
         '<p style="font-size:12px;margin-top:6px;opacity:0.6">Mixed media: a carry-on, sunscreen, three outfits a day.</p>' +
         '<p class="mono" style="margin-top:10px">' + esc(g.status === 'Probably' ? 'On hold' : 'Acquired') + (g.ig ? ' · @' + esc(g.ig) : '') + '</p></div>' +
-        '<div class="sub" style="padding:8px 0 10px"><span class="mono">Their frames</span><span class="mono muted">' + frames.length + '</span></div>' +
+        '<div class="sub" style="margin:8px 0 12px"><span class="mono">Their frames</span><span class="mono muted">' + frames.length + '</span></div>' +
         (frames.length ? gridHTML(frames) : '<p class="muted" style="font-size:14px">Nothing developed yet.</p>'));
       wireGrid($('#sheet-body'));
     }; });
@@ -709,6 +721,7 @@
 
   // ---------- start ----------
   function enter() {
+    applyAccent();
     $('#tabs').classList.remove('hide');
     show('now');
   }
