@@ -110,7 +110,7 @@
       loadGame()
     ];
     if (SAMPLE) S.memories = sampleMemories();
-    else jobs.push(api('/api/memories').then(function (j) { S.memories = j.memories || []; }).catch(function () {}));
+    else jobs.push(api('/api/memories').then(function (j) { S.memories = withPending(j.memories || []); }).catch(function () {}));
     return Promise.all(jobs);
   }
 
@@ -244,9 +244,10 @@
       return navigator.share({ text: text, url: url });
     }).catch(function () {});
   }
-  function afterPost() {
+  function afterPost(waiting) {
     var url = cam.blob ? URL.createObjectURL(cam.blob) : '';
-    sheet('<p class="mono muted">Posted</p><h2 style="font-size:28px;margin:12px 0 8px;letter-spacing:-0.03em">It’s in. Everyone sees it tomorrow at 9am.</h2>' +
+    sheet((waiting ? '<p class="mono muted">Saved on your phone</p><h2 style="font-size:28px;margin:12px 0 8px;letter-spacing:-0.03em">No signal right now. It posts by itself once you’re back online.</h2><p class="muted" style="font-size:14px;margin-bottom:8px">Keep the app open for a moment when you get signal so it can send.</p>'
+      : '<p class="mono muted">Posted</p><h2 style="font-size:28px;margin:12px 0 8px;letter-spacing:-0.03em">It’s in. Everyone sees it tomorrow at 9am.</h2>') +
       '<p class="muted" style="font-size:14px;margin-bottom:18px">Want to send it to the group chat now too?</p>' +
       '<div style="display:flex;flex-direction:column;gap:10px"><button class="btn full" id="send-now">Send to iMessage or WhatsApp</button><button class="btn ghost full" id="send-later">Keep it a surprise</button></div>');
     var note = $('#cam-note').value.trim();
@@ -695,29 +696,111 @@
     img.src = URL.createObjectURL(f);
   }
 
+  // ---------- outbox: shots wait on the phone until there's signal ----------
+  // Each shot is saved to the phone (IndexedDB) before anything is sent, then
+  // uploaded in order. A failed or offline send stays in the outbox and retries
+  // when the phone comes back online, when the app is reopened, and every minute.
+  var MEMQ = {}; // fallback when this browser has no IndexedDB (lost if the app is closed)
+  var OUT = (function () {
+    var dbp = null;
+    function db() {
+      if (!dbp) dbp = new Promise(function (res, rej) {
+        if (!window.indexedDB) return rej(new Error('no storage'));
+        var r = indexedDB.open('oe-outbox', 1);
+        r.onupgradeneeded = function () { r.result.createObjectStore('shots', { keyPath: 'qid' }); };
+        r.onsuccess = function () { res(r.result); }; r.onerror = function () { rej(r.error); };
+      });
+      return dbp;
+    }
+    function run(mode, fn) {
+      return db().then(function (d) { return new Promise(function (res, rej) {
+        var t = d.transaction('shots', mode), q = fn(t.objectStore('shots'));
+        t.oncomplete = function () { res(q && q.result); }; t.onerror = t.onabort = function () { rej(t.error || new Error('storage')); };
+      }); });
+    }
+    return {
+      put: function (x) { return run('readwrite', function (st) { return st.put(x); }).catch(function () { MEMQ[x.qid] = x; }); },
+      all: function () { return run('readonly', function (st) { return st.getAll(); }).then(function (r) { return (r || []).concat(Object.keys(MEMQ).map(function (k) { return MEMQ[k]; })); }, function () { return Object.keys(MEMQ).map(function (k) { return MEMQ[k]; }); }); },
+      del: function (id) { delete MEMQ[id]; return run('readwrite', function (st) { return st.delete(id); }).catch(function () {}); }
+    };
+  })();
+  var PENDING = {}; // local copies of shots still in the outbox, shown in your own photos
+  function localCopy(it) {
+    return { id: 'q-' + it.qid, qid: it.qid, pending: true, kind: it.memo.kind, name: it.memo.name, day: it.memo.day, note: it.memo.note, createdAt: it.createdAt,
+      media: [{ url: URL.createObjectURL(new Blob([it.buf], { type: it.type })), type: /^video\//.test(it.type) ? 'video' : 'image' }] };
+  }
+  function withPending(list) {
+    var ids = {}; list.forEach(function (m) { ids[m.id] = 1; });
+    return list.concat(Object.keys(PENDING).map(function (k) { return PENDING[k]; }).filter(function (m) { return !ids[m.id]; }));
+  }
+  function sendOne(it) {
+    var up = it.url ? Promise.resolve({ url: it.url }) :
+      window.OEUpload(it.path, new Blob([it.buf], { type: it.type }), { access: 'public', handleUploadUrl: '/api/upload', clientPayload: '{}', contentType: it.type })
+        .then(function (b) { it.url = b.url; return OUT.put(it).then(function () { return b; }); }); // never upload the same file twice
+    return up.then(function (b) {
+      var memo = Object.assign({}, it.memo, { qid: it.qid, media: [{ url: b.url, type: it.type }] });
+      return api('/api/memories', { method: 'POST', body: JSON.stringify(memo) });
+    }).then(function () {
+      if (PENDING['q-' + it.qid]) { PENDING['q-' + it.qid].pending = false; delete PENDING['q-' + it.qid]; }
+      return OUT.del(it.qid);
+    });
+  }
+  var flushing = null;
+  function flush() {
+    if (SAMPLE) return Promise.resolve(0);
+    if (flushing) return flushing;
+    flushing = OUT.all().then(function (items) {
+      items.sort(function (a, b) { return String(a.createdAt).localeCompare(String(b.createdAt)); });
+      if (!items.length || navigator.onLine === false) return;
+      return items.reduce(function (p, it) { return p.then(function () { return sendOne(it); }); }, Promise.resolve());
+    }).catch(function () {}).then(function () { flushing = null; return outboxBadge(); });
+    return flushing;
+  }
+  function outboxBadge() {
+    return OUT.all().then(function (items) {
+      var el = $('#outbox'), n = items.length;
+      if (!el) return n;
+      el.hidden = !n;
+      el.innerHTML = n ? '<span class="mono">' + n + (n === 1 ? ' photo' : ' photos') + ' waiting for signal</span><span class="mono" style="text-decoration:underline">Retry</span>' : '';
+      return n;
+    });
+  }
+
   $('#cam-send').onclick = function () {
     var btn = this, t = today();
     if (!cam.blob) return;
     if (!S.name) { toast('Add your name in the welcome screens first'); return; }
-    btn.disabled = true; btn.textContent = 'Posting…';
+    btn.disabled = true; btn.textContent = 'Saving…';
+    var qid = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    var type = cam.isVideo ? (cam.file.type || 'video/mp4') : 'image/jpeg';
     var ext = cam.isVideo ? (cam.file.name.split('.').pop() || 'mp4') : 'jpg';
-    var send = SAMPLE ? Promise.resolve({ url: URL.createObjectURL(cam.blob) }) :
-      window.OEUpload('album/' + S.name.replace(/[^\w]+/g, '-') + '-' + Date.now() + '.' + ext, cam.blob, {
-        access: 'public', handleUploadUrl: '/api/upload', clientPayload: JSON.stringify({}), contentType: cam.isVideo ? cam.file.type : 'image/jpeg'
-      });
-    send.then(function (blob) {
-      var memo = { kind: cam.kind, name: S.name, day: t.day ? t.day.day : '', note: $('#cam-note').value.trim(), media: [{ url: blob.url, type: cam.isVideo ? 'video/' : 'image/jpeg' }] };
-      if (SAMPLE) return { id: 's' + Date.now() };
-      return api('/api/memories', { method: 'POST', body: JSON.stringify(memo) });
-    }).then(function (j) {
+    var memo = { kind: cam.kind, name: S.name, day: t.day ? t.day.day : '', note: $('#cam-note').value.trim() };
+    var reset = function () { btn.disabled = false; btn.textContent = 'Post'; };
+    cam.blob.arrayBuffer().then(function (buf) {
+      var it = { qid: qid, path: 'album/' + S.name.replace(/[^\w]+/g, '-') + '-' + qid + '.' + ext, buf: buf, type: type, memo: memo, createdAt: new Date().toISOString() };
+      var local = localCopy(it);
+      if (SAMPLE) { local.pending = false; } else { PENDING[local.id] = local; }
       store.set('roll-' + t.n.date, rollUsed() + 1);
-      S.memories.push({ id: j.id, kind: cam.kind, name: S.name, day: t.day ? t.day.day : '', note: $('#cam-note').value.trim(), createdAt: new Date().toISOString(), media: [{ url: URL.createObjectURL(cam.blob), type: cam.isVideo ? 'video' : 'image' }] });
+      S.memories.push(local);
+      if (SAMPLE) return false;
+      return OUT.put(it).then(function () {
+        if (navigator.onLine === false) return true;
+        btn.textContent = 'Posting…';
+        // give it a few seconds to go through; otherwise it carries on in the background
+        return Promise.race([flush().then(function (n) { return n > 0; }), new Promise(function (r) { setTimeout(function () { r(!!PENDING[local.id]); }, 8000); })]);
+      });
+    }).then(function (waiting) {
       $('#cam').classList.remove('on');
-      afterPost();
+      afterPost(waiting);
       show(current);
-    }).catch(function (err) { toast(err.message || 'Upload failed. Try again.'); })
-      .then(function () { btn.disabled = false; btn.textContent = 'Post'; });
+      outboxBadge();
+    }).catch(function () { toast('Couldn’t save that one. Try again.'); })
+      .then(reset);
   };
+
+  window.addEventListener('online', function () { flush().then(function (n) { if (!n && current) show(current); }); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) flush(); });
+  $('#outbox').onclick = function () { toast('Trying again…'); flush().then(function (n) { toast(n ? 'Still no signal. It’ll keep trying.' : 'All posted'); }); };
 
   // ---------- start ----------
   function enter() {
@@ -732,11 +815,14 @@
 
   var real = realMiami();
   if (real.date < TRIP.start && !PREVIEW) { $('#s-gate').classList.add('on'); renderGate(); return; }
-  loadAll().then(function () {
+  OUT.all().then(function (items) { items.forEach(function (it) { var c = localCopy(it); PENDING[c.id] = c; }); }).catch(function () {}).then(loadAll).then(function () {
+    S.memories = withPending(S.memories || []);
+    flush();
     if (!store.get('onboarded', false) || Q.has('welcome')) { $('#s-ob').classList.add('on'); renderOb(0); }
     else enter();
   });
+  setInterval(function () { if (!document.hidden) flush(); }, 60000);
   setInterval(function () { if (!document.hidden && $('#tabs') && !$('#tabs').classList.contains('hide') && !$('#cam').classList.contains('on') && !$('#sheet').classList.contains('on')) {
-    (SAMPLE ? Promise.resolve() : api('/api/memories').then(function (j) { S.memories = j.memories || []; })).catch(function () {}).then(function () { if ((current === 'now' || current === 'dark') && window.scrollY < 40) show(current); if (current === 'play') loadGame().then(function () { if (window.scrollY < 40) renderPlay(); }); });
+    (SAMPLE ? Promise.resolve() : api('/api/memories').then(function (j) { S.memories = withPending(j.memories || []); })).catch(function () {}).then(function () { if ((current === 'now' || current === 'dark') && window.scrollY < 40) show(current); if (current === 'play') loadGame().then(function () { if (window.scrollY < 40) renderPlay(); }); });
   } }, 60000);
 })();

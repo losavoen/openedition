@@ -300,6 +300,9 @@ html:not([data-theme="night"]) .grain{opacity:0.04}
 .tabs button:not(.shutter){min-width:0;width:50px;height:50px;padding:0;display:grid;place-items:center}
 .tabs button:not(.shutter) svg{display:block}
 .tabs button.on:not(.shutter){background:var(--acc);color:#1A1A18}
+.outbox{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--safe-b) + 96px);z-index:49;display:flex;gap:12px;align-items:center;white-space:nowrap;padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:11px;cursor:pointer;box-shadow:0 0 0 0 transparent;border-left:3px solid var(--acc)}
+.outbox[hidden]{display:none}
+.tabs.hide ~ .outbox,.outbox:has(+ .tabs.hide){display:none}
 </style>
 </head>
 <body>
@@ -317,6 +320,7 @@ html:not([data-theme="night"]) .grain{opacity:0.04}
   <section class="screen" id="s-play"></section>
 </div>
 
+<button class="outbox" id="outbox" hidden aria-live="polite"></button>
 <nav class="tabs hide" id="tabs" aria-label="App">
   <button data-go="now" class="on" aria-label="Today" title="Today"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.6"/><path d="M12 2.8v2.2M12 19v2.2M2.8 12H5M19 12h2.2M5.5 5.5l1.6 1.6M16.9 16.9l1.6 1.6M5.5 18.5l1.6-1.6M16.9 7.1l1.6-1.6"/></svg></button>
   <button data-go="rooms" aria-label="Schedule" title="Schedule"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></button>

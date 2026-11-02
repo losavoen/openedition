@@ -39,8 +39,12 @@ export default async function handler(req, res) {
         .map((m) => ({ url: m.url, type: /^video\//.test(m.type) ? 'video' : 'image' }));
       const note = clip(body.note, 600);
       if (!media.length && !note) return res.status(400).json({ error: 'Add a photo or a few words' });
-      const doc = { id: newId(), token: newToken(), kind: ['fit', 'daily'].includes(body.kind) ? body.kind : 'memory', name: clip(body.name, 60) || 'Someone', day: DAYS.includes(body.day) ? body.day : '', note, media, createdAt: new Date().toISOString() };
-      await put(`${PREFIX}${doc.id}.json`, JSON.stringify(doc), { access: 'public', addRandomSuffix: true, contentType: 'application/json', cacheControlMaxAge: 0 });
+      // qid: the phone's own id for a shot from its outbox, so a retried send overwrites instead of duplicating
+      const qid = /^[a-z0-9]{6,24}$/.test(String(body.qid || '')) ? String(body.qid) : '';
+      const doc = { id: qid ? 'q-' + qid : newId(), token: newToken(), kind: ['fit', 'daily'].includes(body.kind) ? body.kind : 'memory', name: clip(body.name, 60) || 'Someone', day: DAYS.includes(body.day) ? body.day : '', note, media, createdAt: new Date().toISOString() };
+      await put(`${PREFIX}${doc.id}.json`, JSON.stringify(doc), qid
+        ? { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: 'application/json', cacheControlMaxAge: 0 }
+        : { access: 'public', addRandomSuffix: true, contentType: 'application/json', cacheControlMaxAge: 0 });
       return res.status(201).json({ memory: view(doc), id: doc.id, token: doc.token });
     }
     if (req.method === 'DELETE') {
