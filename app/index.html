@@ -303,6 +303,17 @@ html:not([data-theme="night"]) .grain{opacity:0.04}
 .outbox{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--safe-b) + 96px);z-index:49;display:flex;gap:12px;align-items:center;white-space:nowrap;padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:11px;cursor:pointer;box-shadow:0 0 0 0 transparent;border-left:3px solid var(--acc)}
 .outbox[hidden]{display:none}
 .tabs.hide ~ .outbox,.outbox:has(+ .tabs.hide){display:none}
+/* first-time key: the icons you'll actually tap */
+.key{display:flex;flex-direction:column}
+.keyrow{display:grid;grid-template-columns:48px 1fr;gap:16px;align-items:center;width:100%;padding:14px 0;border:0;border-top:1px solid var(--line);background:none;color:var(--paper);text-align:left;font:inherit;cursor:pointer}
+.keyrow:first-child{border-top:0;padding-top:4px}
+.kic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);color:var(--paper)}
+.kic.shut{background:var(--paper);border-color:var(--paper)}
+.kic.shut i{width:14px;height:14px;border-radius:50%;border:2px solid var(--bg)}
+.keyrow:first-child .kic.shut{box-shadow:0 0 0 4px var(--bg),0 0 0 5px var(--acc)}
+.kt{display:flex;flex-direction:column;gap:2px}
+.kt b{font-weight:550;font-size:17px;letter-spacing:-0.01em}
+.kt span{font-size:14px;line-height:1.4;color:var(--muted)}
 </style>
 </head>
 <body>

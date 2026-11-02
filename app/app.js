@@ -448,7 +448,11 @@
         (next && nowRow ? '<div class="nextline"><span class="mono">Next · ' + esc(next.time) + '</span><span>' + esc(next.title) + '</span></div>' : '') +
       '</header>' +
       (store.get('coach', true) ? '<section class="sect" id="coach"><div class="sh"><span class="mono">First time here?</span><button class="mono linkbtn" id="coach-ok">Got it</button></div>' +
-        '<ol class="how"><li>Tap the round button to take a photo. You get 24 a day.</li><li>Your photos appear in Photos the next morning at 9.</li><li>Schedule has every plan. People has everyone coming.</li></ol></section>' : '') +
+        '<div class="key">' +
+          '<button class="keyrow" data-key="cam"><span class="kic shut"><i></i></span><span class="kt"><b>Shoot</b><span>The round button. 24 photos a day, no retakes.</span></span></button>' +
+          '<button class="keyrow" data-key="dark"><span class="kic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="3.5" width="14" height="14" rx="1"/><path d="M3.5 7v13.5H17"/><path d="M6.5 14l3.6-3.6 3 3 2-2 5.4 5"/></svg></span><span class="kt"><b>Develop</b><span>Everyone’s photos come back in Photos at 9am the next morning.</span></span></button>' +
+          '<button class="keyrow" data-key="rooms"><span class="kic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><span class="kt"><b>Follow</b><span>Schedule has every plan. People has everyone coming.</span></span></button>' +
+        '</div></section>' : '') +
       // today's photo
       '<section class="sect"><div class="sh"><span class="mono">Today’s photo challenge</span><span class="mono muted">' + (ROLL - used) + ' of ' + ROLL + ' left</span></div>' +
         '<div class="shotimg"><img src="' + DAY_HERO[d.day] + '" alt=""></div>' +
@@ -469,6 +473,7 @@
       '</div></section>';
     $('#now-shoot').onclick = openCam;
     var co = $('#coach-ok'); if (co) co.onclick = function () { store.set('coach', false); var c = $('#coach'); if (c) c.remove(); };
+    $$('.keyrow').forEach(function (k) { k.onclick = function () { var g = k.getAttribute('data-key'); if (g === 'cam') openCam(); else show(g); }; });
     $$('[data-act]', el).forEach(function (b) { b.onclick = function () { act(b.getAttribute('data-act')); }; });
   }
 
