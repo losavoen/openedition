@@ -71,7 +71,7 @@ An installable app (add to home screen) for the four days in Miami. It stays loc
 - **Rooms**: the four days as cassette-style cards with the run of show and that day's developed frames.
 - **Guests**: everyone's wall label and their frames.
 
-Preview switches: `/app/?preview` (open early), `/app/?at=sat-16:45` (pretend time), `/app/?sample` (sample photos), `/app/?welcome` (replay onboarding).
+Preview switches: `/app/?preview` (open early), `/app/?at=fri-14:30` (pretend time), `/app/?sample` (sample photos), `/app/?welcome` (replay onboarding).
 
 ## Spotted (the trip game)
 

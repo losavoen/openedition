@@ -24,7 +24,8 @@ async function previewOnly(request, url) {
   if (!pin || !v || v[1] !== (await hmac(pin, 'openedition-view-v1'))) return null;
   const p = url.pathname;
   if (p.startsWith('/api/')) return new Response(JSON.stringify({ error: 'Preview only' }), { status: 401, headers: { 'content-type': 'application/json' } });
-  if (p === '/app' || p === '/app/') return url.searchParams.has('sample') ? next() : Response.redirect(new URL(DEMO, url), 302);
+  // Preview always opens on Friday afternoon (also fixes saved links from when it opened on Saturday).
+  if (p === '/app' || p === '/app/') return url.searchParams.has('sample') && url.searchParams.get('at') === 'fri-14:30' ? next() : Response.redirect(new URL(DEMO, url), 302);
   if (p.startsWith('/app/') || p.startsWith('/assets/')) return next();
   if (p === '/tape') return url.searchParams.has('sample') ? next() : Response.redirect(new URL('/tape?sample', url), 302);
   return Response.redirect(new URL(DEMO, url), 302);

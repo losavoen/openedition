@@ -54,6 +54,8 @@
     return { date: o.year + '-' + o.month + '-' + o.day, min: (parseInt(o.hour, 10) % 24) * 60 + parseInt(o.minute, 10) };
   }
   var DAYKEYS = { fri: '2026-12-04', sat: '2026-12-05', sun: '2026-12-06', mon: '2026-12-07' };
+  // Older preview links opened on Saturday 4:45pm; send them to Friday instead.
+  if (Q.get('at') === 'sat-16:45' && SAMPLE) { Q.set('at', 'fri-14:30'); try { history.replaceState(null, '', location.pathname + '?' + Q.toString().replace(/=(&|$)/g, '$1')); } catch (e) {} }
   function now() {
     var at = Q.get('at');
     if (at) { var m = at.match(/^(fri|sat|sun|mon)-(\d{1,2}):(\d{2})$/); if (m) return { date: DAYKEYS[m[1]], min: +m[2] * 60 + +m[3] }; }
