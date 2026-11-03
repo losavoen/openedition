@@ -326,9 +326,6 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .grain{position:fixed;inset:-50%;pointer-events:none;z-index:40;opacity:0.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grainmove 0.9s steps(4) infinite}
 @keyframes grainmove{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}100%{transform:translate(0,0)}}
 /* film-strip dividers */
-.sprocket{height:26px;margin-top:120px;background:#1C1C1A;position:relative}
-.sprocket::before{content:"";position:absolute;left:0;right:0;top:8px;height:10px;background:repeating-linear-gradient(90deg,transparent 0 10px,#F2F2EE 10px 22px,transparent 22px 34px);opacity:0.85}
-.sprocket+.sec,.sprocket+section{padding-top:72px}
 /* rec indicators */
 .rec{display:inline-flex;align-items:center;gap:8px}
 .rec i{width:8px;height:8px;border-radius:50%;background:#C0262D;animation:recblink 1.2s steps(2) infinite}
@@ -512,14 +509,14 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <path class="bay" d="M850 0 L1000 0 L1000 640 L850 640 C860 520 840 380 855 250 C865 140 845 60 850 0 Z" style="opacity:.6"/>
 <text x="635" y="560" style="font-family:'Azeret Mono',monospace;font-size:13px;letter-spacing:.12em;fill:#5F5C57" transform="rotate(-82 635 560)">biscayne bay</text>
 <text x="940" y="90" style="font-family:'Azeret Mono',monospace;font-size:13px;letter-spacing:.12em;fill:#5F5C57" transform="rotate(90 940 90)">atlantic</text>
-<path class="ghost" d="M150 330 Q486 342 810 250 Q634 291 480 385 Q407 455 360 545 Q472 368 525 165 Q594 260 690 330 Q586 274 470 255 Q623 389 812 470 Q814 383 790 300"/>
-<path class="trail" id="trail" d="M150 330 Q486 342 810 250 Q634 291 480 385 Q407 455 360 545 Q472 368 525 165 Q594 260 690 330 Q586 274 470 255 Q623 389 812 470 Q814 383 790 300"/>
-<g class="stop" data-i="0"><circle cx="150" cy="330" r="15"/><text class="num" x="150" y="330">1</text><text class="lab" x="172" y="326" text-anchor="start">mia</text><text class="lab" x="172" y="348" text-anchor="start" style="font-size:13px;fill:#5F5C57">fri · 11:00</text></g><g class="stop" data-i="1"><circle cx="810" cy="250" r="15"/><text class="num" x="810" y="250">2</text><text class="lab" x="832" y="246" text-anchor="start">art basel</text><text class="lab" x="832" y="268" text-anchor="start" style="font-size:13px;fill:#5F5C57">fri · 14:00</text></g><g class="stop" data-i="2"><circle cx="480" cy="385" r="15"/><text class="num" x="480" y="385">3</text><text class="lab" x="458" y="381" text-anchor="end">miami river</text><text class="lab" x="458" y="403" text-anchor="end" style="font-size:13px;fill:#5F5C57">fri · 20:30</text></g><g class="stop" data-i="3"><circle cx="360" cy="545" r="15"/><text class="num" x="360" y="545">4</text><text class="lab" x="382" y="541" text-anchor="start">coconut grove</text><text class="lab" x="382" y="563" text-anchor="start" style="font-size:13px;fill:#5F5C57">sat · 10:00</text></g><g class="stop" data-i="4"><circle cx="525" cy="165" r="15"/><text class="num" x="525" y="165">5</text><text class="lab" x="547" y="161" text-anchor="start">design district</text><text class="lab" x="547" y="183" text-anchor="start" style="font-size:13px;fill:#5F5C57">sat · 12:00</text></g><g class="stop" data-i="5"><circle cx="690" cy="330" r="15"/><text class="num" x="690" y="330">6</text><text class="lab" x="668" y="326" text-anchor="end">the bay</text><text class="lab" x="668" y="348" text-anchor="end" style="font-size:13px;fill:#5F5C57">sat · 16:30</text></g><g class="stop" data-i="6"><circle cx="470" cy="255" r="15"/><text class="num" x="470" y="255">7</text><text class="lab" x="448" y="251" text-anchor="end">wynwood</text><text class="lab" x="448" y="273" text-anchor="end" style="font-size:13px;fill:#5F5C57">sat · 19:30</text></g><g class="stop" data-i="7"><circle cx="812" cy="470" r="15"/><text class="num" x="812" y="470">8</text><text class="lab" x="790" y="466" text-anchor="end">beach club</text><text class="lab" x="790" y="488" text-anchor="end" style="font-size:13px;fill:#5F5C57">sun · 12:30</text></g><g class="stop" data-i="8"><circle cx="790" cy="300" r="15"/><text class="num" x="790" y="300">9</text><text class="lab" x="812" y="296" text-anchor="start">lincoln road</text><text class="lab" x="812" y="318" text-anchor="start" style="font-size:13px;fill:#5F5C57">sun · 20:30</text></g>
+<path class="ghost" d="M150 330 Q486 342 810 250 Q628 295 470 395 Q403 461 360 545 Q472 368 525 165 Q594 260 690 330 Q617 318 545 330 Q667 421 812 470 Q658 335 470 255"/>
+<path class="trail" id="trail" d="M150 330 Q486 342 810 250 Q628 295 470 395 Q403 461 360 545 Q472 368 525 165 Q594 260 690 330 Q617 318 545 330 Q667 421 812 470 Q658 335 470 255"/>
+<g class="stop" data-i="0"><circle cx="150" cy="330" r="15"/><text class="num" x="150" y="330">1</text><text class="lab" x="172" y="326" text-anchor="start">mia</text><text class="lab" x="172" y="348" text-anchor="start" style="font-size:13px;fill:#5F5C57">fri · 11:00</text></g><g class="stop" data-i="1"><circle cx="810" cy="250" r="15"/><text class="num" x="810" y="250">2</text><text class="lab" x="832" y="246" text-anchor="start">art basel</text><text class="lab" x="832" y="268" text-anchor="start" style="font-size:13px;fill:#5F5C57">fri · 14:00</text></g><g class="stop" data-i="2"><circle cx="470" cy="395" r="15"/><text class="num" x="470" y="395">3</text><text class="lab" x="448" y="391" text-anchor="end">miami river</text><text class="lab" x="448" y="413" text-anchor="end" style="font-size:13px;fill:#5F5C57">fri · 20:30</text></g><g class="stop" data-i="3"><circle cx="360" cy="545" r="15"/><text class="num" x="360" y="545">4</text><text class="lab" x="382" y="541" text-anchor="start">coconut grove</text><text class="lab" x="382" y="563" text-anchor="start" style="font-size:13px;fill:#5F5C57">sat · 10:00</text></g><g class="stop" data-i="4"><circle cx="525" cy="165" r="15"/><text class="num" x="525" y="165">5</text><text class="lab" x="547" y="161" text-anchor="start">design district</text><text class="lab" x="547" y="183" text-anchor="start" style="font-size:13px;fill:#5F5C57">sat · 12:00</text></g><g class="stop" data-i="5"><circle cx="690" cy="330" r="15"/><text class="num" x="690" y="330">6</text><text class="lab" x="712" y="326" text-anchor="start">the bay</text><text class="lab" x="712" y="348" text-anchor="start" style="font-size:13px;fill:#5F5C57">sat · 16:30</text></g><g class="stop" data-i="6"><circle cx="545" cy="330" r="15"/><text class="num" x="545" y="330">7</text><text class="lab" x="523" y="326" text-anchor="end">downtown</text><text class="lab" x="523" y="348" text-anchor="end" style="font-size:13px;fill:#5F5C57">sat · 19:30</text></g><g class="stop" data-i="7"><circle cx="812" cy="470" r="15"/><text class="num" x="812" y="470">8</text><text class="lab" x="790" y="466" text-anchor="end">beach club</text><text class="lab" x="790" y="488" text-anchor="end" style="font-size:13px;fill:#5F5C57">sun · 12:30</text></g><g class="stop" data-i="8"><circle cx="470" cy="255" r="15"/><text class="num" x="470" y="255">9</text><text class="lab" x="448" y="251" text-anchor="end">wynwood</text><text class="lab" x="448" y="273" text-anchor="end" style="font-size:13px;fill:#5F5C57">sun · 16:30</text></g>
 <circle class="dot" id="trail-dot" r="8" cx="150" cy="330"/>
 </svg>
 <figcaption class="mono cap">A sketch, not to scale. The house isn’t on it.</figcaption>
 </figure>
-<div><p class="mono lbl ip" style="margin:0 0 12px">The weekend on a map</p><ol><li data-i="0"><span>01</span><b>MIA</b><small>Fri · 11:00 · Land, share an Uber</small></li><li data-i="1"><span>02</span><b>Art Basel</b><small>Fri · 14:00 · Miami Beach Convention Center</small></li><li data-i="2"><span>03</span><b>Miami River</b><small>Fri · 20:30 · Welcome dinner at Casa Neos</small></li><li data-i="3"><span>04</span><b>Coconut Grove</b><small>Sat · 10:00 · Brunch at the farmers market</small></li><li data-i="4"><span>05</span><b>Design District</b><small>Sat · 12:00 · Superblue, ICA, Edgewater</small></li><li data-i="5"><span>06</span><b>The bay</b><small>Sat · 16:30 · The boat, sunset to after dark</small></li><li data-i="6"><span>07</span><b>Wynwood</b><small>Sat · 19:30 · Dinner, then Everyday People</small></li><li data-i="7"><span>08</span><b>Beach club</b><small>Sun · 12:30 · Nikki Beach or Joia Beach</small></li><li data-i="8"><span>09</span><b>Lincoln Road</b><small>Sun · 20:30 · Dinner at MILA</small></li></ol></div>
+<div><p class="mono lbl ip" style="margin:0 0 12px">The weekend on a map</p><ol><li data-i="0"><span>01</span><b>MIA</b><small>Fri · 11:00 · Land, share an Uber</small></li><li data-i="1"><span>02</span><b>Art Basel</b><small>Fri · 14:00 · Miami Beach Convention Center</small></li><li data-i="2"><span>03</span><b>Miami River</b><small>Fri · 20:30 · Welcome dinner at Casa Neos</small></li><li data-i="3"><span>04</span><b>Coconut Grove</b><small>Sat · 10:00 · Brunch at the farmers market</small></li><li data-i="4"><span>05</span><b>Design District</b><small>Sat · 12:00 · Superblue, ICA, Edgewater</small></li><li data-i="5"><span>06</span><b>The bay</b><small>Sat · 16:30 · The boat, sunset to after dark</small></li><li data-i="6"><span>07</span><b>Downtown</b><small>Sat · 19:30 · Dinner at Mangrove, then out</small></li><li data-i="7"><span>08</span><b>Beach club</b><small>Sun · 12:30 · Nikki Beach or Joia Beach</small></li><li data-i="8"><span>09</span><b>Wynwood</b><small>Sun · 16:30 · Wynwood Walls at golden hour</small></li></ol></div>
 </div>
 <div class="arr sv" id="arrivals-board">
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 8px"><p class="mono lbl ip">Who lands when</p><p class="mono cap">Fills in from the RSVPs. Share rides from the same airport.</p></div>
@@ -527,7 +524,6 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 </section>
 
-<div class="sprocket" aria-hidden="true"></div>
 <!-- 04 · ITINERARY -->
 <section id="itinerary" class="sec wrap" aria-label="Itinerary" style="scroll-margin-top: 60px">
 <div class="sh mono lbl"><span class="room">Room 04</span><span>Itinerary</span><span>Three days, plus Monday</span></div>
@@ -582,8 +578,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="ros"><span class="mono cap">13:30</span><div><p style="font-weight: 550">Design District, ICA Miami, Edgewater</p><p class="cap">ICA is free. Galleries, shops and a walk by the water.</p></div></div>
 <div class="ros"><span class="mono cap">15:00</span><div><p style="font-weight: 550">Rest</p><p class="cap">Back to the house for a break.</p></div></div>
 <div class="ros"><span class="mono cap">16:30</span><div><p style="font-weight: 550">The boat</p><p class="cap">About $120 USD each, fuel included. We leave before sunset and come back after dark. <span class="ir">Book.</span></p></div></div>
-<div class="ros"><span class="mono cap">19:30</span><div><p style="font-weight: 550">Quick dinner in Wynwood</p><p class="cap">Near the next stop.</p></div></div>
-<div class="ros"><span class="mono cap">21:00</span><div><p style="font-weight: 550">Everyday People</p><p class="cap">The Art Week party. The 2026 date isn’t out yet. Last year it was on Saturday and cost $35.</p></div></div>
+<div class="ros"><span class="mono cap">19:30</span><div><p style="font-weight: 550">Dinner at Mangrove</p><p class="cap">Jamaican food and a cocktail bar downtown, 103 NW 1st Ave, close to where the boat comes in. Around $30 each before drinks. A DJ plays later and the bar is open until 3, so we can stay. <span class="ir">Book.</span></p></div></div>
+<div class="ros"><span class="mono cap">22:00</span><div><p style="font-weight: 550">Everyday People</p><p class="cap">The Art Week party. The 2026 date isn’t out yet. Last year it was on Saturday and cost $35. If it’s not on Saturday this year, we stay at Mangrove.</p></div></div>
 <div class="ros"><span class="mono cap">Late</span><div><p style="font-weight: 550">Circoloco, if you want it</p><p class="cap">Factory Town, Hialeah. Doors at 10, from $211.</p></div></div>
 </div>
 </div>
@@ -594,7 +590,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="is">Day 03</span><span>Sun · Dec 6</span></p>
 <h3 class="big">Sunday</h3>
 <p class="mono cap shot">Today’s shot · Sand to Wynwood</p>
-<p style="max-width: 400px; font-size: 16px; line-height: 1.4">Church and matcha on the same street, the beach club in the afternoon, then dinner on a rooftop for anyone still here.</p>
+<p style="max-width: 400px; font-size: 16px; line-height: 1.4">Church and matcha on the same street, the beach club in the afternoon, then a low-key dinner for anyone still here.</p>
 <div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="/_blob/f74d28082aed0a2416fb3f59121b5f88" alt="Loungers under fringed umbrellas on the sand, facing the Miami skyline" style="object-position: 50% 55%"></div>
 </div>
 <div class="page" style="background: #FFFFFF">
@@ -605,7 +601,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="ros"><span class="mono cap">12:30</span><div><p style="font-weight: 550">Beach club: Nikki Beach or Joia Beach</p><p class="cap">Four hours in the sun. About $100–150 each. Flying home today? Pack your bags in the morning and go to the airport from here. <span class="ir">Book.</span></p></div></div>
 <div class="ros"><span class="mono cap">16:30</span><div><p style="font-weight: 550">Wynwood Walls</p><p class="cap">Straight from the beach club, around golden hour. About $12–15, and an hour is plenty.</p></div></div>
 <div class="ros"><span class="mono cap">18:30</span><div><p style="font-weight: 550">Home to change</p><p class="cap">If you’re staying Monday.</p></div></div>
-<div class="ros"><span class="mono cap">20:30</span><div><p style="font-weight: 550">Dinner at MILA</p><p class="cap">Rooftop on Lincoln Road, smart casual. About $100–150 each. <span class="ir">Book.</span></p></div></div>
+<div class="ros"><span class="mono cap">20:30</span><div><p style="font-weight: 550">Low-key dinner</p><p class="cap">Somewhere casual near the house, or takeout at the house. Everyone pays for their own.</p></div></div>
 </div>
 </div>
 </article>
@@ -739,7 +735,6 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 07 · SOUNDTRACK -->
-<div class="sprocket" aria-hidden="true"></div>
 <section id="soundtrack" class="sec" aria-label="Soundtrack" style="scroll-margin-top: 60px">
 <div class="wrap"><div class="sh mono lbl"><span class="room">Room 08</span><span>Soundtrack</span><span>On the aux</span></div></div>
 <div class="two" style="gap: 0">
@@ -793,7 +788,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="cost sv"><span>Everyday People</span><span class="mono cap">About $35</span><span class="mono cap is">Core</span></div>
 <div class="cost sv"><span>Wynwood Walls</span><span class="mono cap">About $12–15</span><span class="mono cap is">Core</span></div>
 <div class="cost sv"><span>Casa Neos</span><span class="mono cap">$100–150</span><span class="mono cap ip">Estimate</span></div>
-<div class="cost sv"><span>MILA</span><span class="mono cap">$100–150</span><span class="mono cap ip">Estimate</span></div>
+<div class="cost sv"><span>Mangrove</span><span class="mono cap">About $30–50</span><span class="mono cap ip">Estimate</span></div>
 <div class="cost sv"><span>Beach club, Nikki or Joia</span><span class="mono cap">$100–150</span><span class="mono cap ip">Estimate</span></div>
 <div class="cost sv"><span>Getting around: rides, a shared car</span><span class="mono cap">Split by group</span><span class="mono cap ip">To plan</span></div>
 <div class="cost sv" style="color: #55524F"><span>Superblue</span><span class="mono cap">$42</span><span class="mono cap">Optional</span></div>
@@ -802,8 +797,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-top: 40px">
 <div style="display: flex; flex-direction: column; gap: 8px">
-<p style="font-size: clamp(48px, 6.4vw, 96px); line-height: 0.82; font-weight: 550; letter-spacing: -0.045em">$560–710</p>
-<p class="mono cap" style="text-transform: uppercase"><span class="is">Core $259–262</span> · <span class="ip">dinners and beach club $300–450</span></p>
+<p style="font-size: clamp(48px, 6.4vw, 96px); line-height: 0.82; font-weight: 550; letter-spacing: -0.045em">$490–610</p>
+<p class="mono cap" style="text-transform: uppercase"><span class="is">Core $259–262</span> · <span class="ip">dinners and beach club $230–350</span></p>
 </div>
 <p class="cap" style="max-width: 280px; font-size: 13px">Rough cost per person in USD, plus about $160 CAD ($115 USD) for the house, with half covered by me. Rides, cars and lunches are extra. If it’s too much, tell me in the RSVP and we’ll change the plan.</p>
 </div>
@@ -983,7 +978,6 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 11 · MEMORIES -->
-<div class="sprocket" aria-hidden="true"></div>
 <section id="memories" class="sec wrap" aria-label="Memories" style="scroll-margin-top: 60px">
 <div class="sh mono lbl"><span class="room">Room 13</span><span>Memories</span><span>After the weekend</span></div>
 <div class="two" style="align-items: end; row-gap: 28px; margin-bottom: 40px">
@@ -1057,7 +1051,7 @@ renderVals() {
 const s = this.state;
 const set = (k) => (e) => this.setState({ [k]: e.target.value });
 const opts = (key, list) => list.map((v) => ({ label: v, cls: s[key] === v ? 'pill on' : 'pill', pick: () => this.setState({ [key]: v }) }));
-const extrasList = ['Art Basel day ticket', 'Superblue', 'The boat', 'Everyday People', 'Circoloco', 'Beach club', 'Dinner at MILA', 'Happy to drive a rental', 'Splitting a rental car'];
+const extrasList = ['Art Basel day ticket', 'Superblue', 'The boat', 'Everyday People', 'Circoloco', 'Beach club', 'Dinner at Casa Neos', 'Happy to drive a rental', 'Splitting a rental car'];
 const toggle = (v) => () => this.setState({ extras: s.extras.includes(v) ? s.extras.filter((x) => x !== v) : s.extras.concat(v) });
 const declined = s.attending === 'Can’t make it';
 const go = (n) => () => this.setState({ step: n });

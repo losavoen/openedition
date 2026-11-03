@@ -21,7 +21,7 @@
     var opts = function (key, list) {
       return list.map(function (v) { return { label: v, cls: s[key] === v ? 'pill on' : 'pill', pick: function () { var p = {}; p[key] = v; setState(p); } }; });
     };
-    var extrasList = ['Art Basel day ticket', 'Superblue', 'The boat', 'Everyday People', 'Circoloco', 'Beach club', 'Dinner at MILA', 'Happy to drive a rental', 'Splitting a rental car'];
+    var extrasList = ['Art Basel day ticket', 'Superblue', 'The boat', 'Everyday People', 'Circoloco', 'Beach club', 'Dinner at Casa Neos', 'Happy to drive a rental', 'Splitting a rental car'];
     var toggle = function (v) { return function () { setState({ extras: s.extras.indexOf(v) > -1 ? s.extras.filter(function (x) { return x !== v; }) : s.extras.concat(v) }); }; };
     var declined = s.attending === 'Can’t make it';
     var go = function (n) { return function () { setState({ step: n }); }; };
