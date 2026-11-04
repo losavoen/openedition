@@ -118,26 +118,35 @@
   // Bottom nav: slides up while you scroll (past the hero), hides a moment after you stop.
   function dock() {
     var nav = $('dock'); if (!nav) return;
-    var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
-    var hero = document.querySelector('.hero');
-    var timer = null, hovering = false;
-    function current() {
-      var mid = window.innerHeight * 0.4, on = null;
-      links.forEach(function (a) { var h = a.getAttribute('href'); var el = h.charAt(0) === '#' ? document.querySelector(h) : null; if (el && el.getBoundingClientRect().top <= mid) on = a; });
-      links.forEach(function (a) { a.classList.toggle('on', a === on); });
-      if (on && on.scrollIntoView && nav.classList.contains('show')) { var box = nav.firstElementChild; box.scrollLeft = on.offsetLeft - box.clientWidth / 2 + on.clientWidth / 2; }
-    }
-    function hide() { if (!hovering) nav.classList.remove('show'); }
-    window.addEventListener('scroll', function () {
+    var hero = document.querySelector('.hero'), list = $('dk-list'), btn = $('dk-idx'), prog = $('dk-prog');
+    var rooms = Array.prototype.slice.call(list.querySelectorAll('a[data-n]'));
+    var quick = Array.prototype.slice.call(nav.querySelectorAll('.dk-quick a'));
+    var now = $('dk-now'), nEl = $('dk-n'), tEl = $('dk-t'), queued = false;
+    function open(v) { list.hidden = !v; btn.setAttribute('aria-expanded', v ? 'true' : 'false'); btn.querySelector('span').textContent = v ? 'close' : 'index'; }
+    function update() {
+      queued = false;
       var past = !hero || hero.getBoundingClientRect().bottom < window.innerHeight * 0.5;
-      if (!past) { nav.classList.remove('show'); return; }
-      nav.classList.add('show'); current();
-      clearTimeout(timer); timer = setTimeout(hide, 1600);
-    }, { passive: true });
-    nav.addEventListener('pointerenter', function () { hovering = true; clearTimeout(timer); });
-    nav.addEventListener('pointerleave', function () { hovering = false; timer = setTimeout(hide, 1200); });
-    nav.addEventListener('focusin', function () { nav.classList.add('show'); clearTimeout(timer); });
-    nav.addEventListener('focusout', function () { timer = setTimeout(hide, 1200); });
+      nav.classList.toggle('show', past || !list.hidden);
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      prog.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, window.scrollY / max) : 0).toFixed(4) + ')';
+      var mid = window.innerHeight * 0.4, on = rooms[0];
+      rooms.forEach(function (a) { var el = document.querySelector(a.getAttribute('href')); if (el && el.getBoundingClientRect().top <= mid) on = a; });
+      rooms.forEach(function (a) { a.classList.toggle('on', a === on); });
+      quick.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === on.getAttribute('href')); });
+      if (nEl.textContent !== on.getAttribute('data-n')) {
+        nEl.textContent = on.getAttribute('data-n');
+        tEl.textContent = on.textContent.replace(/^\d+/, '');
+        now.setAttribute('href', on.getAttribute('href'));
+      }
+    }
+    window.addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+    window.addEventListener('resize', update);
+    btn.addEventListener('click', function () { open(list.hidden); update(); });
+    list.addEventListener('click', function (e) { if (e.target.closest('a')) open(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !list.hidden) { open(false); btn.focus(); } });
+    document.addEventListener('click', function (e) { if (!list.hidden && !nav.contains(e.target)) open(false); });
+    nav.addEventListener('focusin', function () { nav.classList.add('show'); });
+    update();
   }
 
 

@@ -301,14 +301,32 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .edition canvas{width:100%;max-width:360px;height:auto;box-shadow:0 18px 40px rgba(28,28,26,0.14)}
 
 /* bottom nav: shows only while scrolling */
-.dock{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:50;transform:translate(-50%,140%);opacity:0;transition:transform 0.6s var(--ease),opacity 0.4s var(--ease);max-width:calc(100vw - 24px)}
-.dock.show{transform:translate(-50%,0);opacity:1}
-.dock div{display:flex;gap:2px;background:#1C1C1A;border-radius:999px;padding:5px;overflow-x:auto;scrollbar-width:none;box-shadow:0 14px 34px rgba(28,28,26,0.22)}
-.dock div::-webkit-scrollbar{display:none}
-.dock a{flex:none;color:#F2F2EE;font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.04em;text-transform:lowercase;padding:9px 12px;border-radius:999px;white-space:nowrap;transition:background-color 0.3s var(--ease),color 0.3s var(--ease)}
-.dock a:hover{background:rgba(255,255,255,0.12)}
-.dock a.on{background:var(--blush);color:#1C1C1A}
-@media (prefers-reduced-motion:reduce){.dock{transition:opacity 0.2s}}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:50;transform:translateY(100%);transition:transform .6s var(--ease);font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;text-transform:lowercase;color:#1C1C1A}
+.dock.show{transform:none}
+.dk-bar{position:relative;display:flex;align-items:center;gap:24px;height:52px;padding:0 max(27px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(27px,env(safe-area-inset-left,0px));background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid #1C1C1A;box-sizing:content-box}
+.dk-prog{position:absolute;left:0;top:-1px;height:2px;width:100%;background:var(--peri);transform-origin:0 50%;transform:scaleX(0)}
+.dk-now{display:flex;gap:14px;align-items:baseline;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dk-now span:first-child{color:var(--peri-ink)}
+.dk-quick{margin-left:auto;display:flex;gap:22px}
+.dk-quick a,.dk-out a{position:relative}
+.dk-quick a::after{content:'';position:absolute;left:0;right:0;bottom:-5px;height:1px;background:#1C1C1A;transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+.dk-quick a:hover::after,.dk-quick a.on::after{transform:scaleX(1);transform-origin:left}
+.dk-idx{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 0}
+.dk-idx i{position:relative;width:14px;height:8px;border-top:1px solid #1C1C1A;border-bottom:1px solid #1C1C1A;transition:transform .4s var(--ease)}
+.dk-idx[aria-expanded="true"] i{transform:rotate(90deg)}
+.dk-idx:focus-visible,.dock a:focus-visible{outline:2px solid var(--peri-ink);outline-offset:3px}
+.dk-list{position:absolute;left:0;right:0;bottom:100%;background:#FFFFFF;border-top:1px solid #1C1C1A;padding:22px max(27px,env(safe-area-inset-right,0px)) 26px max(27px,env(safe-area-inset-left,0px));max-height:70vh;overflow:auto;animation:dkUp .45s var(--ease) both}
+.dk-list>p{margin:0 0 14px;color:var(--peri-ink)}
+.dk-list ol{list-style:none;margin:0;padding:0;columns:3 220px;column-gap:40px}
+.dk-list li{break-inside:avoid}
+.dk-list li a{display:flex;gap:16px;padding:9px 0;border-bottom:1px solid rgba(28,28,26,.14);font-size:13px;transition:padding-left .35s var(--ease)}
+.dk-list li a span{color:#9A978F}
+.dk-list li a:hover,.dk-list li a.on{padding-left:8px}
+.dk-list li a.on span{color:var(--peri-ink)}
+.dk-out{display:flex;gap:24px;margin-top:18px}
+@keyframes dkUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (max-width:760px){.dk-quick{display:none}.dk-bar{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));justify-content:space-between}.dk-list{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+@media (prefers-reduced-motion:reduce){.dock,.dk-list{transition:none;animation:none}}
 
 /* ===== exhibition + tape layer ===== */
 /* room plaques */
@@ -1039,12 +1057,16 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </main>
 
 <!-- BOTTOM NAV (shown only while scrolling) -->
-<nav class="dock" id="dock" aria-label="Sections"><div>
-<a href="#plan">plan</a><a href="#stay">the house</a><a href="#around">getting around</a><a href="#itinerary">itinerary</a><a href="#boat">boat</a><a href="#wardrobe">wardrobe</a><a href="#soundtrack">soundtrack</a><a href="#costs">costs</a><a href="#faq">faq</a><a href="#rsvp">rsvp</a><a href="#guests">who’s coming</a><a href="#memories">memories</a><a href="/tape">the tape</a><a href="/app/">the app</a>
+<nav class="dock" id="dock" aria-label="Sections">
+<div class="dk-list" id="dk-list" hidden><p class="mono">Index</p><ol><li><a href="#plan" data-n="01"><span>01</span>the plan</a></li><li><a href="#stay" data-n="02"><span>02</span>where we’re staying</a></li><li><a href="#around" data-n="03"><span>03</span>getting around</a></li><li><a href="#itinerary" data-n="04"><span>04</span>itinerary</a></li><li><a href="#boat" data-n="05"><span>05</span>the boat</a></li><li><a href="#wardrobe" data-n="06"><span>06</span>wardrobe</a></li><li><a href="#kit" data-n="07"><span>07</span>the kit</a></li><li><a href="#soundtrack" data-n="08"><span>08</span>soundtrack</a></li><li><a href="#costs" data-n="09"><span>09</span>costs</a></li><li><a href="#faq" data-n="10"><span>10</span>questions</a></li><li><a href="#rsvp" data-n="11"><span>11</span>rsvp</a></li><li><a href="#guests" data-n="12"><span>12</span>who’s coming</a></li><li><a href="#memories" data-n="13"><span>13</span>memories</a></li></ol><div class="dk-out"><a href="/tape">the tape ↗</a><a href="/app/">the app ↗</a></div></div>
+<div class="dk-bar"><i class="dk-prog" id="dk-prog" aria-hidden="true"></i>
+<a class="dk-now" id="dk-now" href="#plan"><span id="dk-n">01</span><span id="dk-t">the plan</span></a>
+<div class="dk-quick"><a href="#itinerary">itinerary</a><a href="#costs">costs</a><a href="#rsvp">rsvp</a></div>
+<button type="button" class="dk-idx" id="dk-idx" aria-expanded="false" aria-controls="dk-list"><span>index</span><i aria-hidden="true"></i></button>
 </div></nav>
 <div class="grain" aria-hidden="true"></div>
 <!-- FOOTER -->
-<footer style="width: 100%; box-sizing: border-box; padding: 120px 27px 28px">
+<footer style="width: 100%; box-sizing: border-box; padding: 120px 27px 92px">
 <div class="mono cap" style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid #1C1C1A; text-transform: uppercase"><span class="rec">End of tape · See you in Miami</span><span>Brought to you by Roaming Haus</span></div>
 </footer>
 
