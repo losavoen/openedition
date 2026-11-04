@@ -145,7 +145,7 @@
       '<div style="display:flex;justify-content:space-between"><span class="mono">Open Edition</span><span class="mono muted">(miami art week)</span></div>' +
       '<div style="display:flex;flex-direction:column;gap:22px">' +
       '<p class="mono muted">The app</p><h1 class="big">Doors<br>open<br>Friday</h1>' +
-      '<p style="font-size:17px;max-width:320px" class="muted">This opens on December 4, the day we land. Until then, everything you need is on the site.</p>' +
+      '<p style="font-size:17px;max-width:320px" class="muted">Doors open Friday, December 4, the day we land. Until then, everything you need is on the site.</p>' +
       '<div class="count"><div><b>00</b><span class="mono muted">days</span></div><div><b>00</b><span class="mono muted">hrs</span></div><div><b>00</b><span class="mono muted">min</span></div><div><b>00</b><span class="mono muted">sec</span></div></div>' +
       '</div>' +
       '<a class="btn ghost full" href="/">Back to the site</a></div>';
