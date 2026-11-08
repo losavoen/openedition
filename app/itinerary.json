@@ -9,34 +9,24 @@
    "shot": "Your first look at the fair",
    "rows": [
     {
-     "time": "11:00",
+     "time": "Evening",
      "title": "Land",
      "desc": "MIA or FLL. MIA is about 20 minutes from the house and FLL about 40–50. We’ll share Ubers from each airport."
     },
     {
-     "time": "12:30",
-     "title": "Bags down, quick lunch",
-     "desc": "I’ll ask the host about dropping bags early. Then a quick lunch nearby."
+     "time": "Before",
+     "title": "Here early?",
+     "desc": "Rest at the house, or walk around the Design District. Nothing is planned until dinner."
     },
     {
-     "time": "14:00",
-     "title": "Art Basel Miami Beach",
-     "desc": "Miami Beach Convention Center, open until 6. Day ticket $92. Ride over, or try the free water taxi."
+     "time": "21:30",
+     "title": "Late dinner: Mangrove or Thai in",
+     "desc": "Mangrove is Jamaican food and a cocktail bar downtown, 103 NW 1st Ave. The kitchen is open until 11:45 on Fridays. Or we order Thai and eat at the house. We’ll decide on the day."
     },
     {
-     "time": "18:30",
-     "title": "Check in, shower, get ready",
-     "desc": "Time to get ready."
-    },
-    {
-     "time": "20:30",
-     "title": "Welcome dinner, Casa Neos",
-     "desc": "On the Miami River. About $100–150 each. Book."
-    },
-    {
-     "time": "22:30",
-     "title": "Out",
-     "desc": "Easiest option: unKommon Art Week at Little River Studios, a few blocks from the house. Tickets on DICE."
+     "time": "Late",
+     "title": "Out, if you still have energy",
+     "desc": "unKommon Art Week at Little River Studios is a few blocks from the house. Tickets on DICE."
     }
    ]
   },
@@ -50,43 +40,38 @@
    "rows": [
     {
      "time": "10:00",
-     "title": "Brunch, Coconut Grove Farmers Market",
-     "desc": "3300 Grand Ave. Saturdays only."
+     "title": "Breakfast at Libertino Cafe",
+     "desc": "Wynwood, 2659 NW 2nd Ave. Good coffee, milk bread sandwiches and waffles. A slow start."
     },
     {
-     "time": "12:00",
-     "title": "Superblue: James Turrell’s Blue Sea Sky",
-     "desc": "1101 NW 23rd St. $42 on weekends. Book a time."
+     "time": "11:30",
+     "title": "Galleries",
+     "desc": "Wynwood and the Design District. ICA Miami is free. Superblue is $42 if you want it. Book a time."
     },
     {
      "time": "13:30",
-     "title": "Design District, ICA Miami, Edgewater",
-     "desc": "ICA is free. Galleries, shops and a walk by the water."
+     "title": "Water taxi to the fair",
+     "desc": "Free. Boats leave the Venetian Marina, 1635 N Bayshore Dr, every 7–9 minutes for Maurice Gibb Park in Miami Beach. A free shuttle goes from there to the fair."
     },
     {
-     "time": "15:00",
-     "title": "Rest",
-     "desc": "Back to the house for a break."
+     "time": "14:00",
+     "title": "Art Basel Miami Beach",
+     "desc": "Miami Beach Convention Center, open until 6. Day ticket $92. This is the only ticket we need."
     },
     {
-     "time": "16:30",
-     "title": "The boat",
-     "desc": "About $120 USD each, fuel included. We leave before sunset and come back after dark. Book."
+     "time": "18:30",
+     "title": "Home to get ready",
+     "desc": "Water taxi back, or a shared ride."
     },
     {
-     "time": "19:30",
-     "title": "Dinner at Mangrove",
-     "desc": "Jamaican food and a cocktail bar downtown, 103 NW 1st Ave, close to where the boat comes in. Around $30 each before drinks. A DJ plays later and the bar is open until 3, so we can stay. Book."
+     "time": "20:00",
+     "title": "Dinner, to be decided",
+     "desc": "Somewhere special, or somewhere affordable. We’ll choose closer to the date."
     },
     {
      "time": "22:00",
      "title": "Everyday People",
-     "desc": "The Art Week party. The 2026 date isn’t out yet. Last year it was on Saturday and cost $35. If it’s not on Saturday this year, we stay at Mangrove."
-    },
-    {
-     "time": "Late",
-     "title": "Circoloco, if you want it",
-     "desc": "Factory Town, Hialeah. Doors at 10, from $211."
+     "desc": "The Art Week party. The 2026 date isn’t out yet. Last year it was on Saturday and cost $35."
     }
    ]
   },
@@ -110,23 +95,18 @@
     },
     {
      "time": "12:30",
-     "title": "Beach club: Nikki Beach or Joia Beach",
-     "desc": "Four hours in the sun. About $100–150 each. Flying home today? Pack your bags in the morning and go to the airport from here. Book."
-    },
-    {
-     "time": "16:30",
      "title": "Wynwood Walls",
-     "desc": "Straight from the beach club, around golden hour. About $12–15, and an hour is plenty."
+     "desc": "About $12–15, and an hour is plenty."
     },
     {
-     "time": "18:30",
-     "title": "Home to change",
-     "desc": "If you’re staying Monday."
+     "time": "15:00",
+     "title": "Casa Neos",
+     "desc": "The day party, on the Miami River. About $100–150 each. Flying home today? Pack in the morning and go to the airport from here. Book."
     },
     {
-     "time": "20:30",
-     "title": "Low-key dinner",
-     "desc": "Somewhere casual near the house, or takeout at the house. Everyone pays for their own."
+     "time": "Evening",
+     "title": "Takeout at the house",
+     "desc": "For anyone still here. Everyone pays for their own."
     }
    ]
   },
@@ -152,6 +132,11 @@
      "time": "11:00",
      "title": "Or take the day",
      "desc": "A last swim, anything we missed, or a long lunch."
+    },
+    {
+     "time": "12:00",
+     "title": "Beach club, if we want it",
+     "desc": "Nikki Beach or Joia Beach, about $100–150 each. Only if enough people want it and it fits the budget. Tell me in the RSVP."
     },
     {
      "time": "18:00",
