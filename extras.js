@@ -109,6 +109,7 @@
 
   function house() {
     api('/api/house').then(function (j) {
+      if (j.pay) Array.prototype.forEach.call(document.querySelectorAll('[data-house="pay"]'), function (el) { el.textContent = j.pay; });
       if (!j.address) return;
       Array.prototype.forEach.call(document.querySelectorAll('[data-house="address"]'), function (el) { el.textContent = j.address; });
       Array.prototype.forEach.call(document.querySelectorAll('[data-house="map"]'), function (el) { el.href = j.maps; });

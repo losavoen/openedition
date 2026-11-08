@@ -179,6 +179,42 @@
     onScroll();
   }
 
-  function init() { [ring, words, highlight, days, route].forEach(function (f) { try { f(); } catch (e) { if (window.console) console.warn('motion', e); } }); }
+
+  /* ---------- 6. section links land at the top of the section ----------
+     Images above a section can finish loading after the jump and push it down
+     the page. Keep the section pinned to the top until the page settles or the
+     visitor scrolls themselves. */
+  function anchors() {
+    var target = null, until = 0, lock = false;
+    function offset(el) { var m = parseFloat(getComputedStyle(el).scrollMarginTop) || 0; return el.getBoundingClientRect().top + window.scrollY - m; }
+    function go(el, smooth) {
+      target = el; until = Date.now() + 2500; lock = true;
+      window.scrollTo({ top: offset(el), behavior: smooth && !reduce ? 'smooth' : 'auto' });
+      setTimeout(function () { lock = false; settle(); }, smooth ? 900 : 50);
+      clearInterval(go.t);
+      go.t = setInterval(function () { if (!target || Date.now() > until) { clearInterval(go.t); return; } settle(); }, 120);
+    }
+    function settle() {
+      if (!target || lock || Date.now() > until) return;
+      var want = offset(target);
+      if (Math.abs(window.scrollY - want) > 4) window.scrollTo({ top: want, behavior: 'auto' });
+    }
+    function stop() { target = null; }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey) return;
+      var id = a.getAttribute('href').slice(1); if (!id) return;
+      var el = document.getElementById(id); if (!el) return;
+      e.preventDefault();
+      if (history.pushState) history.pushState(null, '', '#' + id);
+      go(el, true);
+    });
+    if ('ResizeObserver' in window) new ResizeObserver(settle).observe(document.body);
+    document.addEventListener('load', settle, true);
+    ['wheel', 'touchstart', 'keydown'].forEach(function (t) { window.addEventListener(t, stop, { passive: true }); });
+    if (location.hash.length > 1) { var el = document.getElementById(location.hash.slice(1)); if (el) setTimeout(function () { go(el, false); }, 60); }
+  }
+
+  function init() { [ring, words, highlight, days, route, anchors].forEach(function (f) { try { f(); } catch (e) { if (window.console) console.warn('motion', e); } }); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
