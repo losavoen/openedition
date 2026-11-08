@@ -49,12 +49,17 @@
      "desc": "We’ll walk through Wynwood and the Design District. ICA Miami is free, and Superblue is $42 if you want to add it. Book a time."
     },
     {
-     "time": "13:30",
+     "time": "12:45",
+     "title": "Lunch at The Taco Stand",
+     "desc": "Wynwood, 313 NW 25th St, a short walk from the galleries. Fish tacos and carne asada fries. Cheap and quick before the fair."
+    },
+    {
+     "time": "13:45",
      "title": "Water taxi to the fair",
      "desc": "Free. Boats leave the Venetian Marina, 1635 N Bayshore Dr, every 7–9 minutes for Maurice Gibb Park in Miami Beach. A free shuttle goes from there to the fair."
     },
     {
-     "time": "14:00",
+     "time": "14:15",
      "title": "Art Basel Miami Beach",
      "desc": "Miami Beach Convention Center, open until 6. The $92 day ticket is all we need."
     },
