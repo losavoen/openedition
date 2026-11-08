@@ -9,23 +9,23 @@
    "shot": "Your first look at the fair",
    "rows": [
     {
-     "time": "Evening",
-     "title": "Land",
-     "desc": "MIA or FLL. MIA is about 20 minutes from the house and FLL about 40–50. We’ll share Ubers from each airport."
+     "time": "Anytime",
+     "title": "Land and drop your bags",
+     "desc": "MIA is about 20 minutes from the house and FLL is 40 to 50. Share an Uber with anyone landing around the same time."
     },
     {
-     "time": "Before",
-     "title": "Here early?",
-     "desc": "Rest at the house, or walk around the Design District. Nothing is planned until dinner."
+     "time": "Daytime",
+     "title": "If you’re in early",
+     "desc": "Rest at the house or walk around the Design District. Nothing’s planned until dinner."
     },
     {
      "time": "22:00",
      "title": "Welcome dinner at Mangrove",
-     "desc": "Something chill to start. Jamaican food and a cocktail bar downtown, 103 NW 1st Ave. The kitchen is open until 11:45 on Fridays, and a DJ plays later. Around $30 each before drinks. Book."
+     "desc": "A relaxed first night. Jamaican food and cocktails downtown at 103 NW 1st Ave. The kitchen is open until 11:45 on Fridays and there’s a DJ later. Around $30 each before drinks. Book."
     },
     {
      "time": "Late",
-     "title": "Out, if you still have energy",
+     "title": "Out, if you’re up for it",
      "desc": "unKommon Art Week at Little River Studios is a few blocks from the house. Tickets on DICE."
     }
    ]
@@ -41,12 +41,12 @@
     {
      "time": "10:00",
      "title": "Breakfast at Libertino Cafe",
-     "desc": "Wynwood, 2659 NW 2nd Ave. Good coffee, milk bread sandwiches and waffles. A slow start."
+     "desc": "Wynwood, 2659 NW 2nd Ave. Good coffee, milk bread sandwiches and waffles."
     },
     {
      "time": "11:30",
      "title": "Galleries",
-     "desc": "Wynwood and the Design District. ICA Miami is free. Superblue is $42 if you want it. Book a time."
+     "desc": "We’ll walk through Wynwood and the Design District. ICA Miami is free, and Superblue is $42 if you want to add it. Book a time."
     },
     {
      "time": "13:30",
@@ -56,7 +56,7 @@
     {
      "time": "14:00",
      "title": "Art Basel Miami Beach",
-     "desc": "Miami Beach Convention Center, open until 6. Day ticket $92. This is the only ticket we need."
+     "desc": "Miami Beach Convention Center, open until 6. The $92 day ticket is all we need."
     },
     {
      "time": "18:30",
@@ -65,8 +65,8 @@
     },
     {
      "time": "20:00",
-     "title": "Dinner, to be decided",
-     "desc": "Somewhere special, or somewhere affordable. We’ll choose closer to the date."
+     "title": "Dinner",
+     "desc": "Still deciding between somewhere special and somewhere more affordable. I’ll confirm closer to the date."
     },
     {
      "time": "22:00",
@@ -96,7 +96,7 @@
     {
      "time": "12:15",
      "title": "Magic City Flea Market",
-     "desc": "At Ironside in Little River, 7580 NE 4th Ct, a few minutes from the house. Vintage clothes, handmade pieces and art from local vendors. It runs on Sundays, usually from noon. I’ll confirm Art Week hours."
+     "desc": "At Ironside in Little River, 7580 NE 4th Ct, a few minutes from the house. Vintage clothes, handmade pieces and art from local vendors. It usually opens at noon on Sundays. I’ll confirm the hours for that weekend."
     },
     {
      "time": "13:45",
@@ -106,12 +106,12 @@
     {
      "time": "15:00",
      "title": "Casa Neos",
-     "desc": "The day party, on the Miami River. About $100–150 each. Flying home today? Pack in the morning and go to the airport from here. Book."
+     "desc": "A day party on the Miami River. About $100–150 each. If you’re flying home Sunday, pack in the morning and head to the airport from here. Book."
     },
     {
      "time": "Evening",
      "title": "Takeout at the house",
-     "desc": "For anyone still here. Everyone pays for their own."
+     "desc": "For whoever’s still around. Everyone covers their own."
     }
    ]
   },
@@ -126,7 +126,7 @@
     {
      "time": "09:00",
      "title": "Coffee, then pack",
-     "desc": "Check out by 11, time to confirm with the host. Bags come with us."
+     "desc": "Checkout is at 11, which I’m confirming with the host. We’ll bring our bags with us."
     },
     {
      "time": "11:00",
@@ -135,13 +135,13 @@
     },
     {
      "time": "11:00",
-     "title": "Or take the day",
-     "desc": "A last swim, anything we missed, or a long lunch."
+     "title": "Or take the day off",
+     "desc": "A swim, anything we missed, or a long lunch."
     },
     {
      "time": "12:00",
-     "title": "Beach club, if we want it",
-     "desc": "Nikki Beach or Joia Beach, about $100–150 each. Only if enough people want it and it fits the budget. Tell me in the RSVP."
+     "title": "Beach club, maybe",
+     "desc": "Nikki Beach or Joia Beach, about $100–150 each. We’ll only go if enough people are interested, so let me know in the RSVP."
     },
     {
      "time": "18:00",
