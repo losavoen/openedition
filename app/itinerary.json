@@ -19,9 +19,9 @@
      "desc": "Rest at the house, or walk around the Design District. Nothing is planned until dinner."
     },
     {
-     "time": "21:30",
-     "title": "Late dinner: Mangrove or Thai in",
-     "desc": "Mangrove is Jamaican food and a cocktail bar downtown, 103 NW 1st Ave. The kitchen is open until 11:45 on Fridays. Or we order Thai and eat at the house. We’ll decide on the day."
+     "time": "22:00",
+     "title": "Welcome dinner at Mangrove",
+     "desc": "Something chill to start. Jamaican food and a cocktail bar downtown, 103 NW 1st Ave. The kitchen is open until 11:45 on Fridays, and a DJ plays later. Around $30 each before drinks. Book."
     },
     {
      "time": "Late",
@@ -94,7 +94,12 @@
      "desc": "40 NE 40th St, across the street."
     },
     {
-     "time": "12:30",
+     "time": "12:15",
+     "title": "Magic City Flea Market",
+     "desc": "At Ironside in Little River, 7580 NE 4th Ct, a few minutes from the house. Vintage clothes, handmade pieces and art from local vendors. It runs on Sundays, usually from noon. I’ll confirm Art Week hours."
+    },
+    {
+     "time": "13:45",
      "title": "Wynwood Walls",
      "desc": "About $12–15, and an hour is plenty."
     },
