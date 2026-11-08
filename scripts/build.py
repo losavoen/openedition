@@ -79,7 +79,10 @@ for aid, date in [('fri', '2026-12-04'), ('sat', '2026-12-05'), ('sun', '2026-12
     for i, (h, m, title, desc) in enumerate(rows):
         start = starts[i]
         end = starts[i + 1] if i + 1 < len(starts) and starts[i + 1] > start else start + timedelta(minutes=90)
-        events.append((start, end, _txt(title), _txt(desc or '')))
+        _links = re.findall(r'<a class="lk" href="([^"]+)"[^>]*>([^<]*?) ↗</a>', desc or '')
+        _d = _txt(re.sub(r'\s*<a class="lk".*?</a>', '', desc or ''))
+        if _links: _d += '\\n' + '\\n'.join(_txt(l) + ': ' + u.replace(',', '\\,').replace(';', '\\;') for u, l in _links)
+        events.append((start, end, _txt(title), _d))
 stamp = datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')
 lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Open Edition//Miami Art Week//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Open Edition (miami art week)', 'X-WR-TIMEZONE:America/New_York']
 for n, (s_, e_, t_, d_) in enumerate(events):
@@ -102,7 +105,12 @@ for aid, date, day, side, color, shot in [
     if art:
         for t, title, desc in re.findall(r'<div class="ros"><span class="mono cap">([^<]*)</span><div><p style="font-weight: 550">(.*?)</p>(?:<p class="cap">(.*?)</p>)?', art.group(0), re.S):
             clean = lambda x: _html.unescape(re.sub(r'<[^>]+>', '', x)).strip()
-            rows.append({'time': clean(t), 'title': clean(title), 'desc': clean(desc or '')})
+            links = [{'label': clean(l), 'url': _html.unescape(u)} for u, l in re.findall(r'<a class="lk" href="([^"]+)"[^>]*>([^<]*?) ↗</a>', desc or '')]
+            row = {'time': clean(t), 'title': clean(title), 'desc': clean(re.sub(r'\s*<a class="lk".*?</a>', '', desc or ''))}
+            if links: row['links'] = links
+            rows.append(row)
+    _shot = re.search(r'Today’s shot · ([^<]+)<', art.group(0)) if art else None
+    if _shot: shot = _html.unescape(_shot.group(1)).strip()
     _days.append({'id': aid, 'day': day, 'date': date, 'side': side, 'color': color, 'shot': shot, 'rows': rows})
 (root / 'app').mkdir(exist_ok=True)
 (root / 'app' / 'itinerary.json').write_text(json.dumps({'days': _days}, ensure_ascii=False, indent=1))

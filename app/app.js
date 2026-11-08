@@ -538,7 +538,7 @@
     var isToday = S.days.indexOf(d) === t.i, cur = null;
     if (isToday) d.rows.forEach(function (r, i) { var m = toMin(r.time); if (m != null && m <= t.n.min) cur = i; });
     return '<div class="timeline">' + d.rows.map(function (r, i) {
-      return '<div class="trow' + (i === cur ? ' now' : '') + '"><span class="mono t">' + esc(r.time) + '</span><div><p style="font-weight:550">' + esc(r.title) + '</p>' + (r.desc ? '<p class="d">' + esc(r.desc) + '</p>' : '') + '</div></div>';
+      return '<div class="trow' + (i === cur ? ' now' : '') + '"><span class="mono t">' + esc(r.time) + '</span><div><p style="font-weight:550">' + esc(r.title) + '</p>' + (r.desc ? '<p class="d">' + esc(r.desc) + '</p>' : '') + (r.links ? '<p class="lks">' + r.links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + ' ↗</a>'; }).join('') + '</p>' : '') + '</div></div>';
     }).join('') + '</div>';
   }
   function dayDetail(i) {
