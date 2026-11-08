@@ -416,6 +416,11 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .route.armed li{color:#9A978F}.route.armed li.lit{color:#1C1C1A}
 @media (max-width:760px){.route{grid-template-columns:minmax(0,1fr)}.route .stop .lab{display:none}}
 @media (prefers-reduced-motion:reduce){.kin .kw>span{transform:none!important}.hl{background-size:100% 38%}}
+/* boat on hold: faded images and a small tag, kept on the page */
+.maybe img{filter:grayscale(1) contrast(.92)!important;opacity:.62;transition:opacity .4s var(--ease)}
+.maybe:hover img{opacity:.8}
+.hold{position:absolute;z-index:2;left:12px;top:12px;padding:5px 9px;background:#FFFFFF;color:#1C1C1A;border:1px solid #1C1C1A;font-size:10px;letter-spacing:.1em;text-transform:uppercase;transform:rotate(-3deg)}
+.pola .ph{position:relative}
 </style>
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
@@ -434,7 +439,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 
 <!-- BANNER -->
 <div class="ticker" aria-label="Miami, December 4–7. Monday is optional. RSVP by Tuesday, November 10." style="background: var(--blush); padding: 11px 0; font-size: 13px; text-transform: lowercase; color: #1C1C1A">
-<div aria-hidden="true"><span class="cd" style="padding-right: 40px">Five weeks to Miami</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami, December 4–7</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Monday is optional</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span><span class="cd" style="padding-right: 40px">Five weeks to Miami</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami Art Week, Friday to Sunday</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Stay Monday if you can</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span></div>
+<div aria-hidden="true"><span class="cd" style="padding-right: 40px">Five weeks to Miami</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami, December 4–7</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Monday is optional</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span><span class="cd" style="padding-right: 40px">Five weeks to Miami</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Miami, December 4–7</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">Monday is optional</span><span style="padding-right: 40px">·</span><span style="padding-right: 40px">RSVP by Tuesday, November 10</span><span style="padding-right: 40px">·</span></div>
 </div>
 
 <!-- HERO -->
@@ -442,7 +447,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <nav class="pola" aria-label="Jump to a section">
 <a href="#itinerary"><span class="ph"><img src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="" style="object-position: 55% 55%"></span><span class="pc mono"><span>01</span><span>Itinerary</span></span></a>
 <a href="#stay"><span class="ph"><img src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt=""></span><span class="pc mono"><span>02</span><span>The house</span></span></a>
-<a href="#boat"><span class="ph"><img src="assets/9208bb2aa1b5568c58d43073ad5e76c6.jpg" alt=""></span><span class="pc mono"><span>03</span><span>Boat</span></span></a>
+<a href="#boat" class="maybe"><span class="ph"><img src="assets/9208bb2aa1b5568c58d43073ad5e76c6.jpg" alt=""><span class="hold mono">On hold</span></span><span class="pc mono"><span>03</span><span>Boat, maybe</span></span></a>
 <a href="#wardrobe"><span class="ph"><img src="assets/88f0eb29b662472738110e66db71790d.jpg" alt=""></span><span class="pc mono"><span>04</span><span>Wardrobe</span></span></a>
 <a href="#soundtrack"><span class="ph"><img src="assets/11a1b42b2656fccd82af0047a0a10060.jpg" alt=""></span><span class="pc mono"><span>05</span><span>Soundtrack</span></span></a>
 <a href="#rsvp"><span class="ph"><img src="assets/c4eb66219cdb3bccb6a3bd147e0dcdea.jpg" alt=""></span><span class="pc mono"><span>06</span><span>RSVP</span></span></a>
@@ -470,8 +475,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 <div class="days sv" id="days" aria-live="polite">
 <div class="days-top"><p class="mono lbl ip">Days to Miami</p><p class="mono cap" id="days-cap">One dot for each day until we’re there</p></div>
-<p class="days-n" id="days-n">Soon</p>
-<div class="dots" id="dots" aria-hidden="true"></div>
+<p class="days-n" id="days-n">Counting down to December 4</p>
+<div class="dots" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 </div>
 </section>
 
@@ -560,7 +565,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 
 <nav class="cards" aria-label="Days">
 <a class="card sv" href="#fri"><span class="cimg"><img src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt="The house in Little River"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ip">Fri / Dec 4 · Side A</span><span class="ct">Arrivals and dinner</span><span class="cap">Land, drop bags, dinner at Mangrove</span></a>
-<a class="card sv" href="#sat"><span class="cimg"><img src="assets/6d5b2c5b16a2856583fe6d970384b8b9.jpg" alt="Jet skis heading toward the skyline at dusk"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ir">Sat / Dec 5 · Side B</span><span class="ct">Art day</span><span class="cap">Libertino, galleries, the fair, dinner</span></a>
+<a class="card sv" href="#sat"><span class="cimg"><img src="assets/487dd456b4007dab547d2dbdda5fdc60.jpg" alt="Downtown Miami at dusk under pink-lit buildings"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ir">Sat / Dec 5 · Side B</span><span class="ct">Art day</span><span class="cap">Libertino, galleries, the fair, dinner</span></a>
 <a class="card sv" href="#sun"><span class="cimg"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Loungers under fringed umbrellas facing the Miami skyline" style="object-position: 50% 60%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl is">Sun / Dec 6 · Side C</span><span class="ct">Slow Sunday</span><span class="cap">Church, matcha, the flea, Wynwood, Casa Neos</span></a>
 <a class="card sv" href="#mon"><span class="cimg"><img src="assets/a84798b4498739329e65cf17fed751f2.jpg" alt="Pool loungers under palm trees" style="object-position: 50% 70%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ip">Mon / Dec 7 · Side D</span><span class="ct">Monday</span><span class="cap">Work, explore, or head home</span></a>
 </nav>
@@ -691,15 +696,15 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <span class="ir">Bring</span><span>A layer, a swimsuit, your songs</span>
 </div>
 <p class="cap sv" style="max-width: 300px">I’ll share the marina and exact time once it’s booked.</p>
-<figure class="sc" style="width: 140px"><img src="assets/1c8c9309193976c9a4e1ebbffde5c892.jpg" alt="Pink cabin lights over the wake" style="display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover"><figcaption class="mono cap" style="padding-top: 6px; text-transform: uppercase"><span class="ir">(Above)</span> Lights on</figcaption></figure>
+<figure class="sc maybe" style="width: 140px"><img src="assets/1c8c9309193976c9a4e1ebbffde5c892.jpg" alt="Pink cabin lights over the wake" style="display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover"><figcaption class="mono cap" style="padding-top: 6px; text-transform: uppercase"><span class="ir">(Above)</span> Lights on</figcaption></figure>
 </div>
 <div>
 <h2 class="big trk" style="text-align: center">Boat</h2>
-<div class="mono cap" style="display: flex; justify-content: space-between; border-top: 1px solid #1C1C1A; margin-top: 20px; padding-top: 12px; text-transform: uppercase"><span>Miami Art Week</span><span>2026</span><span>Saturday</span></div>
+<div class="mono cap" style="display: flex; justify-content: space-between; border-top: 1px solid #1C1C1A; margin-top: 20px; padding-top: 12px; text-transform: uppercase"><span>Miami Art Week</span><span>2026</span><span>If it happens</span></div>
 </div>
 </div>
 <div style="background: var(--sage); display: flex; align-items: center; justify-content: center; padding: 64px 27px; min-height: 760px">
-<figure class="sc" style="background: #F2F2EE; padding: 18px 18px 14px; width: min(420px, 100%)"><img src="assets/9208bb2aa1b5568c58d43073ad5e76c6.jpg" alt="Sunset over the wake from a pink-lit boat" style="display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover"><figcaption class="mono cap" style="padding-top: 10px; text-transform: uppercase"><span class="is">(Above)</span> Golden hour, back of the boat</figcaption></figure>
+<figure class="sc maybe" style="position: relative; background: #F2F2EE; padding: 18px 18px 14px; width: min(420px, 100%)"><span class="hold mono" style="left: 32px; top: 32px">On hold</span><img src="assets/9208bb2aa1b5568c58d43073ad5e76c6.jpg" alt="Sunset over the wake from a pink-lit boat" style="display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover"><figcaption class="mono cap" style="padding-top: 10px; text-transform: uppercase"><span class="is">(Above)</span> Golden hour, back of the boat</figcaption></figure>
 </div>
 </div>
 </section>
@@ -1037,8 +1042,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="sheet">
 <figure class="fr sv"><span class="mono cap ip">01 · Fri</span><span class="fb"><img src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="Plane window at sunrise"></span><figcaption class="cap">Wheels down</figcaption></figure>
 <figure class="fr sv"><span class="mono cap ip">02 · Fri</span><span class="fb"><img src="assets/c4eb66219cdb3bccb6a3bd147e0dcdea.jpg" alt="Palms and towers at night"></span><figcaption class="cap">First night</figcaption></figure>
-<figure class="fr sv"><span class="mono cap ir">03 · Sat</span><span class="fb"><img src="assets/6d5b2c5b16a2856583fe6d970384b8b9.jpg" alt="Jet skis toward the skyline"></span><figcaption class="cap">At the fair</figcaption></figure>
-<figure class="fr sv"><span class="mono cap ir">04 · Sat</span><span class="fb"><img src="assets/d95dbf2f141cda43394cd25cdb42755f.jpg" alt="The boat at night past the skyline" style="object-position: 50% 60%"></span><figcaption class="cap">After dark</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ir">03 · Sat</span><span class="fb"><img src="assets/487dd456b4007dab547d2dbdda5fdc60.jpg" alt="Downtown Miami at dusk"></span><figcaption class="cap">Art day</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ir">04 · Sat</span><span class="fb"><img src="assets/11a1b42b2656fccd82af0047a0a10060.jpg" alt="Friends walking up lit stairs at night"></span><figcaption class="cap">After dark</figcaption></figure>
 <figure class="fr sv"><span class="mono cap is">05 · Sun</span><span class="fb"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Beach club loungers"></span><figcaption class="cap">The flea market</figcaption></figure>
 <figure class="fr sv"><span class="mono cap is">06 · Sun</span><span class="fb"><img src="assets/45d3085f470d21e1b85bcaedd49351e5.jpg" alt="Lit stairs on the way to dinner"></span><figcaption class="cap">Casa Neos</figcaption></figure>
 </div>
