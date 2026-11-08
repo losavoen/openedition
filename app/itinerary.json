@@ -239,16 +239,12 @@
     },
     {
      "time": "12:00",
-     "title": "Beach club, maybe",
-     "desc": "Nikki Beach or Joia Beach, about $100–150 each. We’ll only go if enough people are interested, so let me know in the RSVP.",
+     "title": "Nikki Beach",
+     "desc": "A few of us are going. About $100–150 each. If you want to join, let me know in the RSVP.",
      "links": [
       {
-       "label": "Nikki Beach",
+       "label": "Map",
        "url": "https://www.google.com/maps/search/?api=1&query=Nikki%20Beach%20Miami%20Beach"
-      },
-      {
-       "label": "Joia Beach",
-       "url": "https://www.google.com/maps/search/?api=1&query=Joia%20Beach%20Miami"
       }
      ]
     },
