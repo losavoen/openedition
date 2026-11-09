@@ -19,9 +19,9 @@
      "desc": "Rest at the house or walk around the Design District. Nothing’s planned until dinner."
     },
     {
-     "time": "22:00",
+     "time": "22:30",
      "title": "Welcome dinner at Mangrove",
-     "desc": "A relaxed first night. Jamaican food and cocktails downtown at 103 NW 1st Ave. The kitchen is open until 11:45 on Fridays and there’s a DJ later. Around $30 each before drinks.",
+     "desc": "A relaxed first night, late enough for the 8:30 arrivals to drop their bags first. Jamaican food and cocktails downtown at 103 NW 1st Ave. The kitchen is open until 11:45 on Fridays and there’s a DJ later. Around $30 each before drinks.",
      "links": [
       {
        "label": "Reserve",
@@ -188,7 +188,7 @@
     {
      "time": "13:45",
      "title": "Wynwood Walls",
-     "desc": "About $12–15, and an hour is plenty.",
+     "desc": "About $12–15. Keep it to 45 minutes so there’s time to change.",
      "links": [
       {
        "label": "Tickets",
@@ -197,7 +197,12 @@
      ]
     },
     {
-     "time": "15:00",
+     "time": "14:30",
+     "title": "Back to the house to change",
+     "desc": "About 10 minutes from Wynwood. Swap the church outfit for the day-party one."
+    },
+    {
+     "time": "15:30",
      "title": "Casa Neos",
      "desc": "A day party on the Miami River. About $100–150 each. If you’re flying home Sunday, pack in the morning and head to the airport from here.",
      "links": [
