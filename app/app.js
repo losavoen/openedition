@@ -91,13 +91,13 @@
       mk('Ilelosa', 'Friday', '2026-12-04', '11:05', 'memory', 'f63505a42750c5a52910c41fafde0526.jpg', 'Wheels down.'),
       mk('Simi', 'Friday', '2026-12-04', '12:40', 'daily', '33b2dca8bf23bad75dc01309e0e0694f.jpg'),
       mk('Simi', 'Friday', '2026-12-04', '15:10', 'memory', 'ce9c479ce68a77630ab0c0e8cee3ed96.jpg', 'Lost everyone within five minutes.'),
-      mk('Nero', 'Friday', '2026-12-04', '22:30', 'memory', '45d3085f470d21e1b85bcaedd49351e5.jpg'),
+      mk('Bosa', 'Friday', '2026-12-04', '22:30', 'memory', '45d3085f470d21e1b85bcaedd49351e5.jpg'),
       mk('Sayo', 'Friday', '2026-12-04', '19:40', 'fit', 'd6d17608513a701b079d98bc3ec87c83.jpg'),
       mk('Nicole', 'Saturday', '2026-12-05', '10:20', 'daily', 'a84798b4498739329e65cf17fed751f2.jpg'),
       mk('Sayo', 'Saturday', '2026-12-05', '12:15', 'memory', '6d5b2c5b16a2856583fe6d970384b8b9.jpg'),
       mk('Ilelosa', 'Saturday', '2026-12-05', '17:20', 'memory', 'sample/boat.mp4', 'Nobody talked for ten minutes.'),
       mk('Chiara', 'Saturday', '2026-12-05', '18:05', 'memory', '1c8c9309193976c9a4e1ebbffde5c892.jpg'),
-      mk('Nero', 'Saturday', '2026-12-05', '20:00', 'fit', '04489c978cf8f115fbac43843951a9a7.jpg')
+      mk('Bosa', 'Saturday', '2026-12-05', '20:00', 'fit', '04489c978cf8f115fbac43843951a9a7.jpg')
     ];
   }
 
@@ -304,7 +304,7 @@
     var sp = function (ids) { var o = {}; ids.forEach(function (i) { o[i] = { photo: '' }; }); return o; };
     var players = [
       { name: 'Simi', spotted: sp([0, 1, 2, 3, 5, 9, 14]) }, { name: 'Ilelosa', spotted: sp([0, 4, 8, 12, 6, 15]) },
-      { name: 'Nero', spotted: sp([2, 7, 10, 13]) }, { name: 'Sayo', spotted: sp([1, 11]) }, { name: 'Nicole', spotted: sp([3, 8, 15]) }, { name: 'Chiara', spotted: sp([0, 6]) }
+      { name: 'Bosa', spotted: sp([2, 7, 10, 13]) }, { name: 'Sayo', spotted: sp([1, 11]) }, { name: 'Nicole', spotted: sp([3, 8, 15]) }, { name: 'Chiara', spotted: sp([0, 6]) }
     ];
     players.forEach(function (p) { var sc = scoreOf(p.spotted); p.squares = sc.squares; p.bingos = sc.bingos; p.points = sc.points; });
     players.sort(function (a, b) { return b.points - a.points; });

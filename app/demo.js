@@ -4,13 +4,13 @@
 (function () {
   var guests = [
     { id: 'g1', name: 'Simi', from: 'Toronto', line: 'A Basquiat crown', status: 'I’m in' },
-    { id: 'g2', name: 'Nero', from: 'Toronto', line: 'Anything by Amoako Boafo', status: 'I’m in' },
+    { id: 'g2', name: 'Bosa', from: 'Toronto', line: 'Anything by Amoako Boafo', status: 'I’m in' },
     { id: 'g3', name: 'Nicole', from: 'Toronto', line: 'A Kusama pumpkin', status: 'Probably' }
   ];
   var arrivals = [
     { name: 'Ilelosa', airport: 'MIA', arriveDay: 'Friday', landing: 'Morning', inTime: '10:40am' },
     { name: 'Simi', airport: 'MIA', arriveDay: 'Friday', landing: 'Morning', inTime: '10:55am' },
-    { name: 'Nero', airport: 'FLL', arriveDay: 'Friday', landing: 'Afternoon', inTime: '1:20pm' },
+    { name: 'Bosa', airport: 'FLL', arriveDay: 'Friday', landing: 'Afternoon', inTime: '1:20pm' },
     { name: 'Sayo', airport: 'MIA', arriveDay: 'Friday', landing: 'Morning', inTime: '11:30am' },
     { name: 'Nicole', airport: 'MIA', arriveDay: 'Saturday', landing: 'Evening' },
     { name: 'Chiara', airport: 'FLL', arriveDay: 'Friday', landing: 'Afternoon' }
