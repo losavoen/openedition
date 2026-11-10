@@ -186,7 +186,9 @@
      visitor scrolls themselves. */
   function anchors() {
     var target = null, until = 0, lock = false;
-    function offset(el) { var m = parseFloat(getComputedStyle(el).scrollMarginTop) || 0; return el.getBoundingClientRect().top + window.scrollY - m; }
+    // Land the section's top edge exactly on the bottom of the top bar, so nothing from the section before shows.
+    function bar() { var d = document.querySelector('.dock'); if (!d) return 0; var r = d.getBoundingClientRect(); return r.bottom > 0 && getComputedStyle(d).visibility !== 'hidden' ? Math.round(r.bottom) : 0; }
+    function offset(el) { var m = bar() || parseFloat(getComputedStyle(el).scrollMarginTop) || 0; return Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY - m)); }
     function go(el, smooth) {
       target = el; until = Date.now() + 12000; lock = true;
       window.scrollTo({ top: offset(el), behavior: smooth && !reduce ? 'smooth' : 'auto' });
