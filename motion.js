@@ -188,7 +188,7 @@
     var target = null, until = 0, lock = false;
     function offset(el) { var m = parseFloat(getComputedStyle(el).scrollMarginTop) || 0; return el.getBoundingClientRect().top + window.scrollY - m; }
     function go(el, smooth) {
-      target = el; until = Date.now() + 2500; lock = true;
+      target = el; until = Date.now() + 12000; lock = true;
       window.scrollTo({ top: offset(el), behavior: smooth && !reduce ? 'smooth' : 'auto' });
       setTimeout(function () { lock = false; settle(); }, smooth ? 900 : 50);
       clearInterval(go.t);
@@ -209,9 +209,9 @@
       if (history.pushState) history.pushState(null, '', '#' + id);
       go(el, true);
     });
-    if ('ResizeObserver' in window) new ResizeObserver(settle).observe(document.body);
+    if ('ResizeObserver' in window) { var ro = new ResizeObserver(settle); ro.observe(document.body); Array.prototype.forEach.call(document.querySelectorAll('section'), function (s) { ro.observe(s); }); }
     document.addEventListener('load', settle, true);
-    ['wheel', 'touchstart', 'keydown'].forEach(function (t) { window.addEventListener(t, stop, { passive: true }); });
+    ['wheel', 'touchmove', 'keydown'].forEach(function (t) { window.addEventListener(t, function (e) { if (e.type === 'keydown' && !/^(Arrow|Page|Home|End| )/.test(e.key)) return; stop(); }, { passive: true }); });
     if (location.hash.length > 1) { var el = document.getElementById(location.hash.slice(1)); if (el) setTimeout(function () { go(el, false); }, 60); }
   }
 

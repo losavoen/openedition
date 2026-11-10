@@ -116,28 +116,29 @@
     }).catch(function () {});
   }
 
-  // Bottom nav: slides up while you scroll (past the hero), hides a moment after you stop.
+  // Top bar: five chapters, the current one highlighted; "All sections" lists every section by chapter.
   function dock() {
     var nav = $('dock'); if (!nav) return;
     var hero = document.querySelector('.hero'), list = $('dk-list'), btn = $('dk-idx'), prog = $('dk-prog');
-    var rooms = Array.prototype.slice.call(list.querySelectorAll('a[data-n]'));
-    var quick = Array.prototype.slice.call(nav.querySelectorAll('.dk-quick a'));
-    var now = $('dk-now'), nEl = $('dk-n'), tEl = $('dk-t'), queued = false;
-    function open(v) { list.hidden = !v; btn.setAttribute('aria-expanded', v ? 'true' : 'false'); btn.querySelector('span').textContent = v ? 'close' : 'index'; }
+    var links = Array.prototype.slice.call(list.querySelectorAll('a[data-ch]'));
+    var tabs = Array.prototype.slice.call($('dk-tabs').querySelectorAll('a[data-ch]'));
+    var queued = false, last = null;
+    function open(v) { list.hidden = !v; btn.setAttribute('aria-expanded', v ? 'true' : 'false'); }
     function update() {
       queued = false;
-      var past = !hero || hero.getBoundingClientRect().bottom < window.innerHeight * 0.5;
+      var past = !hero || hero.getBoundingClientRect().bottom < window.innerHeight * 0.35;
       nav.classList.toggle('show', past || !list.hidden);
       var max = document.documentElement.scrollHeight - window.innerHeight;
       prog.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, window.scrollY / max) : 0).toFixed(4) + ')';
-      var mid = window.innerHeight * 0.4, on = rooms[0];
-      rooms.forEach(function (a) { var el = document.querySelector(a.getAttribute('href')); if (el && el.getBoundingClientRect().top <= mid) on = a; });
-      rooms.forEach(function (a) { a.classList.toggle('on', a === on); });
-      quick.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === on.getAttribute('href')); });
-      if (nEl.textContent !== on.getAttribute('data-n')) {
-        nEl.textContent = on.getAttribute('data-n');
-        tEl.textContent = on.textContent.replace(/^\d+/, '');
-        now.setAttribute('href', on.getAttribute('href'));
+      var line = 90, on = links[0];
+      links.forEach(function (a) { var el = document.querySelector(a.getAttribute('href')); if (el && el.getBoundingClientRect().top <= line) on = a; });
+      links.forEach(function (a) { a.classList.toggle('on', a === on); });
+      var ch = on.getAttribute('data-ch');
+      tabs.forEach(function (t) { t.classList.toggle('on', t.getAttribute('data-ch') === ch); });
+      if (ch !== last) {
+        last = ch;
+        var t = tabs[+ch], box = $('dk-tabs');
+        if (t && box.scrollWidth > box.clientWidth) box.scrollTo({ left: t.offsetLeft - 16, behavior: 'smooth' });
       }
     }
     window.addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
@@ -149,7 +150,6 @@
     nav.addEventListener('focusin', function () { nav.classList.add('show'); });
     update();
   }
-
 
   // The tab: shared costs logged during the trip, settled into who-owes-who.
   var tabNames = [], tabSplit = null;

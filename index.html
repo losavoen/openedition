@@ -30,7 +30,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .ip,.is,.ir{color:inherit}
 .ros .ir{color:var(--rose-ink)}
 .card .mono.lbl{color:var(--peri-ink)}
-.sh{display:grid;grid-template-columns:1fr auto 1fr;align-items:baseline;gap:16px;padding-top:14px;border-top:1px solid #1C1C1A;margin-bottom:40px}
+.sh{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:16px;padding-top:14px;border-top:1px solid #1C1C1A;margin-bottom:40px}
 .sh>:first-child{color:var(--peri-ink)}
 .sh>:last-child{text-align:right}
 .top3{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
@@ -213,8 +213,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .ros.wide{grid-template-columns:minmax(0,1fr);row-gap:6px}
 .trk-row>:nth-child(3){grid-column:2}
 .trk-row>:nth-child(4){display:none}
-.sh{grid-template-columns:1fr 1fr}
-.sh>:nth-child(2){display:none}
+.sh{grid-template-columns:1fr auto}
 .ess{text-align-last:auto}
 .rsvp{border-left:0!important;padding:32px 16px!important}
 .foot{grid-template-columns:minmax(0,1fr)}
@@ -301,37 +300,34 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .edition canvas{width:100%;max-width:360px;height:auto;box-shadow:0 18px 40px rgba(28,28,26,0.14)}
 
 /* bottom nav: shows only while scrolling */
-.dock{position:fixed;left:0;right:0;bottom:0;z-index:50;transform:translateY(100%);transition:transform .6s var(--ease);font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;text-transform:lowercase;color:#1C1C1A}
+.dock{position:fixed;left:0;right:0;top:0;z-index:50;transform:translateY(-100%);transition:transform .5s var(--ease);font-family:'Aspekta',ui-sans-serif,system-ui,sans-serif;font-size:14px;color:#1C1C1A}
 .dock.show{transform:none}
-.dk-bar{position:relative;display:flex;align-items:center;gap:24px;height:52px;padding:0 max(27px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(27px,env(safe-area-inset-left,0px));background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid #1C1C1A;box-sizing:content-box}
-.dk-prog{position:absolute;left:0;top:-1px;height:2px;width:100%;background:var(--peri);transform-origin:0 50%;transform:scaleX(0)}
-.dk-now{display:flex;gap:14px;align-items:baseline;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.dk-now span:first-child{color:var(--peri-ink)}
-.dk-quick{margin-left:auto;display:flex;gap:22px}
-.dk-quick a,.dk-out a{position:relative}
-.dk-quick a::after{content:'';position:absolute;left:0;right:0;bottom:-5px;height:1px;background:#1C1C1A;transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
-.dk-quick a:hover::after,.dk-quick a.on::after{transform:scaleX(1);transform-origin:left}
-.dk-idx{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 0}
+.dk-bar{position:relative;display:flex;align-items:center;gap:20px;height:56px;padding:env(safe-area-inset-top,0px) max(27px,env(safe-area-inset-right,0px)) 0 max(27px,env(safe-area-inset-left,0px));background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(28,28,26,.12)}
+.dk-prog{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--peri);transform-origin:0 50%;transform:scaleX(0)}
+.dk-home{font-weight:550;white-space:nowrap}
+.dk-tabs{display:flex;gap:6px;margin:0 auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+.dk-tabs::-webkit-scrollbar{display:none}
+.dk-tabs a{white-space:nowrap;padding:7px 14px;border-radius:999px;transition:background .25s,color .25s}
+.dk-tabs a:hover{background:rgba(28,28,26,.06)}
+.dk-tabs a.on{background:#1C1C1A;color:#FFFFFF}
+.dk-idx{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 0;white-space:nowrap;font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.04em}
 .dk-idx i{position:relative;width:14px;height:8px;border-top:1px solid #1C1C1A;border-bottom:1px solid #1C1C1A;transition:transform .4s var(--ease)}
 .dk-idx[aria-expanded="true"] i{transform:rotate(90deg)}
 .dk-idx:focus-visible,.dock a:focus-visible{outline:2px solid var(--peri-ink);outline-offset:3px}
-.dk-list{position:absolute;left:0;right:0;bottom:100%;background:#FFFFFF;border-top:1px solid #1C1C1A;padding:22px max(27px,env(safe-area-inset-right,0px)) 26px max(27px,env(safe-area-inset-left,0px));max-height:70vh;overflow:auto;animation:dkUp .45s var(--ease) both}
-.dk-list>p{margin:0 0 14px;color:var(--peri-ink)}
-.dk-list ol{list-style:none;margin:0;padding:0;columns:3 220px;column-gap:40px}
-.dk-list li{break-inside:avoid}
-.dk-list li a{display:flex;gap:16px;padding:9px 0;border-bottom:1px solid rgba(28,28,26,.14);font-size:13px;transition:padding-left .35s var(--ease)}
-.dk-list li a span{color:#9A978F}
-.dk-list li a:hover,.dk-list li a.on{padding-left:8px}
-.dk-list li a.on span{color:var(--peri-ink)}
-.dk-out{display:flex;gap:24px;margin-top:18px}
-@keyframes dkUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@media (max-width:760px){.dk-quick{display:none}.dk-bar{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));justify-content:space-between}.dk-list{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+.dk-list{position:absolute;left:0;right:0;top:100%;background:#FFFFFF;border-bottom:1px solid #1C1C1A;padding:24px max(27px,env(safe-area-inset-right,0px)) 26px max(27px,env(safe-area-inset-left,0px));max-height:75vh;overflow:auto}
+.dk-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px 32px}
+.dk-g p{margin:0 0 8px;font-size:11px;letter-spacing:.04em;color:var(--peri-ink)}
+.dk-g ul{list-style:none;margin:0;padding:0}
+.dk-g li a{display:block;padding:8px 0;border-bottom:1px solid rgba(28,28,26,.12);transition:padding-left .3s var(--ease)}
+.dk-g li a:hover,.dk-g li a.on{padding-left:8px}
+.dk-g li a.on{color:var(--peri-ink)}
+.dk-out{display:flex;gap:24px;margin-top:20px;font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px}
+@media (max-width:760px){.dk-bar{gap:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}.dk-home{display:none}.dk-tabs{margin:0;flex:1}.dk-tabs a{padding:7px 12px;font-size:13px}.dk-idx span{display:none}.dk-list{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
 @media (prefers-reduced-motion:reduce){.dock,.dk-list{transition:none;animation:none}}
 
 /* ===== exhibition + tape layer ===== */
 /* room plaques */
-.sh{grid-template-columns:auto 1fr auto;align-items:center}
-.sh>span:nth-child(2){text-align:left;padding-left:18px;border-left:1px solid rgba(28,28,26,0.25)}
+.sh{grid-template-columns:1fr auto;align-items:center}
 .sh>:first-child{color:#1C1C1A!important}
 .rdot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#C0262D;flex:none}
 /* hung photos: white mat + soft wall shadow */
@@ -500,8 +496,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div></section>
 
 <!-- 01 · THE PLAN -->
-<section id="plan" class="sec wrap" aria-label="The plan" style="scroll-margin-top: 60px">
-<div class="sh mono lbl"><span class="room">Room 01</span><span>The plan</span><span>Dec 4–7</span></div>
+<section id="plan" class="sec wrap" aria-label="The plan" style="scroll-margin-top: 72px">
+<div class="sh mono lbl"><span>The plan</span><span>Dec 4–7</span></div>
 <div class="two" style="row-gap: 40px">
 <div class="sv" style="display: flex; flex-direction: column; gap: 14px">
 <p class="mono lbl is">The weekend</p>
@@ -527,8 +523,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 02 · STAY -->
-<section id="stay" class="sec" aria-label="Where we're staying" style="scroll-margin-top: 60px">
-<div class="wrap"><div class="sh mono lbl"><span class="room">Room 02</span><span>Where we’re staying</span><span>Little River</span></div></div>
+<section id="stay" class="sec" aria-label="Where we're staying" style="scroll-margin-top: 72px">
+<div class="wrap"><div class="sh mono lbl"><span>Where we’re staying</span><span>Little River</span></div></div>
 <div style="background: var(--mist)">
 <div class="two wrap" style="padding-top: 88px; padding-bottom: 48px; row-gap: 32px">
 <div class="sv" style="display: flex; flex-direction: column; justify-content: flex-end">
@@ -556,8 +552,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 03 · GETTING AROUND -->
-<section id="around" class="sec wrap" aria-label="Getting around" style="scroll-margin-top: 60px">
-<div class="sh mono lbl"><span class="room">Room 03</span><span>Getting around</span><span>Rides and water taxis</span></div>
+<section id="around" class="sec wrap" aria-label="Getting around" style="scroll-margin-top: 72px">
+<div class="sh mono lbl"><span>Getting around</span><span>Rides and water taxis</span></div>
 <div class="two" style="align-items: start; row-gap: 40px">
 <div style="display: flex; flex-direction: column; gap: 24px">
 <h2 class="big trk">Getting around</h2>
@@ -597,8 +593,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 04 · ITINERARY -->
-<section id="itinerary" class="sec wrap" aria-label="Itinerary" style="scroll-margin-top: 60px">
-<div class="sh mono lbl"><span class="room">Room 04</span><span>Itinerary</span><span>Three days, plus Monday</span></div>
+<section id="itinerary" class="sec wrap" aria-label="Itinerary" style="scroll-margin-top: 72px">
+<div class="sh mono lbl"><span>Itinerary</span><span>Three days, plus Monday</span></div>
 <div class="two" style="align-items: end; row-gap: 24px; margin-bottom: 48px">
 <h2 class="big trk">Itinerary</h2>
 <div class="sv" style="justify-self: end; max-width: 340px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start"><p class="mono lbl">Times might shift a little. Anything marked <span class="ir">book</span>, I’ll reserve once I know who’s coming.</p><a class="pill" href="/openedition.ics" download>Add to my calendar</a></div>
@@ -726,8 +722,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 04 · BOAT -->
-<section id="boat" class="sec" aria-label="The boat" style="scroll-margin-top: 60px">
-<div class="wrap"><div class="sh mono lbl"><span class="room">Room 05</span><span>The boat</span><span>On hold</span></div></div>
+<section id="boat" class="sec" aria-label="The boat" style="scroll-margin-top: 72px">
+<div class="wrap"><div class="sh mono lbl"><span>The boat</span><span>On hold</span></div></div>
 <div class="boat">
 <div class="wrap" style="display: flex; flex-direction: column; justify-content: space-between; gap: 40px; padding-top: 32px; padding-bottom: 28px; min-height: 760px">
 <div style="display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">
@@ -753,8 +749,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 05 · WARDROBE -->
-<section id="wardrobe" class="sec" aria-label="Wardrobe" style="scroll-margin-top: 60px">
-<div class="wrap"><div class="sh mono lbl"><span class="room">Room 06</span><span>Wardrobe</span><span>Loose ideas</span></div></div>
+<section id="wardrobe" class="sec" aria-label="Wardrobe" style="scroll-margin-top: 72px">
+<div class="wrap"><div class="sh mono lbl"><span>Wardrobe</span><span>Loose ideas</span></div></div>
 <div style="background: var(--blush); padding: 56px 27px 64px">
 <div class="two" style="align-items: start; row-gap: 24px; margin-bottom: 48px">
 <div style="display: flex; flex-direction: column; gap: 18px">
@@ -827,8 +823,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 06 · THE KIT -->
-<section id="kit" class="sec wrap" aria-label="The kit" style="scroll-margin-top: 60px">
-<div class="sh mono lbl"><span class="room">Room 07</span><span>The kit</span><span>Opens Friday</span></div>
+<section id="kit" class="sec wrap" aria-label="The kit" style="scroll-margin-top: 72px">
+<div class="sh mono lbl"><span>The kit</span><span>Opens Friday</span></div>
 <div class="two" style="align-items: end; row-gap: 24px; padding-top: 8px">
 <h2 class="big trk">The kit</h2>
 <div class="sv" style="justify-self: end; max-width: 380px; display: flex; flex-direction: column; gap: 14px">
@@ -840,8 +836,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 07 · SOUNDTRACK -->
-<section id="soundtrack" class="sec" aria-label="Soundtrack" style="scroll-margin-top: 60px">
-<div class="wrap"><div class="sh mono lbl"><span class="room">Room 08</span><span>Soundtrack</span><span>On the aux</span></div></div>
+<section id="soundtrack" class="sec" aria-label="Soundtrack" style="scroll-margin-top: 72px">
+<div class="wrap"><div class="sh mono lbl"><span>Soundtrack</span><span>On the aux</span></div></div>
 <div class="two" style="gap: 0">
 <div style="background: var(--mist); padding: 40px 27px 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 56px; min-height: 520px">
 <div style="display: flex; flex-direction: column; gap: 22px; align-items: flex-start">
@@ -882,8 +878,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 08 · COSTS -->
-<section id="costs" class="sec wrap" aria-label="Costs" style="scroll-margin-top: 60px">
-<div class="sh mono lbl"><span class="room">Room 09</span><span>Costs</span><span>Per person</span></div>
+<section id="costs" class="sec wrap" aria-label="Costs" style="scroll-margin-top: 72px">
+<div class="sh mono lbl"><span>Costs</span><span>Per person</span></div>
 <div class="sv" style="background: #FFFFFF; padding: clamp(28px, 3vw, 44px) clamp(16px, 2.4vw, 36px) 32px">
 <h2 class="big trk">Costs</h2>
 <p class="lbl" style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 550; margin-top: 28px"><span>Per person</span><span>USD unless noted</span></p>
@@ -932,8 +928,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 09 · FAQ -->
-<section id="faq" class="sec wrap" aria-label="Questions" style="scroll-margin-top: 60px">
-<div class="sh mono lbl"><span class="room">Room 10</span><span>Questions</span><span>Before you say yes</span></div>
+<section id="faq" class="sec wrap" aria-label="Questions" style="scroll-margin-top: 72px">
+<div class="sh mono lbl"><span>Questions</span><span>Before you say yes</span></div>
 <div class="two" style="align-items: start; row-gap: 40px">
 <div style="display: flex; flex-direction: column; gap: 16px">
 <div class="sc" style="aspect-ratio: 4/3; overflow: hidden"><img class="im" src="assets/9839b35cc0a19e6c28087d20bc1d638b.jpg" alt="The living room at the house" style="object-position: 50% 75%"></div>
@@ -954,8 +950,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 10 · RSVP -->
-<section id="rsvp" class="sec" aria-label="RSVP" style="scroll-margin-top: 60px">
-<div class="wrap"><div class="sh mono lbl"><span class="room">Room 11</span><span>RSVP</span><span>By Tue, Nov 10</span></div></div>
+<section id="rsvp" class="sec" aria-label="RSVP" style="scroll-margin-top: 72px">
+<div class="wrap"><div class="sh mono lbl"><span>RSVP</span><span>By Tue, Nov 10</span></div></div>
 <div class="two" style="gap: 0; background: var(--mist)">
 <div class="wrap" style="padding-top: 48px; padding-bottom: 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 48px; min-height: 560px">
 <div style="display: flex; flex-direction: column; gap: 22px; font-size: clamp(30px, 2.9vw, 44px); line-height: 0.95; font-weight: 550; letter-spacing: -0.02em; text-transform: uppercase">
@@ -1050,8 +1046,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 12 · WHO'S COMING -->
-<section id="guests" class="sec wrap" aria-label="Who’s coming" style="scroll-margin-top: 60px">
-<div class="sh mono lbl"><span class="room">Room 12</span><span>Who’s coming</span><span>Password only</span></div>
+<section id="guests" class="sec wrap" aria-label="Who’s coming" style="scroll-margin-top: 72px">
+<div class="sh mono lbl"><span>Who’s coming</span><span>Password only</span></div>
 <div class="two" style="align-items: end; row-gap: 28px; margin-bottom: 40px">
 <h2 class="big trk">Who’s coming</h2>
 <div class="sv" style="display: flex; flex-direction: column; gap: 22px">
@@ -1083,8 +1079,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </section>
 
 <!-- 11 · MEMORIES -->
-<section id="memories" class="sec wrap" aria-label="Memories" style="scroll-margin-top: 60px">
-<div class="sh mono lbl"><span class="room">Room 13</span><span>Memories</span><span>After the weekend</span></div>
+<section id="memories" class="sec wrap" aria-label="Memories" style="scroll-margin-top: 72px">
+<div class="sh mono lbl"><span>Memories</span><span>After the weekend</span></div>
 <div class="two" style="align-items: end; row-gap: 28px; margin-bottom: 40px">
 <h2 class="big trk">Memories</h2>
 <div class="sv" style="display: flex; flex-direction: column; gap: 20px">
@@ -1136,12 +1132,13 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 
 <!-- BOTTOM NAV (shown only while scrolling) -->
 <nav class="dock" id="dock" aria-label="Sections">
-<div class="dk-list" id="dk-list" hidden><p class="mono">Index</p><ol><li><a href="#plan" data-n="01"><span>01</span>the plan</a></li><li><a href="#stay" data-n="02"><span>02</span>where we’re staying</a></li><li><a href="#around" data-n="03"><span>03</span>getting around</a></li><li><a href="#itinerary" data-n="04"><span>04</span>itinerary</a></li><li><a href="#boat" data-n="05"><span>05</span>the boat</a></li><li><a href="#wardrobe" data-n="06"><span>06</span>wardrobe</a></li><li><a href="#kit" data-n="07"><span>07</span>the kit</a></li><li><a href="#soundtrack" data-n="08"><span>08</span>soundtrack</a></li><li><a href="#costs" data-n="09"><span>09</span>costs</a></li><li><a href="#faq" data-n="10"><span>10</span>questions</a></li><li><a href="#rsvp" data-n="11"><span>11</span>rsvp</a></li><li><a href="#guests" data-n="12"><span>12</span>who’s coming</a></li><li><a href="#memories" data-n="13"><span>13</span>memories</a></li></ol><div class="dk-out"><a href="/tape">the tape ↗</a><a href="/app/">the app ↗</a></div></div>
 <div class="dk-bar"><i class="dk-prog" id="dk-prog" aria-hidden="true"></i>
-<a class="dk-now" id="dk-now" href="#plan"><span id="dk-n">01</span><span id="dk-t">the plan</span></a>
-<div class="dk-quick"><a href="#itinerary">itinerary</a><a href="#costs">costs</a><a href="#rsvp">rsvp</a></div>
-<button type="button" class="dk-idx" id="dk-idx" aria-expanded="false" aria-controls="dk-list"><span>index</span><i aria-hidden="true"></i></button>
-</div></nav>
+<a class="dk-home" href="#top">Open Edition</a>
+<div class="dk-tabs" id="dk-tabs"><a href="#plan" data-ch="0">The trip</a><a href="#itinerary" data-ch="1">Itinerary</a><a href="#wardrobe" data-ch="2">What to bring</a><a href="#costs" data-ch="3">Costs</a><a href="#rsvp" data-ch="4">RSVP</a></div>
+<button type="button" class="dk-idx" id="dk-idx" aria-expanded="false" aria-controls="dk-list"><span>All sections</span><i aria-hidden="true"></i></button>
+</div>
+<div class="dk-list" id="dk-list" hidden><div class="dk-groups"><div class="dk-g"><p class="mono">The trip</p><ul><li><a href="#plan" data-ch="0">The plan</a></li><li><a href="#stay" data-ch="0">Where we’re staying</a></li><li><a href="#around" data-ch="0">Getting around</a></li></ul></div><div class="dk-g"><p class="mono">Itinerary</p><ul><li><a href="#itinerary" data-ch="1">Itinerary</a></li><li><a href="#boat" data-ch="1">The boat</a></li></ul></div><div class="dk-g"><p class="mono">What to bring</p><ul><li><a href="#wardrobe" data-ch="2">Wardrobe and your closet</a></li><li><a href="#kit" data-ch="2">The kit</a></li><li><a href="#soundtrack" data-ch="2">Soundtrack</a></li></ul></div><div class="dk-g"><p class="mono">Costs</p><ul><li><a href="#costs" data-ch="3">Costs</a></li><li><a href="#faq" data-ch="3">Questions</a></li></ul></div><div class="dk-g"><p class="mono">RSVP</p><ul><li><a href="#rsvp" data-ch="4">RSVP</a></li><li><a href="#guests" data-ch="4">Who’s coming</a></li><li><a href="#memories" data-ch="4">Memories</a></li></ul></div></div><div class="dk-out"><a href="/tape">The Tape ↗</a><a href="/app/">The app ↗</a></div></div>
+</nav>
 <div class="grain" aria-hidden="true"></div>
 <!-- FOOTER -->
 <footer style="width: 100%; box-sizing: border-box; padding: 120px 27px 92px">
