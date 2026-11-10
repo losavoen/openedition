@@ -133,6 +133,11 @@
     window.scrollTo(0, 0);
   }
 
+  // Three prints fanned out, as on the site's opening screen.
+  function fan() {
+    var f = [['01', 'Itinerary', 'f63505a42750c5a52910c41fafde0526'], ['02', 'The house', '33b2dca8bf23bad75dc01309e0e0694f'], ['03', 'Boat, maybe', '9208bb2aa1b5568c58d43073ad5e76c6']];
+    return '<div class="fan">' + f.map(function (x) { return '<div class="pr"><span class="pph"><img src="' + A + x[2] + '.jpg" alt=""></span><span class="pc"><span>' + x[0] + '</span><span>' + x[1] + '</span></span></div>'; }).join('') + '</div>';
+  }
   // ---------- gate (before Friday) ----------
   function renderGate() {
     var el = $('#s-gate');
@@ -141,10 +146,10 @@
       var parts = [Math.floor(d / 864e5), Math.floor(d / 36e5) % 24, Math.floor(d / 6e4) % 60, Math.floor(d / 1e3) % 60];
       $$('.count b', el).forEach(function (b, i) { b.textContent = String(parts[i]).padStart(2, '0'); });
     }
-    el.innerHTML = '<div class="gate">' +
-      '<div style="display:flex;justify-content:space-between"><span class="mono">Open Edition</span><span class="mono muted">(miami art week)</span></div>' +
+    el.innerHTML = '<div class="ticker"><div>' + Array(5).join('<span>doors open friday</span><i>·</i><span>miami, december 4–7</span><i>·</i><span>(miami art week)</span><i>·</i>') + '</div></div>' +
+      '<div class="gate">' + fan() +
       '<div style="display:flex;flex-direction:column;gap:22px">' +
-      '<p class="mono muted">The app</p><h1 class="big">Doors<br>open<br>Friday</h1>' +
+      '<p class="mono">The app</p><h1 class="big">Doors<br>open<br>Friday</h1>' +
       '<p style="font-size:17px;max-width:320px" class="muted">Doors open Friday, December 4, the day we land. Until then, everything you need is on the site.</p>' +
       '<div class="count"><div><b>00</b><span class="mono muted">days</span></div><div><b>00</b><span class="mono muted">hrs</span></div><div><b>00</b><span class="mono muted">min</span></div><div><b>00</b><span class="mono muted">sec</span></div></div>' +
       '</div>' +
@@ -162,7 +167,7 @@
     var dots = '<div class="dots">' + Array.apply(null, Array(steps)).map(function (_, i) { return '<i class="' + (i === step ? 'on' : '') + '"></i>'; }).join('') + '</div>';
     var body = '';
     if (step === 0) body =
-      '<div class="stage"><p class="mono muted">December 4–7, 2026 · Miami</p><h1 class="big">Open<br>Edition</h1><p class="cutive" style="font-size:20px">(miami art week)</p>' +
+      '<div class="stage">' + fan() + '<p class="mono muted">December 4–7, 2026 · Miami</p><h1 class="big">Open<br>Edition</h1><p class="cutive" style="font-size:20px">(miami art week)</p>' +
       '<p style="font-size:18px;max-width:320px">A group show in four days. Everyone’s in it, and everyone’s shooting it.</p></div>' + dots +
       '<button class="btn full" data-ob="1">Begin</button>';
     if (step === 1) body =
@@ -318,8 +323,15 @@
   // a small eyebrow and the big title. Anything screen-specific goes after it.
   function head(eyebrow, title, action, extra) {
     var t = today();
-    return '<header class="band"><div class="bandtop"><span class="mono">Day ' + (t.i + 1) + ' of 4 · ' + clock(t.n.min) + ' in Miami</span>' + (action || '') + '</div>' +
-      '<p class="mono eyebrow">' + eyebrow + '</p><h1 class="big">' + title + '</h1>' + (extra || '') + '</header>';
+    var bits = ['Day ' + (t.i + 1) + ' of 4', clock(t.n.min) + ' in Miami', 'Open Edition', '(miami art week)', 'December 4–7'];
+    var line = '<span>' + bits.map(esc).join('</span><i>·</i><span>') + '</span><i>·</i>';
+    return '<div class="ticker" aria-label="' + esc(bits.slice(0, 2).join(', ')) + '"><div>' + line + line + line + line + '</div></div>' +
+      '<header class="band"><div class="bandtop"><span class="mono eyebrow">' + eyebrow + '</span>' + (action || '') + '</div>' +
+      '<h1 class="big">' + title + '</h1>' + (extra || '') + '</header>';
+  }
+  // A polaroid print, like the ones on the site: white border, number and label underneath.
+  function print(act, n, label, img, tag) {
+    return '<button class="pr" data-act="' + act + '"><span class="pph">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : '') + (tag ? '<span class="hold">' + tag + '</span>' : '') + '</span><span class="pc"><span>' + n + '</span><span>' + label + '</span></span></button>';
   }
   function renderPlay() {
     var el = $('#s-play'), mine = me(), sp = mine.spotted || {};
@@ -451,6 +463,14 @@
           '<h2>' + esc(nowRow ? nowRow.title : (next ? next.title : 'Free time')) + '</h2>' +
           '<p class="nd">' + esc(nowRow ? nowRow.desc : (next ? next.desc : '')) + '</p></div>' +
         (next && nowRow ? '<div class="nextline"><span class="mono">Next · ' + esc(next.time) + '</span><span>' + esc(next.title) + '</span></div>' : '')) +
+      // the site's polaroids, as the way into everything visual
+      '<div class="prints">' +
+        print('dark', '01', developing ? developing + ' waiting' : 'Photos', lastPhoto() || A + 'f63505a42750c5a52910c41fafde0526.jpg') +
+        print('house', '02', 'The house', A + '33b2dca8bf23bad75dc01309e0e0694f.jpg') +
+        print('tape', '03', 'The tape', A + '9208bb2aa1b5568c58d43073ad5e76c6.jpg') +
+        print('play', '04', 'Spotted · ' + (me().points || 0) + ' pts', A + '88f0eb29b662472738110e66db71790d.jpg') +
+        print('music', '05', 'Soundtrack', A + '11a1b42b2656fccd82af0047a0a10060.jpg') +
+      '</div>' +
       (store.get('coach', true) ? '<section class="sect" id="coach"><div class="sh"><span class="mono">First time here?</span><button class="mono linkbtn" id="coach-ok">Got it</button></div>' +
         '<div class="key">' +
           '<button class="keyrow" data-key="cam"><span class="kic shut"><i></i></span><span class="kt"><b>Shoot</b><span>The round button. 24 photos a day, no retakes.</span></span></button>' +
@@ -459,20 +479,14 @@
         '</div></section>' : '') +
       // today's photo
       '<section class="sect"><div class="sh"><span class="mono">Today’s photo challenge</span><span class="mono muted">' + (ROLL - used) + ' of ' + ROLL + ' left</span></div>' +
-        '<div class="shotimg"><img src="' + DAY_HERO[d.day] + '" alt=""></div>' +
-        '<h3 class="shot-title">' + esc(d.shot) + '</h3>' +
+        '<div class="shotimg"><img src="' + DAY_HERO[d.day] + '" alt=""><span class="pc"><span>' + esc(d.day) + '</span><span>' + esc(d.shot) + '</span></span></div>' +
         '<div class="roll">' + Array.apply(null, Array(ROLL)).map(function (_, i) { return '<i class="' + (i < used ? 'used' : '') + '"></i>'; }).join('') + '</div>' +
         '<button class="btn full" id="now-shoot" style="margin-top:14px">Take a photo</button></section>' +
       // everything else as one list
       '<section class="sect"><div class="sh"><span class="mono">The trip</span><span class="mono muted">Tap to open</span></div><div class="rows">' +
-        row('play', 'Spotted', 'The trip game', (me().points || 0) + ' pts') +
-        row('dark', 'Photos', developing ? developing + ' appear tomorrow at 9am' : 'Everyone’s photos so far', String(S.memories.length)) +
-        row('tape', 'The tape', 'Everyone’s photos as one video', '▶') +
         (ride ? row('ride', 'Your ride', esc(ride.me.airport || '') + ' · ' + (ride.crew.length > 1 ? 'with ' + esc(crewNames) : 'solo for now'), ride.crew[0] === ride.me && ride.crew.length > 1 ? 'You call' : '') : '') +
         row('tab', 'The tab', 'Shared costs', bal == null ? 'Add' : bal > 0.009 ? '+$' + bal.toFixed(0) : bal < -0.009 ? '−$' + (-bal).toFixed(0) : 'Square') +
         row('chat', 'Group chat', 'iMessage or WhatsApp', '') +
-        row('house', 'The house', S.house ? 'Directions in Maps' : 'Little River', '') +
-        row('music', 'Soundtrack', 'On Spotify', '') +
         row('kit', 'The kit', S.kit ? S.kit.length + ' things inside' : 'Opens Friday', S.kit ? 'Open' : 'Sealed') +
       '</div></section>';
     $('#now-shoot').onclick = openCam;
@@ -481,6 +495,10 @@
     $$('[data-act]', el).forEach(function (b) { b.onclick = function () { act(b.getAttribute('data-act')); }; });
   }
 
+  function lastPhoto() {
+    var n = today().n, done = S.memories.filter(function (m) { return developed(m, n) && m.media && m.media[0] && m.media[0].type !== 'video'; });
+    return done.length ? done[done.length - 1].media[0].url : '';
+  }
   function act(a) {
     if (a === 'dark') return show('dark');
     if (a === 'play') return loadGame().then(function () { show('play'); });
@@ -566,7 +584,7 @@
         cls = 'devin'; style = ' style="--dd:' + Math.min(fresh++ * 0.12, 1.5).toFixed(2) + 's"';
       }
       var badge = m.pending ? '<span class="upst" aria-label="Waiting to post">' + WAIT + '</span>' : '';
-      out.push('<button class="' + cls + '"' + style + ' data-m="' + esc(m.id || '') + '" data-j="' + j + '">' + media + badge + (dev ? '<span class="mono">' + esc(m.name) + '</span>' : '') + '</button>');
+      out.push('<button class="' + cls + '"' + style + ' data-m="' + esc(m.id || '') + '" data-j="' + j + '">' + media + badge + '<span class="cap">' + esc(m.name || '') + '</span></button>');
     }); });
     if (marked) { var keys = Object.keys(SEEN); if (keys.length > 3000) keys.slice(0, keys.length - 3000).forEach(function (k) { delete SEEN[k]; }); store.set('seen-dev', SEEN); }
     return '<div class="grid3" style="padding:0">' + out.join('') + '</div>';
@@ -609,7 +627,7 @@
     el.innerHTML = head('People · ' + list.length + ' coming', 'Who’s coming', '<button class="x onband" data-act="chat" aria-label="Open the group chat">✉</button>', '<p class="lede">Tap someone to see their profile and photos.</p>') +
       (list.length ? '<div class="glist">' + list.map(function (g, i) {
         var count = S.memories.filter(function (m) { return m.name && g.name && m.name.split(' ')[0].toLowerCase() === g.name.split(' ')[0].toLowerCase(); }).length;
-        return '<button class="gitem" data-g="' + i + '"><span class="ph">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="">' : esc((g.name || '?').charAt(0))) + '</span><span><p style="font-weight:550;font-size:17px">' + esc(g.name) + '</p><p class="muted" style="font-size:13px">' + esc(g.pending ? 'Hasn’t added a profile yet' : g.from ? 'Lives and works in ' + g.from : g.status || '') + '</p></span><span class="mono muted">' + count + ' photos</span></button>';
+        return '<button class="gitem" data-g="' + i + '"><span class="ph" style="--pc:' + ['#D8E2DC', '#A2AEDA', '#DCE2BE', '#F8ECEA'][i % 4] + '">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="">' : '<i class="ini">' + esc((g.name || '?').charAt(0)) + '</i>') + '</span><span><p style="font-weight:550;font-size:17px">' + esc(g.name) + '</p><p class="muted" style="font-size:13px">' + esc(g.pending ? 'Hasn’t added a profile yet' : g.from ? 'Lives and works in ' + g.from : g.status || '') + '</p></span><span class="mono muted">' + count + ' photos</span></button>';
       }).join('') + '</div>' : '<p class="empty-note">Guests show up here once they add a profile on the site.</p>') +
       '<div style="padding:20px"><a class="btn ghost full" href="/#guests">Edit my wall label</a></div>';
     $$('[data-act]', el).forEach(function (b) { b.onclick = function () { act(b.getAttribute('data-act')); }; });
@@ -617,7 +635,7 @@
       var g = list[+b.getAttribute('data-g')], t = today();
       var frames = S.memories.filter(function (m) { return m.name && m.name.split(' ')[0].toLowerCase() === g.name.split(' ')[0].toLowerCase() && developed(m, t.n); });
       sheet('<div style="display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:end">' +
-        '<span class="ph" style="width:96px;height:120px;border-radius:12px;overflow:hidden;background:var(--panel2);display:grid;place-items:center;font-size:36px;font-weight:550">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="" style="width:100%;height:100%;object-fit:cover;filter:grayscale(1)">' : esc(g.name.charAt(0))) + '</span>' +
+        '<span class="ph" style="width:96px;height:120px;border-radius:12px;overflow:hidden;background:var(--panel2);display:grid;place-items:center;font-size:36px;font-weight:550">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="" style="width:100%;height:100%;object-fit:cover">' : esc(g.name.charAt(0))) + '</span>' +
         '<div><p class="mono muted">Wall label</p><h2 style="font-size:30px;letter-spacing:-0.03em;line-height:1;margin-top:8px">' + esc(g.name) + '</h2></div></div>' +
         '<div class="card" style="margin:16px 0;background:var(--paper);color:var(--ink)">' +
         (g.from ? '<p style="font-size:14px">Lives and works in ' + esc(g.from) + '</p>' : '') +

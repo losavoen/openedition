@@ -376,6 +376,93 @@ html:not([data-theme="night"]) .grain{opacity:0.04}
 .screen{padding-bottom:calc(var(--safe-b) + 110px)}
 .lks{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px}
 .lks a{font-family:'Azeret Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:lowercase;color:var(--paper);text-decoration:underline;text-underline-offset:3px;opacity:.85}
+
+/* ===== v3: the site's look. Day-colour bands, the blush ticker, polaroid prints, full-colour photos, typewriter labels ===== */
+html[data-theme="gallery"]{--bg:#FAFAF7;--panel:#F1F1EE;--panel2:#E8E8E3;--bar:rgba(250,250,247,0.92)}
+.mono,.tabs button:not(.shutter) span,.lks a,.seg button,.lensbar button,.chip{font-family:'Cutive Mono','Azeret Mono',monospace;font-size:13px;letter-spacing:0.05em}
+.tabs button:not(.shutter) span{font-size:11px;letter-spacing:.04em}
+.screen,#s-now{padding-top:0}
+/* ticker: the site's blush strip, moving */
+.ticker{overflow:hidden;white-space:nowrap;background:var(--blush);color:#1C1C1A;padding:calc(var(--safe-t) + 10px) 0 10px;font-size:13px;text-transform:lowercase}
+.ticker>div{display:inline-flex;gap:18px;width:max-content;animation:marq 40s linear infinite}
+.ticker i{font-style:normal;opacity:.5}
+@keyframes marq{to{transform:translateX(-50%)}}
+/* band: the day's colour, full bleed, one big title */
+.band{background:var(--acc);color:#1C1C1A;padding:18px 20px 26px;gap:0}
+.band .bandtop{margin:0 0 26px;padding:0;background:none;display:flex;justify-content:space-between;align-items:center}
+.band .bandtop .mono{text-transform:uppercase;font-size:13px;letter-spacing:.05em}
+.band .eyebrow{opacity:1}
+.band .big{font-size:clamp(64px,21vw,96px);line-height:.84;letter-spacing:-0.055em;margin:0 0 22px;color:#1C1C1A}
+.band .x.onband,.band .bandtop .x.onband{background:#FFFFFF;border:1px solid #1C1C1A;color:#1C1C1A;width:36px;height:36px}
+.band .x.onband.pill{width:auto}
+.band .lede{color:#1C1C1A;opacity:.8;margin:-6px 0 0}
+.nowblock{border-top:1px solid #1C1C1A}
+.nowblock>.mono::before{background:#1C1C1A;width:10px;height:10px;border-radius:50%}
+.nowblock h2{font-size:32px}
+.nowblock .nd,.band .muted{color:#1C1C1A;opacity:.72}
+.nextline{border-top:1px solid rgba(28,28,26,.3)}
+/* polaroid prints */
+.prints{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding:30px 22px 26px;margin-top:-4px;background:linear-gradient(var(--acc) 0 64px,transparent 64px)}
+.prints::-webkit-scrollbar{display:none}
+.pr{flex:none;width:136px;border:0;background:#FFFFFF;color:#1C1C1A;padding:8px 8px 12px;display:flex;flex-direction:column;gap:9px;cursor:pointer;box-shadow:0 14px 30px rgba(28,28,26,.16);transform:rotate(var(--r,-3deg));transition:transform .5s var(--ease)}
+.pr:nth-child(even){--r:2.5deg}.pr:nth-child(3n){--r:-1.5deg}
+.pr:active{transform:rotate(0) translateY(-6px)}
+.pph{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#E6E6DF}
+.pph img{width:100%;height:100%;object-fit:cover;display:block}
+.pc{display:flex;justify-content:space-between;gap:8px;font-family:'Cutive Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;text-align:left}
+.pc span:last-child{text-align:right}
+.hold{position:absolute;left:8px;top:8px;padding:4px 7px;background:#FFF;border:1px solid #1C1C1A;font-family:'Cutive Mono',monospace;font-size:10px;text-transform:uppercase;transform:rotate(-3deg)}
+/* today's photo challenge as one big print */
+.shotimg{background:#FFFFFF;padding:10px 10px 16px;box-shadow:0 18px 40px rgba(28,28,26,.14);transform:rotate(-1deg);aspect-ratio:auto;margin:6px 4px 20px;color:#1C1C1A}
+.shotimg::after{display:none}
+.shotimg img{aspect-ratio:4/5;height:auto;filter:none;margin-bottom:12px}
+.shotimg .pc{font-size:13px}
+/* section headers: typewriter label over a hairline, as on the site */
+.sect .sh{border-top:1px solid var(--paper)}
+/* trip list: numbered like the site's map list */
+.rows{counter-reset:r}
+.row{grid-template-columns:34px minmax(0,1fr) auto 18px;padding:16px 0}
+.row::before{counter-increment:r;content:counter(r,decimal-leading-zero);font-family:'Cutive Mono',monospace;font-size:13px;color:var(--muted);align-self:start;padding-top:3px}
+.row b{font-size:20px;letter-spacing:-0.02em}
+/* photo grid: a wall of prints */
+.grid3{gap:14px 10px;padding:6px 2px 10px!important}
+.grid3 button{aspect-ratio:auto;background:#FFFFFF;padding:5px 5px 0;box-shadow:0 8px 20px rgba(28,28,26,.13);transform:rotate(var(--r,-1.6deg));overflow:visible;display:flex;flex-direction:column}
+.grid3 button:nth-child(even){--r:1.4deg}.grid3 button:nth-child(3n){--r:-.6deg}
+.grid3 img,.grid3 video{aspect-ratio:4/5;height:auto}
+.grid3 .cap{font-family:'Cutive Mono',monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:#1C1C1A;padding:7px 2px 8px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dev{overflow:hidden!important}
+.dev img{transform:none}
+.dev span.cap{position:static;font-size:10px}
+.dev::after,.dev::before{bottom:28px}
+.redlight{background:var(--blush);color:#1C1C1A;border:0;border-radius:0;padding:18px 20px;margin:0 0 22px}
+.redlight .muted{color:#1C1C1A;opacity:.7}
+/* schedule */
+.daypick button.on{background:var(--c)!important;box-shadow:none;color:#1C1C1A!important}
+.daypick button.on b,.daypick button.on i,.daypick button.on .mono{color:#1C1C1A}
+.daybar{border-left:0;background:var(--panel);padding:14px 16px;margin:4px 20px 10px}
+.trow .t{font-family:'Cutive Mono',monospace;font-size:13px}
+.trow p[style*="font-weight:550"]{font-size:18px;letter-spacing:-0.015em}
+/* people: small prints instead of grey circles */
+.gitem{grid-template-columns:64px 1fr auto;padding:16px 0}
+.gitem .ph{width:58px;height:70px;border-radius:0;background:#FFFFFF;padding:4px 4px 12px;box-shadow:0 8px 18px rgba(28,28,26,.14);transform:rotate(-3deg);display:block;font-size:0}
+.gitem:nth-child(even) .ph{transform:rotate(2.5deg)}
+.gitem .ph img{filter:none;width:100%;height:100%;display:block}
+.gitem .ini{display:grid;place-items:center;width:100%;height:100%;background:var(--pc);color:#1C1C1A;font-style:normal;font-size:24px;font-weight:550}
+.gitem p[style*="font-size:17px"]{font-size:20px!important;letter-spacing:-0.02em}
+/* game tiles in the day colour */
+.bingo button.hit{background:var(--acc)}
+/* gate + welcome: the site's opening, prints over a mist band */
+#s-gate .gate{background:var(--mist);color:#1C1C1A;justify-content:flex-start;gap:34px;padding-top:28px;min-height:calc(100svh - 40px)}
+#s-gate .gate .muted{color:#1C1C1A;opacity:.72}
+#s-gate .count div{border-top-color:#1C1C1A}
+#s-gate .btn.ghost{background:#FFFFFF;border-color:#1C1C1A;color:#1C1C1A;margin-top:auto}
+.gate .big{font-size:clamp(56px,16vw,72px);line-height:.84;letter-spacing:-.055em}
+.fan{display:flex;justify-content:center;gap:10px;padding:6px 0 4px}
+.fan .pr{width:31%;max-width:132px;cursor:default}
+.ob .stage{justify-content:flex-start;padding-top:12px}
+.ob .stage .fan{margin:0 -8px 10px}
+.ob .big{font-size:clamp(64px,20vw,92px);line-height:.84;letter-spacing:-.055em}
+@media (prefers-reduced-motion:reduce){.ticker>div{animation:none}}
 </style>
 </head>
 <body>
