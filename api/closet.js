@@ -30,6 +30,27 @@ function metaTag(html, names) {
   }
   return '';
 }
+// Price from the page: Open Graph / product meta first, then JSON-LD Offer data.
+const SYM = { USD: '$', CAD: 'CA$', GBP: '£', EUR: '€', AUD: 'A$' };
+function fmtPrice(amount, cur) {
+  const n = Number(String(amount).replace(/[^0-9.]/g, ''));
+  if (!(n > 0) || n > 100000) return '';
+  const c = String(cur || 'USD').toUpperCase().slice(0, 3);
+  const v = n % 1 ? n.toFixed(2) : String(n);
+  return SYM[c] ? SYM[c] + v : v + ' ' + c;
+}
+function readPrice(html) {
+  const amt = metaTag(html, ['product:price:amount', 'og:price:amount', 'twitter:data1']);
+  const cur = metaTag(html, ['product:price:currency', 'og:price:currency']);
+  if (amt && /\d/.test(amt)) { const p = fmtPrice(amt, cur || (amt.includes('£') ? 'GBP' : amt.includes('€') ? 'EUR' : 'USD')); if (p) return p; }
+  const blocks = html.match(/<script[^>]+application\/ld\+json[^>]*>[\s\S]*?<\/script>/gi) || [];
+  for (const b of blocks) {
+    const txt = b.replace(/^<script[^>]*>|<\/script>$/gi, '');
+    const m = txt.match(/"price"\s*:\s*"?([0-9][0-9.,]*)"?/) || txt.match(/"lowPrice"\s*:\s*"?([0-9][0-9.,]*)"?/);
+    if (m) { const c = (txt.match(/"priceCurrency"\s*:\s*"([A-Z]{3})"/) || [])[1]; const p = fmtPrice(m[1].replace(/,(?=\d{3}\b)/g, ''), c); if (p) return p; }
+  }
+  return '';
+}
 async function readProduct(link) {
   try {
     const r = await fetch(link, { headers: { 'user-agent': UA, accept: 'text/html' }, redirect: 'follow', signal: timed(5000) });
@@ -38,7 +59,7 @@ async function readProduct(link) {
     let image = metaTag(html, ['og:image:secure_url', 'og:image', 'twitter:image', 'twitter:image:src']);
     if (image) { try { image = new URL(image, r.url).href; } catch { image = ''; } }
     const title = metaTag(html, ['og:title', 'twitter:title']) || unent((html.match(/<title[^>]*>([^<]{1,200})/i) || [])[1] || '').trim();
-    return { image, title };
+    return { image, title, price: readPrice(html) };
   } catch { return {}; }
 }
 async function copyImage(url) {
@@ -96,6 +117,7 @@ async function clean(body) {
       link: /^https?:\/\//i.test(link) ? link : '',
       image: OURS.test(String(b.image || '')) ? b.image : '',
       tried: !!b.tried,
+      price: clip(b.price, 20),
       look: ids.has(b.look) ? b.look : '',
       bought: !!b.bought
     };
@@ -106,6 +128,7 @@ async function clean(body) {
     const meta = await readProduct(b.link);
     if (!b.item && meta.title) b.item = meta.title.slice(0, 80);
     if (meta.image) b.image = await copyImage(meta.image);
+    if (meta.price) b.price = meta.price;
   }));
   for (const b of buys) if (!b.item) b.item = host(b.link);
   return { looks, buys };

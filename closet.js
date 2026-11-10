@@ -75,7 +75,7 @@
       return '<li class="buy' + (b.bought ? ' done' : '') + '">' +
         (b.link ? '<a class="buy-pic" href="' + esc(b.link) + '" target="_blank" rel="noopener" aria-label="Open ' + esc(b.item) + ' on ' + esc(host(b.link)) + '">' + pic + '</a>' : '<span class="buy-pic">' + pic + '</span>') +
         '<span class="buy-i"><span class="buy-n">' + (b.link ? '<a href="' + esc(b.link) + '" target="_blank" rel="noopener">' + esc(b.item) + '</a>' : esc(b.item)) + '</span>' +
-        (b.link ? '<a class="lk mono cap" href="' + esc(b.link) + '" target="_blank" rel="noopener">' + esc(host(b.link)) + ' ↗</a>' : '') +
+        (b.link ? '<span class="buy-src">' + (b.price ? '<span class="mono">' + esc(b.price) + '</span>' : '') + '<a class="lk mono cap" href="' + esc(b.link) + '" target="_blank" rel="noopener">' + esc(host(b.link)) + ' ↗</a></span>' : '') +
         (b.look ? '<span class="mono cap">For ' + esc(lookName(b.look)) + '</span>' : '') + '</span>' +
         '<span class="buy-r"><label class="buy-chk"><input type="checkbox" data-bought="' + b.id + '"' + (b.bought ? ' checked' : '') + '><span class="mono cap">Got it</span></label>' +
         '<button type="button" class="buy-x" data-del-buy="' + b.id + '" aria-label="Remove ' + esc(b.item) + '">×</button></span></li>';
