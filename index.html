@@ -443,7 +443,13 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .fld select{font:inherit;font-size:16px;color:#1C1C1A;background:transparent;border:0;border-bottom:1px solid #1C1C1A;padding:10px 0;border-radius:0;width:100%}
 .closet-buys{min-width:0}
 .buys{list-style:none;margin:0 0 24px;padding:0}
-.buy{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(28,28,26,.18)}
+.buy{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(28,28,26,.18)}
+.buy-pic{display:grid;place-items:center;width:64px;height:80px;background:var(--mist);overflow:hidden}
+.buy-pic img{width:100%;height:100%;object-fit:cover}
+.buy-n a{color:inherit;text-decoration:none}
+.buy-n a:hover{text-decoration:underline}
+.buy.done .buy-pic{opacity:.45}
+.buy-chk{display:flex;align-items:center;gap:6px;cursor:pointer}
 .buy-i{display:flex;flex-direction:column;gap:2px;min-width:0}
 .buy-n{font-size:16px;overflow-wrap:anywhere}
 .buy-r{display:flex;align-items:center;gap:12px}
@@ -804,12 +810,12 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="closet-h"><h3 class="closet-ttl">To buy</h3><span class="mono cap" id="buy-count">Nothing yet</span></div>
 <ul class="buys" id="buys" aria-live="polite"><li class="mono cap closet-empty">Pieces you still need. Tick them off as they arrive.</li></ul>
 <form id="buy-form" class="buy-form" autocomplete="off">
-<label class="fld"><span class="lbl mono">What do you need?</span><input type="text" name="item" maxlength="80" placeholder="Gold kitten heels"></label>
+<label class="fld"><span class="lbl mono">Link</span><input type="text" inputmode="url" name="link" maxlength="400" placeholder="Paste the product page"></label>
 <div class="duo">
-<label class="fld"><span class="lbl mono">Price (USD)</span><input type="text" name="price" inputmode="decimal" placeholder="85"></label>
+<label class="fld"><span class="lbl mono">Name (optional)</span><input type="text" name="item" maxlength="80" placeholder="Taken from the link"></label>
 <label class="fld"><span class="lbl mono">For</span><select name="look"></select></label>
 </div>
-<label class="fld"><span class="lbl mono">Link</span><input type="text" inputmode="url" name="link" maxlength="400" placeholder="Paste the product page"></label>
+<p class="mono cap" style="color:#5F5C57">We’ll pull the photo from the link. Some shops block this, so a few may show without one.</p>
 <button type="submit" class="btn">Add to the list</button>
 </form>
 </div>

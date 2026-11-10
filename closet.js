@@ -12,7 +12,7 @@
   function $(s, el) { return (el || root).querySelector(s); }
   function $$(s, el) { return Array.prototype.slice.call((el || root).querySelectorAll(s)); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-  function money(n) { return '$' + (Math.round(n * 100) / 100).toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }); }
+  function host(u) { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return 'the shop'; } }
   function msg(t) { $('#closet-msg').textContent = t || ''; }
   function getCred() { try { return JSON.parse(localStorage.getItem('oe-closet') || 'null'); } catch (e) { return null; } }
   function setCred(v) { try { v ? localStorage.setItem('oe-closet', JSON.stringify(v)) : localStorage.removeItem('oe-closet'); } catch (e) {} }
@@ -52,9 +52,8 @@
   // ---------- render ----------
   function render() {
     var toBuy = C.buys.filter(function (b) { return !b.bought; }), bought = C.buys.filter(function (b) { return b.bought; });
-    var sum = function (a) { return a.reduce(function (s, b) { return s + (b.price || 0); }, 0); };
     $('#closet-count').textContent = C.looks.length + (C.looks.length === 1 ? ' look' : ' looks');
-    $('#buy-count').textContent = toBuy.length ? money(sum(toBuy)) + ' to buy' + (bought.length ? ' · ' + money(sum(bought)) + ' bought' : '') : (bought.length ? 'All bought' : 'Nothing yet');
+    $('#buy-count').textContent = toBuy.length ? toBuy.length + ' to buy' + (bought.length ? ' · ' + bought.length + ' bought' : '') : (bought.length ? 'All bought' : 'Nothing yet');
 
     $('#looks').innerHTML = C.looks.length ? C.looks.map(function (l) {
       var need = C.buys.filter(function (b) { return b.look === l.id && !b.bought; });
@@ -72,11 +71,13 @@
 
     var lookName = function (id) { var l = C.looks.filter(function (x) { return x.id === id; })[0]; return l ? l.title : ''; };
     $('#buys').innerHTML = C.buys.length ? C.buys.slice().sort(function (a, b) { return a.bought - b.bought; }).map(function (b) {
+      var pic = b.image ? '<img src="' + esc(b.image) + '" alt="">' : '<span class="mono cap">' + (b.link && !b.tried ? '…' : '') + '</span>';
       return '<li class="buy' + (b.bought ? ' done' : '') + '">' +
-        '<label class="buy-chk"><input type="checkbox" data-bought="' + b.id + '"' + (b.bought ? ' checked' : '') + '><span class="sr">Bought</span></label>' +
-        '<span class="buy-i"><span class="buy-n">' + esc(b.item) + '</span>' + (b.look ? '<span class="mono cap">For ' + esc(lookName(b.look)) + '</span>' : '') + '</span>' +
-        '<span class="buy-r">' + (b.price ? '<span class="mono">' + money(b.price) + '</span>' : '') +
-        (b.link ? '<a class="lk" href="' + esc(b.link) + '" target="_blank" rel="noopener">Shop ↗</a>' : '') +
+        (b.link ? '<a class="buy-pic" href="' + esc(b.link) + '" target="_blank" rel="noopener" aria-label="Open ' + esc(b.item) + ' on ' + esc(host(b.link)) + '">' + pic + '</a>' : '<span class="buy-pic">' + pic + '</span>') +
+        '<span class="buy-i"><span class="buy-n">' + (b.link ? '<a href="' + esc(b.link) + '" target="_blank" rel="noopener">' + esc(b.item) + '</a>' : esc(b.item)) + '</span>' +
+        (b.link ? '<a class="lk mono cap" href="' + esc(b.link) + '" target="_blank" rel="noopener">' + esc(host(b.link)) + ' ↗</a>' : '') +
+        (b.look ? '<span class="mono cap">For ' + esc(lookName(b.look)) + '</span>' : '') + '</span>' +
+        '<span class="buy-r"><label class="buy-chk"><input type="checkbox" data-bought="' + b.id + '"' + (b.bought ? ' checked' : '') + '><span class="mono cap">Got it</span></label>' +
         '<button type="button" class="buy-x" data-del-buy="' + b.id + '" aria-label="Remove ' + esc(b.item) + '">×</button></span></li>';
     }).join('') : '<li class="mono cap closet-empty">Pieces you still need. Tick them off as they arrive.</li>';
 
@@ -126,11 +127,12 @@
   bf.onsubmit = function (e) {
     e.preventDefault();
     var item = bf.item.value.trim();
-    if (!item) { msg('Add what you want to buy'); return; }
     var link = bf.link.value.trim(); if (link && !/^https?:\/\//i.test(link)) link = 'https://' + link;
-    C.buys.push({ id: rid(), item: item, price: parseFloat(String(bf.price.value).replace(/[^0-9.]/g, '')) || null, link: link, look: bf.look.value, bought: false });
-    bf.item.value = ''; bf.price.value = ''; bf.link.value = '';
-    save('Added to your list');
+    if (!item && !link) { msg('Paste a link or name the piece'); return; }
+    C.buys.push({ id: rid(), item: item, link: link, look: bf.look.value, bought: false });
+    bf.item.value = ''; bf.link.value = '';
+    render();
+    save(link ? 'Added. Getting the photo…' : 'Added to your list').then(function () { if (link) msg('Added to your list'); });
   };
 
   // ---------- another device ----------
