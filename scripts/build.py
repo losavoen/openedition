@@ -47,6 +47,7 @@ html = f'''<!doctype html>
 {helmet.strip()}
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
+<script src="closet.js" defer></script>
 <script src="memories.js" defer></script>
 <script>window.OE_CONFIG = {json.dumps({k: cfg[k] for k in ('hostName', 'hostPhone', 'backupContact', 'rooms', 'payMethods') if k in cfg})};</script>
 <script src="extras.js" defer></script>
