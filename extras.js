@@ -76,11 +76,16 @@
     }).join('');
   }
 
-  function songs(data) {
+  // Requested songs join the tracklist after the 12 picks: form requests first, then songs named in RSVPs.
+  var rsvpSongs = [], formSongs = [];
+  function songs(data) { if (data) rsvpSongs = data.songs || []; drawSongs(); }
+  function loadSongReqs() { api('/api/songs').then(function (j) { formSongs = j.requests || []; drawSongs(); }).catch(function () {}); }
+  function drawSongs() {
     var el = $('song-requests'); if (!el) return;
-    var list = data.songs || [];
-    el.innerHTML = list.map(function (s, i) {
-      return '<div class="trk-row"><span class="mono cap ip">' + (i === 0 ? 'Req.' : '') + '</span><span style="font-weight: 550">' + esc(s.songs) + '</span><span class="cap">Requested by ' + esc(s.name) + '</span><span class="mono cap">RSVP</span></div>';
+    var rows = formSongs.map(function (s) { return { song: s.song, by: (s.artist ? s.artist + ' · ' : '') + 'Requested by ' + s.name, tag: s.moment && s.moment !== 'Anytime' ? s.moment : 'Request' }; })
+      .concat(rsvpSongs.map(function (s) { return { song: s.songs, by: 'Requested by ' + String(s.name || '').split(/\s+/)[0], tag: 'RSVP' }; }));
+    el.innerHTML = rows.map(function (r, i) {
+      return '<div class="trk-row"><span class="mono cap ip">' + (13 + i) + '</span><span style="font-weight: 550">' + esc(r.song) + '</span><span class="cap">' + esc(r.by) + '</span><span class="mono cap">' + esc(r.tag) + '</span></div>';
     }).join('');
   }
 
@@ -231,7 +236,7 @@
       btn.disabled = true; btn.textContent = 'Sending…'; msg.textContent = '';
       fetch('/api/songs', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
         .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || 'Couldn’t send that. Try again.'); return j; }); })
-        .then(function () { msg.textContent = 'Sent. “' + body.song + '” is in the queue.'; f.song.value = ''; f.artist.value = ''; f.moment.value = 'Anytime'; })
+        .then(function () { msg.textContent = 'Sent. “' + body.song + '” is on the list.'; loadSongReqs(); f.song.value = ''; f.artist.value = ''; f.moment.value = 'Anytime'; })
         .catch(function (err) { msg.textContent = err.message; })
         .then(function () { btn.disabled = false; btn.textContent = 'Send request'; });
     });
@@ -239,7 +244,7 @@
   function rsvpData() { api('/api/rsvps').then(function (d) { board(d); songs(d); tabNames = (d.arrivals || []).map(function (a) { return a.name; }).filter(Boolean); renderSplit(); }).catch(function () {}); }
 
   document.addEventListener('DOMContentLoaded', function () {
-    countdown(); liveItinerary(); config(); kit(); house(); dock(); tabSetup(); rsvpData(); loadTab(); songForm();
+    countdown(); liveItinerary(); config(); kit(); house(); dock(); tabSetup(); rsvpData(); loadTab(); songForm(); loadSongReqs();
     document.addEventListener('oe-rsvp-saved', rsvpData);
     setInterval(function () { if (!document.hidden) { countdown(); rsvpData(); } }, 60000);
   });
