@@ -551,9 +551,9 @@
   function dayDetail(i) {
     var d = S.days[i], t = today();
     var frames = S.memories.filter(function (m) { return m.day === d.day && developed(m, t.n); });
-    sheet('<p class="mono muted">Room 0' + (i + 1) + ' · Side ' + d.side + '</p><h2 class="big" style="margin:10px 0 6px">' + d.day + '</h2><p class="muted" style="margin-bottom:16px">Today’s shot · ' + esc(d.shot) + '</p>' +
+    sheet('<p class="mono muted">Day 0' + (i + 1) + ' · Dec ' + (+d.date.slice(8)) + '</p><h2 class="big" style="margin:10px 0 6px">' + d.day + '</h2><p class="muted" style="margin-bottom:16px">Today’s shot · ' + esc(d.shot) + '</p>' +
       timeline(d, t).replace('class="timeline"', 'class="timeline" style="padding:0"') +
-      '<div class="sub" style="margin:22px 0 12px"><span class="mono">On the wall</span><span class="mono muted">' + frames.length + ' frames</span></div>' +
+      '<div class="sub" style="margin:22px 0 12px"><span class="mono">Photos</span><span class="mono muted">' + frames.length + '</span></div>' +
       (frames.length ? gridHTML(frames) : '<p class="muted" style="font-size:14px">Nothing developed from this room yet.</p>'));
     wireGrid($('#sheet-body'));
   }
@@ -618,14 +618,14 @@
         var count = S.memories.filter(function (m) { return m.name && g.name && m.name.split(' ')[0].toLowerCase() === g.name.split(' ')[0].toLowerCase(); }).length;
         return '<button class="gitem" data-g="' + i + '"><span class="ph" style="--pc:' + ['#D8E2DC', '#A2AEDA', '#DCE2BE', '#F8ECEA'][i % 4] + '">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="">' : '<i class="ini">' + esc((g.name || '?').charAt(0)) + '</i>') + '</span><span><p style="font-weight:550;font-size:17px">' + esc(g.name) + '</p><p class="muted" style="font-size:13px">' + esc(g.pending ? 'Hasn’t added a profile yet' : g.from ? 'Lives and works in ' + g.from : g.status || '') + '</p></span><span class="mono muted">' + count + ' photos</span></button>';
       }).join('') + '</div>' : '<p class="empty-note">Guests show up here once they add a profile on the site.</p>') +
-      '<div style="padding:20px"><a class="btn ghost full" href="/#guests">Edit my wall label</a></div>';
+      '<div style="padding:20px"><a class="btn ghost full" href="/#guests">Edit my profile</a></div>';
     $$('[data-act]', el).forEach(function (b) { b.onclick = function () { act(b.getAttribute('data-act')); }; });
     $$('[data-g]', el).forEach(function (b) { b.onclick = function () {
       var g = list[+b.getAttribute('data-g')], t = today();
       var frames = S.memories.filter(function (m) { return m.name && m.name.split(' ')[0].toLowerCase() === g.name.split(' ')[0].toLowerCase() && developed(m, t.n); });
       sheet('<div style="display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:end">' +
         '<span class="ph" style="width:96px;height:120px;border-radius:12px;overflow:hidden;background:var(--panel2);display:grid;place-items:center;font-size:36px;font-weight:550">' + (g.photo ? '<img src="' + esc(g.photo) + '" alt="" style="width:100%;height:100%;object-fit:cover">' : esc(g.name.charAt(0))) + '</span>' +
-        '<div><p class="mono muted">Wall label</p><h2 style="font-size:30px;letter-spacing:-0.03em;line-height:1;margin-top:8px">' + esc(g.name) + '</h2></div></div>' +
+        '<div><p class="mono muted">Profile</p><h2 style="font-size:30px;letter-spacing:-0.03em;line-height:1;margin-top:8px">' + esc(g.name) + '</h2></div></div>' +
         '<div class="card" style="margin:16px 0;background:var(--paper);color:var(--ink)">' +
         (g.from ? '<p style="font-size:14px">Lives and works in ' + esc(g.from) + '</p>' : '') +
         (g.line ? '<p style="font-size:14px;margin-top:4px">Would buy: “' + esc(g.line) + '”</p>' : '') +
