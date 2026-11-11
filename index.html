@@ -25,12 +25,15 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .im{display:block;width:100%;height:100%;object-fit:cover}
 .lbl{font-size:12px;line-height:1.3;text-transform:uppercase;letter-spacing:0.02em}
 .cap{font-size:12px;line-height:1.4}
-.wrap{padding-inline:27px}
-.sec{padding-top:120px}
+.site{--s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:40px;--s6:48px;--s8:64px;--s10:80px;--s12:96px;--s15:120px;--gut:24px;--margin:32px}
+.wrap{padding-inline:var(--margin)}
+.sec{padding-top:var(--s15)}
+/* 12-column grid, 24px gutters (16px on phones) */
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gut);row-gap:var(--s4)}
 .ip,.is,.ir{color:inherit}
 .ros .ir{color:var(--rose-ink)}
 .card .mono.lbl{color:var(--peri-ink)}
-.sectitle{margin:0 0 clamp(28px,3.4vw,48px)}
+.site .sectitle{margin:0 0 var(--s6)}
 .sh{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:16px;padding-top:14px;border-top:1px solid #1C1C1A;margin-bottom:40px}
 .sh>:first-child{color:var(--peri-ink)}
 .sh>:last-child{text-align:right}
@@ -38,7 +41,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .top3>:last-child{justify-self:end}
 .big{font-size:clamp(48px,5.6vw,84px);line-height:0.86;letter-spacing:-0.04em;text-transform:uppercase;font-weight:550}
 .lead{font-size:clamp(20px,1.8vw,27px);line-height:1.2;letter-spacing:-0.01em;max-width:620px}
-.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:27px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s4)}
 .btn,.pill,.back{font:inherit;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;min-height:44px;padding:0 20px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background-color 0.4s var(--ease),color 0.4s var(--ease),border-color 0.4s var(--ease),transform 0.4s var(--ease)}
 .songreq{position:relative;display:flex;flex-direction:column;gap:14px;margin-top:36px;padding-top:24px;border-top:1px solid rgba(28,28,26,0.28)}
 .sr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px}
@@ -203,8 +206,10 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .foot{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:760px){
-.wrap{padding-inline:16px}
-.sec{padding-top:80px}
+.site{--gut:16px;--margin:16px}
+.sec{padding-top:var(--s10)}
+.site .sectitle{margin-bottom:var(--s4)}
+.g12>*{grid-column:1/-1!important}
 .navlinks{display:none}
 .top3{grid-template-columns:1fr auto}
 .pola{justify-content:flex-start;overflow-x:auto;padding:8px 16px 24px;gap:14px;scroll-snap-type:x mandatory;align-self:stretch;margin:0 -16px}
@@ -390,10 +395,14 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .hl{background:linear-gradient(var(--peri),var(--peri)) no-repeat 0 88%/0% 38%;transition:background-size 1.2s var(--ease) .2s}
 .hl.go{background-size:100% 38%}
 /* countdown dots */
-.days{margin-top:72px;display:flex;flex-direction:column;gap:18px}
+.plan-intro .pl-a{grid-column:1/7}
+.plan-intro .pl-b{grid-column:8/13;display:flex;flex-direction:column;gap:var(--s2)}
+.plan-intro .lead{max-width:none}
+.days{margin-top:var(--s12);display:flex;flex-direction:column;gap:var(--s3)}
+@media (max-width:760px){.days{margin-top:var(--s8)}}
 .days-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
 .days-n{font-size:clamp(40px,4.4vw,64px);font-weight:550;letter-spacing:-0.04em;line-height:1;font-variant-numeric:tabular-nums}
-.dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(18px,1fr));gap:10px}
+.dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(16px,1fr));gap:var(--s1)}
 .dots i{display:block;aspect-ratio:1;border-radius:50%;border:1.5px solid #1C1C1A;background:linear-gradient(var(--peri),var(--peri)) no-repeat 0 100%/100% 0%;transition:background-size .5s var(--ease)}
 .dots i.on{background-size:100% 100%}
 .dots i.today{border-color:var(--peri-ink);box-shadow:0 0 0 3px var(--blush)}
@@ -505,11 +514,11 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <!-- 01 · THE PLAN -->
 <section id="plan" class="sec wrap" aria-label="The plan" style="scroll-margin-top: 56px">
 <h2 class="big trk sectitle">Four days in Miami</h2>
-<div class="two" style="row-gap: 40px">
-<div class="sv" style="display: flex; flex-direction: column; gap: 14px">
+<div class="g12 plan-intro">
+<div class="sv pl-a">
 <p class="lead">My birthday falls the same week as Art Week, so I’m celebrating in Miami and I’d love you there. The fair, the galleries, long dinners and a slow Sunday, with a house in Little River as home base. Every plan is built around what works for the group, <span class="ir">budget included</span>.</p>
 </div>
-<div class="sv" style="display: flex; flex-direction: column; gap: 14px">
+<div class="sv pl-b">
 <p class="mono lbl is">What I need from you</p>
 <p class="lead">Let me know if you’re coming by <span class="ip">Tuesday, November 10</span>, so I can confirm the Airbnb.</p>
 <p class="mono lbl">Doors open Friday, December 4. <a href="/app/" style="text-decoration: underline">The Open Edition app</a> goes live that day too, so add it to your home screen when you land.</p>
