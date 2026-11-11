@@ -115,7 +115,13 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .trk-row:hover{padding-left:10px;background:var(--blush)}
 .trk-row>:last-child{text-align:right}
 
-.cost{display:grid;grid-template-columns:minmax(0,1fr) auto auto;column-gap:32px;padding:13px 0;border-top:1px solid rgba(28,28,26,0.28);align-items:baseline}
+.cost{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto) 8.5em;column-gap:32px;padding:13px 0;border-top:1px solid rgba(28,28,26,0.28);align-items:baseline}
+.cost>span:nth-child(2){text-align:right}.cost>span:nth-child(3){text-align:left}
+.costhead{display:flex;justify-content:space-between;gap:16px;font-size:10px;font-weight:550;margin:0 0 12px}
+.costgrid{display:grid;gap:40px;margin-top:28px}
+.costsum{display:flex;flex-direction:column;gap:20px}.costsum .tot{font-size:clamp(48px,6.4vw,96px);white-space:nowrap}
+@media (min-width:1100px){.costgrid{grid-template-columns:minmax(0,1fr) minmax(300px,400px);column-gap:72px;align-items:end}.costsum .tot{font-size:clamp(48px,4.2vw,84px)}}
+@media (max-width:640px){.cost{grid-template-columns:minmax(0,1fr) auto;row-gap:4px;column-gap:16px;padding:14px 0}.cost>span:nth-child(1){grid-column:1;grid-row:1}.cost>span:nth-child(2){grid-column:1;grid-row:2;text-align:left}.cost>span:nth-child(3){grid-column:2;grid-row:1;text-align:right}}
 .qa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:64px;row-gap:36px}
 .ess{font-size:clamp(20px,2.3vw,34px);line-height:0.98;text-transform:uppercase;text-align:justify;text-align-last:justify;letter-spacing:-0.01em}
 
@@ -872,8 +878,9 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="sh mono lbl"><span>Costs</span><span>Per person</span></div>
 <div class="sv" style="background: #FFFFFF; padding: clamp(28px, 3vw, 44px) clamp(16px, 2.4vw, 36px) 32px">
 <h2 class="big trk">Costs</h2>
-<p class="lbl" style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 550; margin-top: 28px"><span>Per person</span><span>USD unless noted</span></p>
-<div style="max-width: 820px; margin-top: 12px">
+<div class="costgrid">
+<div class="costlist">
+<p class="lbl costhead"><span>Per person</span><span>USD unless noted</span></p>
 <div class="cost sv"><span>The house, Fri–Mon</span><span class="mono cap">$175 CAD (about $125 USD), half covered</span><span class="mono cap is">Core</span></div>
 <div class="cost sv"><span>Art Basel day ticket</span><span class="mono cap">$92</span><span class="mono cap is">Core</span></div>
 <div class="cost sv"><span>Everyday People</span><span class="mono cap">About $35</span><span class="mono cap is">Core</span></div>
@@ -886,12 +893,13 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="cost sv" style="color: #55524F"><span>Nikki Beach on Monday, table</span><span class="mono cap">From $50 minimum spend</span><span class="mono cap">If you join</span></div>
 <div class="cost sv" style="color: #55524F; border-bottom: 1px solid rgba(28,28,26,0.28)"><span>The boat</span><span class="mono cap">About $120</span><span class="mono cap">On hold</span></div>
 </div>
-<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-top: 40px">
+<div class="costsum">
 <div style="display: flex; flex-direction: column; gap: 8px">
-<p style="font-size: clamp(48px, 6.4vw, 96px); line-height: 0.82; font-weight: 550; letter-spacing: -0.045em">$310–490</p>
+<p class="tot" style="line-height: 0.82; font-weight: 550; letter-spacing: -0.045em">$310–490</p>
 <p class="mono cap" style="text-transform: uppercase"><span class="is">Core $139–142</span> · <span class="ip">dinners $170–350</span></p>
 </div>
 <p class="cap" style="max-width: 280px; font-size: 13px">A rough total per person in USD, not including the house ($175 CAD, or about $125 USD, after I cover half). Rides and lunches are extra. If it’s more than you want to spend, tell me in the RSVP and we’ll adjust.</p>
+</div>
 </div>
 <div class="tab sv" id="tab">
 <div class="two" style="align-items: start; row-gap: 28px; gap: 40px">
