@@ -296,6 +296,8 @@
 
   // One header for every screen: the accent banner (where we are in the trip, one action),
   // a small eyebrow and the big title. Anything screen-specific goes after it.
+  // The day as a plain line ("Saturday, Dec 5"); the tabs and ticker already carry it, so it doesn't need to shout.
+  function dayLine(d) { return '<span class="dayname">' + esc(d.day) + ', Dec ' + (+d.date.slice(8)) + '</span>'; }
   function head(eyebrow, title, action, extra, col) {
     var t = today();
     var bits = ['Day ' + (t.i + 1) + ' of 4', clock(t.n.min) + ' in Miami', 'Open Edition', '(miami art week)', 'December 4–7'];
@@ -433,7 +435,7 @@
     var crewNames = ride && ride.crew.filter(function (c) { return c !== ride.me; }).map(function (c) { return c.name.split(' ')[0]; }).join(', ');
     el.innerHTML =
       // one coloured band: where we are, what's on now, what's next
-      head(hello + (S.name ? ', ' + esc(S.name) : ''), esc(d.day), '<button class="x onband" data-act="settings" aria-label="Settings">⚙</button>',
+      head(hello + (S.name ? ', ' + esc(S.name) : ''), dayLine(d), '<button class="x onband" data-act="settings" aria-label="Settings">⚙</button>',
         '<div class="nowblock"><p class="mono">' + (nowRow ? 'Now · ' + esc(nowRow.time) : 'Coming up · ' + esc(next ? next.time : '')) + '</p>' +
           '<h2>' + esc(nowRow ? nowRow.title : (next ? next.title : 'Free time')) + '</h2>' +
           '<p class="nd">' + esc(nowRow ? nowRow.desc : (next ? next.desc : '')) + '</p></div>' +
@@ -516,7 +518,7 @@
     if (!d) { el.innerHTML = '<p class="empty-note">Loading…</p>'; return; }
     var frames = S.memories.filter(function (m) { return m.day === d.day && developed(m, t.n); });
     var info = '<div class="dayinfo"><span class="mono">' + (schedDay === t.i ? 'Today · ' : '') + 'Day ' + (schedDay + 1) + ' of 4 · ' + d.rows.length + ' plans</span><span>Photo challenge: ' + esc(d.shot) + '</span></div>';
-    el.innerHTML = head('Schedule · Miami time', d.day, '<button class="x onband" id="share-day" aria-label="Send this day’s plan">↗</button>', info, d.color) +
+    el.innerHTML = head('Schedule · Miami time', dayLine(d), '<button class="x onband" id="share-day" aria-label="Send this day’s plan">↗</button>', info, d.color) +
       // the four days hang off the band like index tabs; the open one is the band's own colour
       '<div class="daytabs" role="tablist">' + S.days.map(function (x, i) {
         return '<button role="tab" aria-selected="' + (i === schedDay) + '" data-sd="' + i + '" class="' + (i === schedDay ? 'on' : '') + '" style="--c:' + x.color + '"><span class="mono">' + x.day.slice(0, 3) + '</span><b>' + x.date.slice(8) + '</b>' + (i === t.i ? '<i>today</i>' : '') + '</button>';

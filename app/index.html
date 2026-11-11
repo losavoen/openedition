@@ -462,6 +462,8 @@ html[data-theme="gallery"]{--bg:#FAFAF7;--panel:#F1F1EE;--panel2:#E8E8E3;--bar:r
 .ob .stage{justify-content:flex-start;padding-top:12px}
 .ob .stage .fan{margin:0 -8px 10px}
 .ob .big{font-size:clamp(64px,20vw,92px);line-height:.84;letter-spacing:-.055em}
+/* day names as a plain line, not a poster */
+.band h1:has(.dayname){font-size:clamp(30px,9vw,40px);line-height:1.05;letter-spacing:-0.03em;text-transform:none;margin:0 0 20px}
 /* schedule: the band takes the chosen day's colour; days hang off it as index tabs */
 .band{transition:background-color .45s var(--ease)}
 .dayinfo{display:flex;flex-direction:column;gap:6px;border-top:1px solid #1C1C1A;padding-top:12px;font-size:15px}
