@@ -171,7 +171,8 @@
       requestAnimationFrame(function () {
         queued = false;
         var r = wrap.getBoundingClientRect(), vh = innerHeight;
-        var f = (vh * 0.85 - r.top) / (r.height * 0.9 + vh * 0.25);
+        // Start as the map comes into view; finish by the time its bottom edge is three quarters of the way up the screen.
+        var f = (vh * 0.9 - r.top) / (r.height + vh * 0.15);
         paint(Math.max(0, Math.min(1, f)));
       });
     }
@@ -188,7 +189,9 @@
     var target = null, until = 0, lock = false;
     // Land the section's top edge exactly on the bottom of the top bar, so nothing from the section before shows.
     function bar() { var d = document.querySelector('.dock'); if (!d) return 0; var r = d.getBoundingClientRect(); return r.bottom > 0 && getComputedStyle(d).visibility !== 'hidden' ? Math.round(r.bottom) : 0; }
-    function offset(el) { var m = bar() || parseFloat(getComputedStyle(el).scrollMarginTop) || 0; return Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY - m)); }
+    // Skip a section's own top padding, so the jump opens on its first line with a small gap under the bar.
+    function pad(el) { if (!el.classList.contains('sec')) return 0; var t = parseFloat(getComputedStyle(el).paddingTop) || 0; return Math.max(0, t - 20); }
+    function offset(el) { var m = bar() || parseFloat(getComputedStyle(el).scrollMarginTop) || 0; return Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY + pad(el) - m)); }
     function go(el, smooth) {
       target = el; until = Date.now() + 12000; lock = true;
       window.scrollTo({ top: offset(el), behavior: smooth && !reduce ? 'smooth' : 'auto' });

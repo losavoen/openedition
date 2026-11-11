@@ -1,21 +1,10 @@
-// Sample mode (?sample): the app runs on made-up data and never talks to the server.
+// Sample mode (?sample): the app never talks to the server and shows the trip as it is now: not started, nobody signed up.
 // Used by the preview PIN, so people can see how the app works without the trip's real
 // photos, profiles or address.
 (function () {
-  var guests = [
-    { id: 'g1', name: 'Simi', from: 'Toronto', line: 'A Basquiat crown', status: 'I’m in' },
-    { id: 'g2', name: 'Bosa', from: 'Toronto', line: 'Anything by Amoako Boafo', status: 'I’m in' },
-    { id: 'g3', name: 'Nicole', from: 'Toronto', line: 'A Kusama pumpkin', status: 'Probably' }
-  ];
-  var arrivals = [
-    { name: 'Ilelosa', airport: 'MIA', arriveDay: 'Friday', landing: 'Morning', inTime: '10:40am' },
-    { name: 'Simi', airport: 'MIA', arriveDay: 'Friday', landing: 'Morning', inTime: '10:55am' },
-    { name: 'Bosa', airport: 'FLL', arriveDay: 'Friday', landing: 'Afternoon', inTime: '1:20pm' },
-    { name: 'Sayo', airport: 'MIA', arriveDay: 'Friday', landing: 'Morning', inTime: '11:30am' },
-    { name: 'Nicole', airport: 'MIA', arriveDay: 'Saturday', landing: 'Evening' },
-    { name: 'Chiara', airport: 'FLL', arriveDay: 'Friday', landing: 'Afternoon' }
-  ];
-  var tab = [{ id: 't1', what: 'Groceries', amount: 84, paidBy: 'Simi', split: [] }];
+  var guests = []; // only people who've RSVP'd and made a profile, and in preview that's nobody
+  var arrivals = [];
+  var tab = [];
   var real = window.fetch.bind(window);
   function json(o) { return Promise.resolve(new Response(JSON.stringify(o), { status: 200, headers: { 'Content-Type': 'application/json' } })); }
   window.fetch = function (url, opts) {

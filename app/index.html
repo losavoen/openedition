@@ -462,6 +462,18 @@ html[data-theme="gallery"]{--bg:#FAFAF7;--panel:#F1F1EE;--panel2:#E8E8E3;--bar:r
 .ob .stage{justify-content:flex-start;padding-top:12px}
 .ob .stage .fan{margin:0 -8px 10px}
 .ob .big{font-size:clamp(64px,20vw,92px);line-height:.84;letter-spacing:-.055em}
+/* schedule: the band takes the chosen day's colour; days hang off it as index tabs */
+.band{transition:background-color .45s var(--ease)}
+.dayinfo{display:flex;flex-direction:column;gap:6px;border-top:1px solid #1C1C1A;padding-top:12px;font-size:15px}
+.dayinfo .mono{text-transform:uppercase;font-size:12px}
+.daytabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 14px 18px}
+.daytabs button{border:0;background:var(--c);color:#1C1C1A;padding:16px 10px 10px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;border-radius:0 0 14px 14px;cursor:pointer;opacity:.5;transform:translateY(-8px);transition:transform .35s var(--ease),opacity .35s var(--ease),padding .35s var(--ease)}
+.daytabs button .mono{font-size:12px;text-transform:uppercase}
+.daytabs b{font-size:24px;font-weight:550;letter-spacing:-0.03em;line-height:1}
+.daytabs i{font-style:normal;font-family:'Cutive Mono',monospace;font-size:10px;text-transform:uppercase;margin-top:2px}
+.daytabs button.on{opacity:1;transform:none;padding-top:18px;padding-bottom:14px}
+.daytabs button:not(.on):active{transform:translateY(-4px)}
+@media (prefers-reduced-motion:reduce){.band,.daytabs button{transition:none}}
 @media (prefers-reduced-motion:reduce){.ticker>div{animation:none}}
 </style>
 </head>

@@ -8,11 +8,11 @@ export default async function handler(req, res) {
   const want = process.env.GUEST_PASSWORD || '';
   const nextPath = typeof body.next === 'string' && body.next.startsWith('/') && !body.next.startsWith('//') ? body.next : '/';
   const given = String(body.password || '').trim();
-  // Preview PIN: a look at the app with sample photos and people. No address, no real data, nothing posts.
+  // Preview PIN: the app as it stands now, before the trip, with nobody's data. No address, no real data, nothing posts.
   const pin = process.env.VIEW_PIN || '';
   if (pin && !(want && same(given, want)) && same(given, pin)) {
     res.setHeader('Set-Cookie', `oe_view=${viewToken(pin)}; Path=/; Max-Age=${60 * 60 * 24 * 30}; HttpOnly; Secure; SameSite=Lax`);
-    res.setHeader('Location', '/app/?sample&at=fri-14:30');
+    res.setHeader('Location', '/app/?sample');
     return res.status(303).end();
   }
   if (!want || !same(given, want)) {

@@ -6,14 +6,14 @@
 // URL switches (for previews and the launch video):
 //   ?preview          open the app before the trip, as if it's Friday at 2:10pm
 //   ?at=fri-14:30     pretend it's this day and time in Miami
-//   ?sample           fill the app with sample photos so every screen has content
+//   ?sample           no server, no data: the app as it stands before the trip
 (function () {
   'use strict';
 
   var TRIP = { start: '2026-12-04', end: '2026-12-07' };
   var Q = new URLSearchParams(location.search);
   var SAMPLE = Q.has('sample');
-  var PREVIEW = Q.has('preview') || SAMPLE || Q.has('at');
+  var PREVIEW = Q.has('preview') || Q.has('at');
   var ROLL = 24;
   var A = '/assets/';
   var INVITED = []; // only guests who made a profile appear in People
@@ -84,22 +84,7 @@
   // ---------- data ----------
   var S = { days: [], memories: [], guests: [], arrivals: [], house: null, tab: [], kit: null, name: store.get('name', ''), lens: store.get('lens', 'gallery') };
 
-  function sampleMemories() {
-    var t = function (d, h) { return new Date(Date.parse(d + 'T' + h + ':00-05:00')).toISOString(); };
-    var mk = function (name, day, date, h, kind, img, note) { return { id: name + h + date, name: name, day: day, kind: kind, note: note || '', createdAt: t(date, h), media: [{ url: A + img, type: /\.mp4$/.test(img) ? 'video' : 'image' }] }; };
-    return [
-      mk('Ilelosa', 'Friday', '2026-12-04', '11:05', 'memory', 'f63505a42750c5a52910c41fafde0526.jpg', 'Wheels down.'),
-      mk('Simi', 'Friday', '2026-12-04', '12:40', 'daily', '33b2dca8bf23bad75dc01309e0e0694f.jpg'),
-      mk('Simi', 'Friday', '2026-12-04', '15:10', 'memory', 'ce9c479ce68a77630ab0c0e8cee3ed96.jpg', 'Lost everyone within five minutes.'),
-      mk('Bosa', 'Friday', '2026-12-04', '22:30', 'memory', '45d3085f470d21e1b85bcaedd49351e5.jpg'),
-      mk('Sayo', 'Friday', '2026-12-04', '19:40', 'fit', 'd6d17608513a701b079d98bc3ec87c83.jpg'),
-      mk('Nicole', 'Saturday', '2026-12-05', '10:20', 'daily', 'a84798b4498739329e65cf17fed751f2.jpg'),
-      mk('Sayo', 'Saturday', '2026-12-05', '12:15', 'memory', '6d5b2c5b16a2856583fe6d970384b8b9.jpg'),
-      mk('Ilelosa', 'Saturday', '2026-12-05', '17:20', 'memory', 'sample/boat.mp4', 'Nobody talked for ten minutes.'),
-      mk('Chiara', 'Saturday', '2026-12-05', '18:05', 'memory', '1c8c9309193976c9a4e1ebbffde5c892.jpg'),
-      mk('Bosa', 'Saturday', '2026-12-05', '20:00', 'fit', '04489c978cf8f115fbac43843951a9a7.jpg')
-    ];
-  }
+
 
   function loadAll() {
     var jobs = [
@@ -111,8 +96,7 @@
       api('/api/kit').then(function (j) { S.kit = j.open ? j.items : null; }).catch(function () {}),
       loadGame()
     ];
-    if (SAMPLE) S.memories = sampleMemories();
-    else jobs.push(api('/api/memories').then(function (j) { S.memories = withPending(j.memories || []); }).catch(function () {}));
+    if (!SAMPLE) jobs.push(api('/api/memories').then(function (j) { S.memories = withPending(j.memories || []); }).catch(function () {}));
     return Promise.all(jobs);
   }
 
@@ -153,7 +137,7 @@
       '<p style="font-size:17px;max-width:320px" class="muted">Doors open Friday, December 4, the day we land. Until then, everything you need is on the site.</p>' +
       '<div class="count"><div><b>00</b><span class="mono muted">days</span></div><div><b>00</b><span class="mono muted">hrs</span></div><div><b>00</b><span class="mono muted">min</span></div><div><b>00</b><span class="mono muted">sec</span></div></div>' +
       '</div>' +
-      '<a class="btn ghost full" href="/">Back to the site</a></div>';
+      (SAMPLE ? '' : '<a class="btn ghost full" href="/">Back to the site</a>') + '</div>';
     tick(); setInterval(tick, 1000);
   }
 
@@ -305,28 +289,19 @@
   ];
   var LINES = (function () { var L = [], r, c; for (r = 0; r < 4; r++) L.push([0, 1, 2, 3].map(function (x) { return r * 4 + x; })); for (c = 0; c < 4; c++) L.push([0, 1, 2, 3].map(function (x) { return x * 4 + c; })); L.push([0, 5, 10, 15], [3, 6, 9, 12]); return L; })();
   S.game = { players: [], tallies: {} };
-  function sampleGame() {
-    var sp = function (ids) { var o = {}; ids.forEach(function (i) { o[i] = { photo: '' }; }); return o; };
-    var players = [
-      { name: 'Simi', spotted: sp([0, 1, 2, 3, 5, 9, 14]) }, { name: 'Ilelosa', spotted: sp([0, 4, 8, 12, 6, 15]) },
-      { name: 'Bosa', spotted: sp([2, 7, 10, 13]) }, { name: 'Sayo', spotted: sp([1, 11]) }, { name: 'Nicole', spotted: sp([3, 8, 15]) }, { name: 'Chiara', spotted: sp([0, 6]) }
-    ];
-    players.forEach(function (p) { var sc = scoreOf(p.spotted); p.squares = sc.squares; p.bingos = sc.bingos; p.points = sc.points; });
-    players.sort(function (a, b) { return b.points - a.points; });
-    return { players: players, tallies: { giving: 14, lost: 3, lambo: 22, uber: 9, skip: 31, banana: 2 } };
-  }
+
   function scoreOf(sp) { var ids = Object.keys(sp || {}).map(Number), has = {}; ids.forEach(function (i) { has[i] = 1; }); var b = LINES.filter(function (l) { return l.every(function (i) { return has[i]; }); }).length; return { squares: ids.length, bingos: b, points: ids.length + b * 3 }; }
   function me() { var k = (S.name || '').toLowerCase().split(' ')[0]; return S.game.players.filter(function (p) { return p.name.toLowerCase().split(' ')[0] === k; })[0] || { name: S.name, spotted: {}, squares: 0, bingos: 0, points: 0 }; }
-  function loadGame() { if (SAMPLE) { if (!S.game.players.length) S.game = sampleGame(); return Promise.resolve(); } return api('/api/game').then(function (j) { S.game = j; }).catch(function () {}); }
+  function loadGame() { if (SAMPLE) return Promise.resolve(); return api('/api/game').then(function (j) { S.game = j; }).catch(function () {}); }
 
   // One header for every screen: the accent banner (where we are in the trip, one action),
   // a small eyebrow and the big title. Anything screen-specific goes after it.
-  function head(eyebrow, title, action, extra) {
+  function head(eyebrow, title, action, extra, col) {
     var t = today();
     var bits = ['Day ' + (t.i + 1) + ' of 4', clock(t.n.min) + ' in Miami', 'Open Edition', '(miami art week)', 'December 4–7'];
     var line = '<span>' + bits.map(esc).join('</span><i>·</i><span>') + '</span><i>·</i>';
     return '<div class="ticker" aria-label="' + esc(bits.slice(0, 2).join(', ')) + '"><div>' + line + line + line + line + '</div></div>' +
-      '<header class="band"><div class="bandtop"><span class="mono eyebrow">' + eyebrow + '</span>' + (action || '') + '</div>' +
+      '<header class="band"' + (col ? ' style="--acc:' + col + '"' : '') + '><div class="bandtop"><span class="mono eyebrow">' + eyebrow + '</span>' + (action || '') + '</div>' +
       '<h1 class="big">' + title + '</h1>' + (extra || '') + '</header>';
   }
   // A polaroid print, like the ones on the site: white border, number and label underneath.
@@ -540,15 +515,27 @@
     var d = S.days[schedDay];
     if (!d) { el.innerHTML = '<p class="empty-note">Loading…</p>'; return; }
     var frames = S.memories.filter(function (m) { return m.day === d.day && developed(m, t.n); });
-    el.innerHTML = head('Schedule · Miami time', d.day, '<button class="x onband" id="share-day" aria-label="Send this day’s plan">↗</button>') +
-      '<div class="daypick">' + S.days.map(function (x, i) {
-        return '<button data-sd="' + i + '" class="' + (i === schedDay ? 'on' : '') + '" style="--c:' + x.color + '"><span class="mono">' + x.day.slice(0, 3) + '</span><b>' + x.date.slice(8) + '</b><i>' + (i === t.i ? 'today' : '&nbsp;') + '</i></button>';
+    var info = '<div class="dayinfo"><span class="mono">' + (schedDay === t.i ? 'Today · ' : '') + 'Day ' + (schedDay + 1) + ' of 4 · ' + d.rows.length + ' plans</span><span>Photo challenge: ' + esc(d.shot) + '</span></div>';
+    el.innerHTML = head('Schedule · Miami time', d.day, '<button class="x onband" id="share-day" aria-label="Send this day’s plan">↗</button>', info, d.color) +
+      // the four days hang off the band like index tabs; the open one is the band's own colour
+      '<div class="daytabs" role="tablist">' + S.days.map(function (x, i) {
+        return '<button role="tab" aria-selected="' + (i === schedDay) + '" data-sd="' + i + '" class="' + (i === schedDay ? 'on' : '') + '" style="--c:' + x.color + '"><span class="mono">' + x.day.slice(0, 3) + '</span><b>' + x.date.slice(8) + '</b>' + (i === t.i ? '<i>today</i>' : '') + '</button>';
       }).join('') + '</div>' +
-      '<div class="daybar" style="--acc:' + d.color + '"><span class="mono">Day ' + (schedDay + 1) + ' of 4 · ' + d.rows.length + ' plans</span><span style="font-size:14px">Photo challenge: ' + esc(d.shot) + '</span></div>' +
       timeline(d, t) +
       '<div class="sub"><span class="mono">' + d.day + '’s photos</span><span class="mono muted">' + frames.length + '</span></div>' +
       '<div style="padding:0 20px">' + (frames.length ? gridHTML(frames) : '<p class="muted" style="font-size:14px">' + (schedDay >= t.i ? 'Photos from this day appear the next morning at 9.' : 'No photos from this day.') + '</p>') + '</div>';
     $$('[data-sd]', el).forEach(function (b) { b.onclick = function () { schedDay = +b.getAttribute('data-sd'); renderRooms(); }; });
+    // swipe sideways anywhere on the schedule to move a day
+    if (!el._swipe) {
+      el._swipe = true; var sx = null, sy = null;
+      el.addEventListener('touchstart', function (e) { var p = e.touches[0]; sx = p.clientX; sy = p.clientY; }, { passive: true });
+      el.addEventListener('touchend', function (e) {
+        if (sx == null) return; var p = e.changedTouches[0], dx = p.clientX - sx, dy = p.clientY - sy; sx = null;
+        if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        var n = schedDay + (dx < 0 ? 1 : -1); if (n < 0 || n >= S.days.length) return;
+        schedDay = n; renderRooms();
+      }, { passive: true });
+    }
     $('#share-day').onclick = function () { shareText(d.day + ' in Miami\n' + d.rows.map(function (r) { return r.time + '  ' + r.title; }).join('\n') + '\n\nPhoto challenge: ' + d.shot); };
     wireGrid(el);
   }

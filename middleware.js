@@ -15,7 +15,7 @@ async function hmac(secret, label) {
   return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 const siteToken = (password) => hmac(password, 'openedition-site-v1');
-const DEMO = '/app/?sample&at=fri-14:30';
+const DEMO = '/app/?sample';
 
 // Preview PIN holders see the app in sample mode only: no site, no API, no address.
 async function previewOnly(request, url) {
@@ -25,7 +25,7 @@ async function previewOnly(request, url) {
   const p = url.pathname;
   if (p.startsWith('/api/')) return new Response(JSON.stringify({ error: 'Preview only' }), { status: 401, headers: { 'content-type': 'application/json' } });
   // Preview always opens on Friday afternoon (also fixes saved links from when it opened on Saturday).
-  if (p === '/app' || p === '/app/') return url.searchParams.has('sample') && url.searchParams.get('at') === 'fri-14:30' ? next() : Response.redirect(new URL(DEMO, url), 302);
+  if (p === '/app' || p === '/app/') return url.searchParams.has('sample') && !url.searchParams.has('at') && !url.searchParams.has('preview') ? next() : Response.redirect(new URL(DEMO, url), 302);
   if (p.startsWith('/app/') || p.startsWith('/assets/')) return next();
   if (p === '/tape') return url.searchParams.has('sample') ? next() : Response.redirect(new URL('/tape?sample', url), 302);
   return Response.redirect(new URL(DEMO, url), 302);
