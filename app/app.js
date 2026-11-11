@@ -629,7 +629,6 @@
         '<div class="card" style="margin:16px 0;background:var(--paper);color:var(--ink)">' +
         (g.from ? '<p style="font-size:14px">Lives and works in ' + esc(g.from) + '</p>' : '') +
         (g.line ? '<p style="font-size:14px;margin-top:4px">Would buy: “' + esc(g.line) + '”</p>' : '') +
-        '<p style="font-size:12px;margin-top:6px;opacity:0.6">Mixed media: a carry-on, sunscreen, three outfits a day.</p>' +
         '<p class="mono" style="margin-top:10px">' + esc(g.status === 'Probably' ? 'On hold' : 'Acquired') + (g.ig ? ' · @' + esc(g.ig) : '') + '</p></div>' +
         '<div class="sub" style="margin:8px 0 12px"><span class="mono">Their frames</span><span class="mono muted">' + frames.length + '</span></div>' +
         (frames.length ? gridHTML(frames) : '<p class="muted" style="font-size:14px">Nothing developed yet.</p>'));

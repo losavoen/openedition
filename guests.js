@@ -39,7 +39,6 @@
         '<p class="gname">' + esc(g.name) + '</p>' +
         (g.from ? '<p class="cap">Lives and works in ' + esc(g.from) + '</p>' : '') +
         (g.line ? '<p class="gline">Would buy: “' + esc(g.line) + '”</p>' : '') +
-        '<p class="cap gmed">Mixed media: a carry-on, sunscreen, three outfits a day.</p>' +
         '<p class="gmeta mono cap"><span>' + (inn ? 'Acquired' : 'On hold') + '</span>' + ig + '</p>' +
         '</div></article>';
     }).join('') + pending();
