@@ -66,6 +66,21 @@
      ]
     },
     {
+     "time": "10:00",
+     "title": "Or the Coconut Grove farmers market",
+     "desc": "Miami’s oldest weekly market, at 3300 Grand Ave. Organic produce, fresh juice and a raw food deli under the trees, open from 10 every Saturday. It’s about 20 minutes south of Wynwood, so go early if you want to make the galleries too.",
+     "links": [
+      {
+       "label": "Details",
+       "url": "https://glaserorganicfarms.com/pages/coconut-market"
+      },
+      {
+       "label": "Map",
+       "url": "https://www.google.com/maps/search/?api=1&query=Coconut%20Grove%20Organic%20Farmers%20Market%2C%203300%20Grand%20Ave%2C%20Miami%2C%20FL"
+      }
+     ]
+    },
+    {
      "time": "11:30",
      "title": "Galleries",
      "desc": "We’ll walk through Wynwood and the Design District. ICA Miami is free, and Superblue is $42 if you want to add it.",
@@ -77,21 +92,6 @@
       {
        "label": "Superblue tickets",
        "url": "https://tickets.superblue.com/en/tickets/immersive-art-experience-miami-superblue"
-      }
-     ]
-    },
-    {
-     "time": "12:45",
-     "title": "Lunch at The Taco Stand",
-     "desc": "Wynwood, 313 NW 25th St, a short walk from the galleries. Fish tacos and carne asada fries. Cheap and quick before the fair.",
-     "links": [
-      {
-       "label": "Menu",
-       "url": "https://letstaco.com"
-      },
-      {
-       "label": "Map",
-       "url": "https://www.google.com/maps/search/?api=1&query=The%20Taco%20Stand%2C%20313%20NW%2025th%20St%2C%20Miami%2C%20FL"
       }
      ]
     },
@@ -109,7 +109,7 @@
     {
      "time": "14:15",
      "title": "Art Basel Miami Beach",
-     "desc": "Miami Beach Convention Center, open until 6. The $92 day ticket is all we need.",
+     "desc": "Miami Beach Convention Center. The $92 day ticket is all we need, and there’s food inside if you get hungry.",
      "links": [
       {
        "label": "Tickets",
@@ -118,14 +118,29 @@
      ]
     },
     {
+     "time": "16:30",
+     "title": "The beach",
+     "desc": "The fair is a ten-minute walk from the sand. Bring a swimsuit or just sit and watch the sunset, around 5:30."
+    },
+    {
      "time": "18:30",
      "title": "Home to get ready",
      "desc": "Water taxi back, or a shared ride."
     },
     {
      "time": "20:00",
-     "title": "Dinner",
-     "desc": "Still deciding between somewhere special and somewhere more affordable. I’ll confirm closer to the date."
+     "title": "Dinner at The Taco Stand",
+     "desc": "Wynwood, 313 NW 25th St, around the corner from Everyday People. Fish tacos and carne asada fries. Cheap and quick before the party.",
+     "links": [
+      {
+       "label": "Menu",
+       "url": "https://letstaco.com"
+      },
+      {
+       "label": "Map",
+       "url": "https://www.google.com/maps/search/?api=1&query=The%20Taco%20Stand%2C%20313%20NW%2025th%20St%2C%20Miami%2C%20FL"
+      }
+     ]
     },
     {
      "time": "22:00",

@@ -6,7 +6,7 @@ X-WR-CALNAME:Open Edition (miami art week)
 X-WR-TIMEZONE:America/New_York
 BEGIN:VEVENT
 UID:oe-0-20261204T2230@openedition
-DTSTAMP:20261111T004829Z
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261204T223000
 DTEND;TZID=America/New_York:20261205T000000
 SUMMARY:Welcome dinner at Mangrove
@@ -14,31 +14,31 @@ DESCRIPTION:A relaxed first night\, late enough for the 8:30 arrivals to drop th
 END:VEVENT
 BEGIN:VEVENT
 UID:oe-1-20261205T1000@openedition
-DTSTAMP:20261111T004829Z
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261205T100000
 DTEND;TZID=America/New_York:20261205T113000
 SUMMARY:Breakfast at Libertino Cafe
 DESCRIPTION:Wynwood\, 2659 NW 2nd Ave. Good coffee\, milk bread sandwiches and waffles.\nDetails: https://wynwoodmiami.com/businesses/libertino-cafe/\nMap: https://www.google.com/maps/search/?api=1&query=Libertino%20Cafe%2C%202659%20NW%202nd%20Ave%2C%20Miami%2C%20FL
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-2-20261205T1130@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-2-20261205T1000@openedition
+DTSTAMP:20261111T012314Z
+DTSTART;TZID=America/New_York:20261205T100000
+DTEND;TZID=America/New_York:20261205T113000
+SUMMARY:Or the Coconut Grove farmers market
+DESCRIPTION:Miami’s oldest weekly market\, at 3300 Grand Ave. Organic produce\, fresh juice and a raw food deli under the trees\, open from 10 every Saturday. It’s about 20 minutes south of Wynwood\, so go early if you want to make the galleries too.\nDetails: https://glaserorganicfarms.com/pages/coconut-market\nMap: https://www.google.com/maps/search/?api=1&query=Coconut%20Grove%20Organic%20Farmers%20Market%2C%203300%20Grand%20Ave%2C%20Miami%2C%20FL
+END:VEVENT
+BEGIN:VEVENT
+UID:oe-3-20261205T1130@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261205T113000
-DTEND;TZID=America/New_York:20261205T124500
+DTEND;TZID=America/New_York:20261205T134500
 SUMMARY:Galleries
 DESCRIPTION:We’ll walk through Wynwood and the Design District. ICA Miami is free\, and Superblue is $42 if you want to add it.\nICA Miami: https://icamiami.org\nSuperblue tickets: https://tickets.superblue.com/en/tickets/immersive-art-experience-miami-superblue
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-3-20261205T1245@openedition
-DTSTAMP:20261111T004829Z
-DTSTART;TZID=America/New_York:20261205T124500
-DTEND;TZID=America/New_York:20261205T134500
-SUMMARY:Lunch at The Taco Stand
-DESCRIPTION:Wynwood\, 313 NW 25th St\, a short walk from the galleries. Fish tacos and carne asada fries. Cheap and quick before the fair.\nMenu: https://letstaco.com\nMap: https://www.google.com/maps/search/?api=1&query=The%20Taco%20Stand%2C%20313%20NW%2025th%20St%2C%20Miami%2C%20FL
-END:VEVENT
-BEGIN:VEVENT
 UID:oe-4-20261205T1345@openedition
-DTSTAMP:20261111T004829Z
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261205T134500
 DTEND;TZID=America/New_York:20261205T141500
 SUMMARY:Water taxi to the fair
@@ -46,119 +46,127 @@ DESCRIPTION:Free. Boats leave the Venetian Marina\, 1635 N Bayshore Dr\, every 7
 END:VEVENT
 BEGIN:VEVENT
 UID:oe-5-20261205T1415@openedition
-DTSTAMP:20261111T004829Z
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261205T141500
-DTEND;TZID=America/New_York:20261205T183000
+DTEND;TZID=America/New_York:20261205T163000
 SUMMARY:Art Basel Miami Beach
-DESCRIPTION:Miami Beach Convention Center\, open until 6. The $92 day ticket is all we need.\nTickets: https://www.artbasel.com/miami-beach
+DESCRIPTION:Miami Beach Convention Center. The $92 day ticket is all we need\, and there’s food inside if you get hungry.\nTickets: https://www.artbasel.com/miami-beach
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-6-20261205T1830@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-6-20261205T1630@openedition
+DTSTAMP:20261111T012314Z
+DTSTART;TZID=America/New_York:20261205T163000
+DTEND;TZID=America/New_York:20261205T183000
+SUMMARY:The beach
+DESCRIPTION:The fair is a ten-minute walk from the sand. Bring a swimsuit or just sit and watch the sunset\, around 5:30.
+END:VEVENT
+BEGIN:VEVENT
+UID:oe-7-20261205T1830@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261205T183000
 DTEND;TZID=America/New_York:20261205T200000
 SUMMARY:Home to get ready
 DESCRIPTION:Water taxi back\, or a shared ride.
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-7-20261205T2000@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-8-20261205T2000@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261205T200000
 DTEND;TZID=America/New_York:20261205T220000
-SUMMARY:Dinner
-DESCRIPTION:Still deciding between somewhere special and somewhere more affordable. I’ll confirm closer to the date.
+SUMMARY:Dinner at The Taco Stand
+DESCRIPTION:Wynwood\, 313 NW 25th St\, around the corner from Everyday People. Fish tacos and carne asada fries. Cheap and quick before the party.\nMenu: https://letstaco.com\nMap: https://www.google.com/maps/search/?api=1&query=The%20Taco%20Stand%2C%20313%20NW%2025th%20St%2C%20Miami%2C%20FL
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-8-20261205T2200@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-9-20261205T2200@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261205T220000
 DTEND;TZID=America/New_York:20261205T233000
 SUMMARY:Everyday People
 DESCRIPTION:The Art Week party\, Saturday\, December 5 at Wynwood Marketplace. Last year tickets were about $35.\nTickets on DICE: https://dice.fm/partner/tickets/event/q2wkl9-everyday-people-miami-5th-dec-wynwood-marketplace-miami-tickets
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-9-20261206T1000@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-10-20261206T1000@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261206T100000
 DTEND;TZID=America/New_York:20261206T113000
 SUMMARY:VOUS Church
 DESCRIPTION:Design District\, 77 NE 40th St. Services at 10 and 12.\nMap: https://www.google.com/maps/search/?api=1&query=VOUS%20Church%2C%2077%20NE%2040th%20St%2C%20Miami%2C%20FL
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-10-20261206T1130@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-11-20261206T1130@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261206T113000
 DTEND;TZID=America/New_York:20261206T121500
 SUMMARY:Matcha at Bigface
 DESCRIPTION:40 NE 40th St\, across the street.\nDetails: https://www.miamidesigndistrict.com/listing/1304/bigface/
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-11-20261206T1215@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-12-20261206T1215@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261206T121500
 DTEND;TZID=America/New_York:20261206T134500
 SUMMARY:Magic City Flea Market
 DESCRIPTION:At Ironside in Little River\, 7580 NE 4th Ct\, a few minutes from the house. Vintage clothes\, handmade pieces and art from local vendors. It usually opens at noon on Sundays. I’ll confirm the hours for that weekend.\nIronside calendar: https://miamiironside.com/allactivities\nMap: https://www.google.com/maps/search/?api=1&query=Miami%20Ironside%2C%207580%20NE%204th%20Ct%2C%20Miami%2C%20FL
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-12-20261206T1345@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-13-20261206T1345@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261206T134500
 DTEND;TZID=America/New_York:20261206T143000
 SUMMARY:Wynwood Walls
 DESCRIPTION:About $12–15. Keep it to 45 minutes so there’s time to change.\nTickets: https://thewynwoodwalls.com
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-13-20261206T1430@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-14-20261206T1430@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261206T143000
 DTEND;TZID=America/New_York:20261206T153000
 SUMMARY:Back to the house to change
 DESCRIPTION:About 10 minutes from Wynwood. Swap the church outfit for the day-party one.
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-14-20261206T1530@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-15-20261206T1530@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261206T153000
 DTEND;TZID=America/New_York:20261206T170000
 SUMMARY:Casa Neos
 DESCRIPTION:A day party on the Miami River. About $100–150 each. If you’re flying home Sunday\, pack in the morning and head to the airport from here.\nReserve: https://www.opentable.com/r/casa-neos-miami
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-15-20261207T0900@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-16-20261207T0900@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261207T090000
 DTEND;TZID=America/New_York:20261207T110000
 SUMMARY:Coffee\, then pack
 DESCRIPTION:Checkout is at 11\, which I’m confirming with the host. We’ll bring our bags with us.
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-16-20261207T1100@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-17-20261207T1100@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261207T110000
 DTEND;TZID=America/New_York:20261207T123000
 SUMMARY:Work from Miami
 DESCRIPTION:A coworking space in Wynwood or a café with good Wi-Fi. We’ll pick one closer to the date.
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-17-20261207T1100@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-18-20261207T1100@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261207T110000
 DTEND;TZID=America/New_York:20261207T120000
 SUMMARY:Or take the day off
 DESCRIPTION:A swim\, anything we missed\, or a long lunch.
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-18-20261207T1200@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-19-20261207T1200@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261207T120000
 DTEND;TZID=America/New_York:20261207T180000
 SUMMARY:Nikki Beach
 DESCRIPTION:A few of us are going. We’ll aim for a table\, which has a $50 minimum spend per person. If you want to join\, let me know in the RSVP.\nMap: https://www.google.com/maps/search/?api=1&query=Nikki%20Beach%20Miami%20Beach
 END:VEVENT
 BEGIN:VEVENT
-UID:oe-19-20261207T1800@openedition
-DTSTAMP:20261111T004829Z
+UID:oe-20-20261207T1800@openedition
+DTSTAMP:20261111T012314Z
 DTSTART;TZID=America/New_York:20261207T180000
 DTEND;TZID=America/New_York:20261207T193000
 SUMMARY:Airport
