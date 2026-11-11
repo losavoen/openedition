@@ -174,6 +174,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 @keyframes rise{from{transform:translateY(110%)}to{transform:none}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
 @keyframes curtain{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes curtainDown{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
 @keyframes dropIn{from{transform:translateY(-100%)}to{transform:none}}
 @keyframes dealIn{from{opacity:0;transform:translateY(-60px) rotate(0deg)}to{opacity:1;transform:rotate(var(--r))}}
 @keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -191,6 +192,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 @supports (animation-timeline: view()){
 .sv{animation:fadeUp linear both;animation-timeline:view();animation-range:entry 0% cover 24%}
 .sc{animation:curtain linear both;animation-timeline:view();animation-range:entry 0% cover 38%}
+/* the day photos open from the top down */
+.spread .sc{animation-name:curtainDown}
 .trk{animation:track linear both;animation-timeline:view();animation-range:entry 0% cover 32%}
 .sh{border-top-color:transparent;position:relative}
 .sh::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:#1C1C1A;transform-origin:left;animation:line linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
