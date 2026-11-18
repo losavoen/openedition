@@ -10,7 +10,7 @@
 <meta property="og:image" content="/assets/og.jpg">
 <style>html,body{margin:0;background:#FFFFFF}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&amp;family=Cutive+Mono&amp;display=swap" rel="stylesheet">
+
 <style>
 @font-face{font-family:'Aspekta';src:url('assets/fonts/Aspekta-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'Aspekta';src:url('assets/fonts/Aspekta-550.woff2') format('woff2');font-weight:550;font-style:normal;font-display:swap}
@@ -20,7 +20,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .site,.site *{font-style:normal;font-synthesis:none;box-sizing:border-box}
 .site{font-family:'Aspekta',Helvetica,Arial,sans-serif;color:#1C1C1A;background:#FFFFFF;font-size:16px;line-height:1.45;--ease:cubic-bezier(.2,.7,0,1);--peri:#A2AEDA;--sage:#DCE2BE;--mist:#D8E2DC;--blush:#F8ECEA;--sand:#EDE6DD;--peri-ink:#4F5DA8;--sage-ink:#66702A;--rose-ink:#B0456C;overflow-x:clip}
 .site p,.site h1,.site h2,.site h3,.site ul,.site ol,.site dl,.site dd,.site figure{margin:0}
-.mono{font-family:'Azeret Mono',ui-monospace,monospace}
+.mono{font-family:'Aspekta',Helvetica,Arial,sans-serif}
 .disp{font-family:'PP Neue Machina','Aspekta',Helvetica,Arial,sans-serif;font-weight:400}
 .im{display:block;width:100%;height:100%;object-fit:cover}
 .lbl{font-size:12px;line-height:1.3;text-transform:uppercase;letter-spacing:0.02em}
@@ -325,7 +325,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .dk-tabs a{white-space:nowrap;padding:7px 14px;border-radius:999px;transition:background .25s,color .25s}
 .dk-tabs a:hover{background:rgba(28,28,26,.06)}
 .dk-tabs a.on{background:#1C1C1A;color:#FFFFFF}
-.dk-idx{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 0;white-space:nowrap;font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.04em}
+.dk-idx{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 0;white-space:nowrap;font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.04em}
 .dk-idx i{position:relative;width:14px;height:8px;border-top:1px solid #1C1C1A;border-bottom:1px solid #1C1C1A;transition:transform .4s var(--ease)}
 .dk-idx[aria-expanded="true"] i{transform:rotate(90deg)}
 .dk-idx:focus-visible,.dock a:focus-visible{outline:2px solid var(--peri-ink);outline-offset:3px}
@@ -336,7 +336,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .dk-g li a{display:block;padding:8px 0;border-bottom:1px solid rgba(28,28,26,.12);transition:padding-left .3s var(--ease)}
 .dk-g li a:hover,.dk-g li a.on{padding-left:8px}
 .dk-g li a.on{color:var(--peri-ink)}
-.dk-out{display:flex;gap:24px;margin-top:20px;font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px}
+.dk-out{display:flex;gap:24px;margin-top:20px;font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:11px}
 @media (max-width:760px){.dk-bar{gap:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}.dk-home{display:none}.dk-tabs{margin:0;flex:1}.dk-tabs a{padding:7px 12px;font-size:13px}.dk-idx span{display:none}.dk-list{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
 @media (prefers-reduced-motion:reduce){.dock,.dk-list{transition:none;animation:none}}
 
@@ -351,7 +351,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 /* film treatment on every photo block: grain + a little warmth, timestamp-style corner */
 .sc,.cimg,.fb,.board figure{position:relative}
 .sc::after,.cimg::after,.board figure::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.18;mix-blend-mode:overlay}
-.vcr{font-family:'Cutive Mono','Azeret Mono',monospace;text-shadow:1px 0 rgba(255,40,40,0.55),-1px 0 rgba(40,140,255,0.55)}
+.vcr{font-family:'Aspekta',Helvetica,Arial,sans-serif;text-shadow:1px 0 rgba(255,40,40,0.55),-1px 0 rgba(40,140,255,0.55)}
 /* global grain, very light */
 .grain{position:fixed;inset:-50%;pointer-events:none;z-index:40;opacity:0.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grainmove 0.9s steps(4) infinite}
 @keyframes grainmove{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}100%{transform:translate(0,0)}}
@@ -417,7 +417,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .route .trail{fill:none;stroke:#1C1C1A;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .route .ghost{fill:none;stroke:#1C1C1A;stroke-opacity:.14;stroke-width:3;stroke-dasharray:2 9;stroke-linecap:round}
 .route .stop circle{fill:#FFFFFF;stroke:#1C1C1A;stroke-width:2.5}
-.route .stop text{font-family:'Azeret Mono',ui-monospace,monospace;font-size:17px;letter-spacing:.04em;fill:#1C1C1A}
+.route .stop text{font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:17px;letter-spacing:.04em;fill:#1C1C1A}
 .route .stop .num{font-size:15px;text-anchor:middle;dominant-baseline:central}
 .route .stop.lit circle{fill:var(--peri)}
 .route .stop .lab{transition:opacity .5s var(--ease)}
@@ -425,7 +425,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .route .dot{fill:var(--rose-ink)}
 .route ol{list-style:none;margin:0;padding:0;counter-reset:s}
 .route li{display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:12px;padding:12px 0;border-top:1px solid rgba(28,28,26,0.28);transition:color .5s var(--ease)}
-.route li span{font-family:'Azeret Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.route li span{font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .route li b{font-weight:550}
 .route li small{grid-column:2;font-size:13px;color:#5F5C57}
 .route.armed li{color:#9A978F}.route.armed li.lit{color:#1C1C1A}
@@ -475,6 +475,25 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 .buy-form{display:flex;flex-direction:column;gap:18px;background:#FFFFFF;padding:22px 20px}
 .closet-empty{padding:12px 0;color:#5F5C57}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ===== Cosmos-style system: linen page, ink type, white panels, one typeface, rounded tiles. No colour bands, no ticker. ===== */
+.site{background:#F7F5F3;color:#0D0D0D;--peri:#FFFFFF;--sage:#FFFFFF;--mist:#FFFFFF;--blush:#FFFFFF;--sand:#FFFFFF;--green:#FFFFFF;--peri-ink:#6E6A69;--sage-ink:#6E6A69;--rose-ink:#6E6A69}
+.site .ticker{display:none}
+.mono{font-family:'Aspekta',Helvetica,Arial,sans-serif;font-weight:500;letter-spacing:.06em}
+.vcr{font-family:'Aspekta',Helvetica,Arial,sans-serif;text-shadow:none}
+.disp{font-family:'Aspekta',Helvetica,Arial,sans-serif}
+.lbl{letter-spacing:.08em;font-weight:500}
+.site .big{text-transform:none;letter-spacing:-0.045em;font-weight:400}
+.sh{border-top-color:rgba(13,13,13,.12)}
+/* tiles: rounded, gently turned, no white polaroid border */
+.pola a{background:transparent;padding:0;box-shadow:none;gap:8px}
+.pola .ph{border-radius:12px;background:#FFFFFF}
+.pola img{filter:none}
+.cimg,.cimg img,.sc,.sc img,.card .cimg{border-radius:16px}
+.spread,.card,.cost-card{border-radius:16px}
+/* panels: white on linen, soft edge */
+.site [style*="background: var(--"]{border-radius:16px}
+.dock{color:#0D0D0D}
 </style>
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
@@ -510,7 +529,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 
 <div class="hcue mono lbl pop hbar" style="animation-delay: 1.2s"><span class="rec">Rec</span><span>(Scroll)</span><span>Four days in Miami for Art Week</span></div>
 <div class="hcopy">
-<h1 style="display: flex; flex-direction: column; align-items: center; gap: 14px; color: #1C1C1A; font-size: 48px"><span class="mask"><span class="big" style="animation-delay: 0.3s">Open <br>Edition</span></span><span class="mask"><span style="animation-delay: 0.42s; font-family: &quot;Cutive Mono&quot;, &quot;Azeret Mono&quot;, monospace; font-weight: 400; font-size: clamp(18px, 1.9vw, 28px); line-height: 1.1; letter-spacing: 0.01em">(miami art week)</span></span></h1>
+<h1 style="display: flex; flex-direction: column; align-items: center; gap: 14px; color: #1C1C1A; font-size: 48px"><span class="mask"><span class="big" style="animation-delay: 0.3s">Open <br>Edition</span></span><span class="mask"><span style="animation-delay: 0.42s; font-weight: 400; font-size: clamp(18px, 1.9vw, 28px); line-height: 1.1; letter-spacing: -0.01em; color: #6E6A69">Miami Art Week</span></span></h1>
 </div></section>
 
 <!-- 01 · THE PLAN -->
@@ -590,9 +609,9 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <path class="bay" d="M600 0 C640 160 610 300 650 420 C680 520 650 600 660 640 L760 640 C740 520 760 360 745 200 C735 100 760 40 750 0 Z"/>
 <path class="beach" d="M760 0 C775 120 760 260 780 380 C795 470 780 560 790 640 L850 640 C840 520 860 380 845 250 C835 140 850 60 840 0 Z"/>
 <path class="bay" d="M850 0 L1000 0 L1000 640 L850 640 C860 520 840 380 855 250 C865 140 845 60 850 0 Z" style="opacity:.6"/>
-<text x="635" y="560" style="font-family:'Azeret Mono',monospace;font-size:13px;letter-spacing:.12em;fill:#5F5C57" transform="rotate(-82 635 560)">biscayne bay</text>
-<text x="940" y="90" style="font-family:'Azeret Mono',monospace;font-size:13px;letter-spacing:.12em;fill:#5F5C57" transform="rotate(90 940 90)">atlantic</text>
-<path d="M300 48 Q330 210 545 345" fill="none" stroke="#1C1C1A" stroke-width="2.5" stroke-dasharray="6 7" stroke-linecap="round" opacity=".55"/><g><circle cx="300" cy="48" r="15" fill="#FFFFFF" stroke="#1C1C1A" stroke-width="2.5"/><text x="300" y="48" text-anchor="middle" dominant-baseline="central" style="font-family:'Azeret Mono',monospace;font-size:13px;fill:#1C1C1A">1</text><text x="322" y="44" style="font-family:'Azeret Mono',monospace;font-size:17px;letter-spacing:.04em;fill:#1C1C1A">fll</text><text x="322" y="66" style="font-family:'Azeret Mono',monospace;font-size:13px;fill:#5F5C57">fri · 40–50 min to the house</text></g><path class="ghost" d="M150 330 Q346 369 545 345 Q503 298 450 268 Q495 222 525 165 Q575 219 640 255 Q725 266 810 250 Q704 153 575 95 Q525 151 495 220 Q465 307 465 400"/>
+<text x="635" y="560" style="font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.12em;fill:#5F5C57" transform="rotate(-82 635 560)">biscayne bay</text>
+<text x="940" y="90" style="font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.12em;fill:#5F5C57" transform="rotate(90 940 90)">atlantic</text>
+<path d="M300 48 Q330 210 545 345" fill="none" stroke="#1C1C1A" stroke-width="2.5" stroke-dasharray="6 7" stroke-linecap="round" opacity=".55"/><g><circle cx="300" cy="48" r="15" fill="#FFFFFF" stroke="#1C1C1A" stroke-width="2.5"/><text x="300" y="48" text-anchor="middle" dominant-baseline="central" style="font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:13px;fill:#1C1C1A">1</text><text x="322" y="44" style="font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:17px;letter-spacing:.04em;fill:#1C1C1A">fll</text><text x="322" y="66" style="font-family:'Aspekta',Helvetica,Arial,sans-serif;font-size:13px;fill:#5F5C57">fri · 40–50 min to the house</text></g><path class="ghost" d="M150 330 Q346 369 545 345 Q503 298 450 268 Q495 222 525 165 Q575 219 640 255 Q725 266 810 250 Q704 153 575 95 Q525 151 495 220 Q465 307 465 400"/>
 <path class="trail" id="trail" d="M150 330 Q346 369 545 345 Q503 298 450 268 Q495 222 525 165 Q575 219 640 255 Q725 266 810 250 Q704 153 575 95 Q525 151 495 220 Q465 307 465 400"/>
 <g class="stop" data-i="0"><circle cx="150" cy="330" r="15"/><text class="num" x="150" y="330">1</text><text class="lab" x="168" y="292" text-anchor="start">mia</text><text class="lab" x="168" y="314" text-anchor="start" style="font-size:13px;fill:#5F5C57">fri · 20 min to the house</text></g><g class="stop" data-i="1"><circle cx="545" cy="345" r="15"/><text class="num" x="545" y="345">2</text><text class="lab" x="567" y="341" text-anchor="start">downtown</text><text class="lab" x="567" y="363" text-anchor="start" style="font-size:13px;fill:#5F5C57">fri · 22:30</text></g><g class="stop" data-i="2"><circle cx="450" cy="268" r="15"/><text class="num" x="450" y="268">3</text><text class="lab" x="428" y="284" text-anchor="end">wynwood</text><text class="lab" x="428" y="306" text-anchor="end" style="font-size:13px;fill:#5F5C57">sat · 10:00</text></g><g class="stop" data-i="3"><circle cx="525" cy="165" r="15"/><text class="num" x="525" y="165">4</text><text class="lab" x="547" y="161" text-anchor="start">design district</text><text class="lab" x="547" y="183" text-anchor="start" style="font-size:13px;fill:#5F5C57">sat · 11:30</text></g><g class="stop" data-i="4"><circle cx="640" cy="255" r="15"/><text class="num" x="640" y="255">5</text><text class="lab" x="640" y="287" text-anchor="middle">venetian marina</text><text class="lab" x="640" y="309" text-anchor="middle" style="font-size:13px;fill:#5F5C57">sat · 13:45</text></g><g class="stop" data-i="5"><circle cx="810" cy="250" r="15"/><text class="num" x="810" y="250">6</text><text class="lab" x="832" y="246" text-anchor="start">art basel</text><text class="lab" x="832" y="268" text-anchor="start" style="font-size:13px;fill:#5F5C57">sat · 14:15</text></g><g class="stop" data-i="6"><circle cx="575" cy="95" r="15"/><text class="num" x="575" y="95">7</text><text class="lab" x="597" y="91" text-anchor="start">little river</text><text class="lab" x="597" y="113" text-anchor="start" style="font-size:13px;fill:#5F5C57">sun · 12:15</text></g><g class="stop" data-i="7"><circle cx="495" cy="220" r="15"/><text class="num" x="495" y="220">8</text><text class="lab" x="473" y="216" text-anchor="end">wynwood walls</text><text class="lab" x="473" y="238" text-anchor="end" style="font-size:13px;fill:#5F5C57">sun · 13:45</text></g><g class="stop" data-i="8"><circle cx="465" cy="400" r="15"/><text class="num" x="465" y="400">9</text><text class="lab" x="443" y="396" text-anchor="end">miami river</text><text class="lab" x="443" y="418" text-anchor="end" style="font-size:13px;fill:#5F5C57">sun · 15:30</text></g>
 <circle class="dot" id="trail-dot" r="8" cx="150" cy="330"/>
