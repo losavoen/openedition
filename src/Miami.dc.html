@@ -316,6 +316,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 /* bottom nav: shows only while scrolling */
 .dock{position:fixed;left:0;right:0;top:0;z-index:50;transform:translateY(-100%);transition:transform .5s var(--ease);font-family:'Aspekta',ui-sans-serif,system-ui,sans-serif;font-size:14px;color:#1C1C1A}
 .dock.show{transform:none}
+/* the top bar is always there, from the first screen */
+.dock{transform:none}
 .dk-bar{position:relative;display:flex;align-items:center;gap:20px;height:56px;padding:env(safe-area-inset-top,0px) max(27px,env(safe-area-inset-right,0px)) 0 max(27px,env(safe-area-inset-left,0px));background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(28,28,26,.12)}
 .dk-prog{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--peri);transform-origin:0 50%;transform:scaleX(0)}
 .dk-home{font-weight:550;white-space:nowrap}
