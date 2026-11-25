@@ -43,7 +43,6 @@ html = f'''<!doctype html>
 <meta property="og:title" content="Open Edition — Miami Art Week">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="/assets/og.jpg">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>html,body{{margin:0;background:#FFFFFF}}</style>
 {helmet.strip()}
 <script src="rsvp.js" defer></script>

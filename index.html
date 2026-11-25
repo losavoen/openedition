@@ -8,7 +8,6 @@
 <meta property="og:title" content="Open Edition — Miami Art Week">
 <meta property="og:description" content="Plans, costs and RSVP for our trip to Miami Art Week, December 4–7, 2026.">
 <meta property="og:image" content="/assets/og.jpg">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>html,body{margin:0;background:#FFFFFF}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -498,18 +497,6 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 /* panels: white on linen, soft edge */
 .site [style*="background: var(--"]{border-radius:16px}
 .dock{color:#0D0D0D}
-
-/* Glass top bar: frosted, tinted with the colours of the section beneath, blending as you move between sections */
-@property --dk-a{syntax:'<color>';inherits:true;initial-value:#F8ECEA}
-@property --dk-b{syntax:'<color>';inherits:true;initial-value:#D8E2DC}
-.dock{--dk-a:#F8ECEA;--dk-b:#D8E2DC;transition:--dk-a .9s cubic-bezier(.2,.7,.2,1),--dk-b .9s cubic-bezier(.2,.7,.2,1)}
-.dk-bar{background:linear-gradient(100deg,color-mix(in srgb,var(--dk-a) 90%,transparent) 0%,color-mix(in srgb,var(--dk-b) 78%,transparent) 55%,rgba(255,255,255,.55) 100%)!important;backdrop-filter:blur(22px) saturate(1.7);-webkit-backdrop-filter:blur(22px) saturate(1.7);border-bottom:1px solid rgba(255,255,255,.65)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 10px 30px rgba(28,28,26,.06)}
-.dk-tabs a:hover{background:rgba(255,255,255,.45)}
-.dk-tabs a.on{background:rgba(28,28,26,.9);color:#FFFFFF;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
-.dk-prog{background:#1C1C1A;opacity:.35}
-.dk-list{background:rgba(255,255,255,.82)!important;backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6)}
-.dk-home{display:flex;align-items:center;color:#1C1C1A}
-.oe-logo{display:block;height:30px;width:auto}
 </style>
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
@@ -545,7 +532,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 
 <div class="hcue mono lbl pop hbar" style="animation-delay: 1.2s"><span class="rec">Rec</span><span>(Scroll)</span><span>Four days in Miami for Art Week</span></div>
 <div class="hcopy">
-<h1 style="display: flex; flex-direction: column; align-items: center; gap: 14px; color: #1C1C1A; font-size: 48px"><span class="mask"><span class="big" style="animation-delay: 0.3s">Open <br>Edition</span></span><span class="mask"><span style="animation-delay: 0.42s; font-weight: 400; font-size: clamp(18px, 1.9vw, 28px); line-height: 1.1; letter-spacing: -0.01em; color: #6E6A69">Miami Art Week · December 4–7, 2026</span></span></h1>
+<h1 style="display: flex; flex-direction: column; align-items: center; gap: 14px; color: #1C1C1A; font-size: 48px"><span class="mask"><span class="big" style="animation-delay: 0.3s">Open <br>Edition</span></span><span class="mask"><span style="animation-delay: 0.42s; font-weight: 400; font-size: clamp(18px, 1.9vw, 28px); line-height: 1.1; letter-spacing: -0.01em; color: #6E6A69">Miami Art Week</span></span></h1>
 </div></section>
 
 <!-- 01 · THE PLAN -->
@@ -1176,7 +1163,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <!-- BOTTOM NAV (shown only while scrolling) -->
 <nav class="dock" id="dock" aria-label="Sections">
 <div class="dk-bar"><i class="dk-prog" id="dk-prog" aria-hidden="true"></i>
-<a class="dk-home" href="#top" aria-label="Open Edition, back to the top"><svg class="oe-logo" viewBox="0 0 196 48" width="196" height="48" aria-hidden="true"><path d="M166,3 L3,3 L3,45 L193,45 L193,22" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M28.7 34.36C33.379999999999995 34.36 36.26 30.88 36.26 26.2C36.26 21.52 33.379999999999995 18.04 28.7 18.04C24.02 18.04 21.14 21.52 21.14 26.2C21.14 30.88 24.02 34.36 28.7 34.36ZM28.7 32.08C25.4 32.08 23.78 29.62 23.78 26.2C23.78 22.78 25.4 20.32 28.7 20.32C32.0 20.32 33.62 22.78 33.62 26.2C33.62 29.62 32.0 32.08 28.7 32.08ZM38.36 18.4V40.0H40.88V31.78C41.99 33.4 43.73 34.36 46.04 34.36C50.72 34.36 53.3 30.88 53.3 26.2C53.3 21.52 50.72 18.04 46.04 18.04C43.64 18.04 41.87 19.09 40.76 20.8V18.4ZM45.74 20.32C49.04 20.32 50.66 22.78 50.66 26.2C50.66 29.62 49.04 32.08 45.74 32.08C42.44 32.08 40.82 29.62 40.82 26.2C40.82 22.78 42.44 20.32 45.74 20.32ZM61.97 34.36C65.36 34.36 67.94 32.35 68.92999999999999 29.259999999999998H66.32C65.6 31.03 64.00999999999999 32.08 61.97 32.08C59.21 32.08 57.62 30.04 57.35 27.1H69.25999999999999V26.2C69.25999999999999 21.52 66.38 18.04 61.97 18.04C57.56 18.04 54.68 21.52 54.68 26.2C54.68 30.88 57.56 34.36 61.97 34.36ZM57.41 24.82C57.8 22.15 59.36 20.32 61.97 20.32C64.58 20.32 66.14 22.15 66.53 24.82ZM81.83 23.98V34.0H84.32V23.740000000000002C84.32 20.98 82.73 18.04 78.77 18.04C76.46 18.04 74.81 19.18 73.76 20.65V18.4H71.36V34.0H73.88V25.27C73.88 20.83 77.21 20.32 78.28999999999999 20.32C80.69 20.32 81.83 21.82 81.83 23.98ZM98.63 34.36C102.02000000000001 34.36 104.6 32.35 105.59 29.259999999999998H102.98C102.26 31.03 100.67 32.08 98.63 32.08C95.87 32.08 94.28 30.04 94.01 27.1H105.92V26.2C105.92 21.52 103.04 18.04 98.63 18.04C94.22 18.04 91.34 21.52 91.34 26.2C91.34 30.88 94.22 34.36 98.63 34.36ZM94.07000000000001 24.82C94.46000000000001 22.15 96.02 20.32 98.63 20.32C101.24000000000001 20.32 102.8 22.15 103.19 24.82ZM122.24 34.0V12.400000000000002H119.72V20.62C118.61 19.0 116.86999999999999 18.04 114.56 18.04C109.88 18.04 107.3 21.52 107.3 26.2C107.3 30.88 109.88 34.36 114.56 34.36C116.96 34.36 118.72999999999999 33.31 119.84 31.6V34.0ZM114.86 32.08C111.56 32.08 109.94 29.62 109.94 26.2C109.94 22.78 111.56 20.32 114.86 20.32C118.16 20.32 119.78 22.78 119.78 26.2C119.78 29.62 118.16 32.08 114.86 32.08ZM124.99999999999999 34.0H127.51999999999998V18.4H124.99999999999999ZM124.99999999999999 15.46H127.51999999999998V12.400000000000002H124.99999999999999ZM131.83999999999997 13.600000000000001V18.4H128.95999999999998V20.62H131.83999999999997V30.46C131.83999999999997 32.86 132.79999999999998 34.0 135.5 34.0H138.55999999999997V31.78H135.98C134.83999999999997 31.78 134.35999999999999 31.3 134.35999999999999 30.16V20.62H138.55999999999997V18.4H134.35999999999999V13.600000000000001ZM140.3 34.0H142.82V18.4H140.3ZM140.3 15.46H142.82V12.400000000000002H140.3ZM152.41999999999996 34.36C157.09999999999997 34.36 159.97999999999996 30.88 159.97999999999996 26.2C159.97999999999996 21.52 157.09999999999997 18.04 152.41999999999996 18.04C147.73999999999998 18.04 144.85999999999996 21.52 144.85999999999996 26.2C144.85999999999996 30.88 147.73999999999998 34.36 152.41999999999996 34.36ZM152.41999999999996 32.08C149.11999999999998 32.08 147.49999999999997 29.62 147.49999999999997 26.2C147.49999999999997 22.78 149.11999999999998 20.32 152.41999999999996 20.32C155.71999999999997 20.32 157.33999999999997 22.78 157.33999999999997 26.2C157.33999999999997 29.62 155.71999999999997 32.08 152.41999999999996 32.08ZM172.54999999999998 23.98V34.0H175.03999999999996V23.740000000000002C175.03999999999996 20.98 173.44999999999996 18.04 169.48999999999998 18.04C167.17999999999998 18.04 165.52999999999997 19.18 164.47999999999996 20.65V18.4H162.07999999999998V34.0H164.59999999999997V25.27C164.59999999999997 20.83 167.92999999999998 20.32 169.00999999999996 20.32C171.40999999999997 20.32 172.54999999999998 21.82 172.54999999999998 23.98Z" fill="currentColor"/></svg></a>
+<a class="dk-home" href="#top">Open Edition</a>
 <div class="dk-tabs" id="dk-tabs"><a href="#plan" data-ch="0">The trip</a><a href="#itinerary" data-ch="1">Itinerary</a><a href="#wardrobe" data-ch="2">What to bring</a><a href="#costs" data-ch="3">Costs</a><a href="#rsvp" data-ch="4">RSVP</a></div>
 <button type="button" class="dk-idx" id="dk-idx" aria-expanded="false" aria-controls="dk-list"><span>All sections</span><i aria-hidden="true"></i></button>
 </div>
