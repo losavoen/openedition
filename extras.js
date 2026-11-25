@@ -121,6 +121,20 @@
     }).catch(function () {});
   }
 
+  // The glass top bar takes the colours of whatever section sits under it, blending from one to the next.
+  var TINT = { top: ['#F8ECEA', '#D8E2DC'], plan: ['#F8ECEA', '#A2AEDA'], stay: ['#D8E2DC', '#DCE2BE'], around: ['#DCE2BE', '#D8E2DC'],
+    itinerary: ['#D8E2DC', '#A2AEDA'], fri: ['#D8E2DC', '#DCE2BE'], sat: ['#A2AEDA', '#F8ECEA'], sun: ['#DCE2BE', '#D8E2DC'], mon: ['#F8ECEA', '#A2AEDA'],
+    boat: ['#A2AEDA', '#D8E2DC'], wardrobe: ['#F8ECEA', '#DCE2BE'], kit: ['#DCE2BE', '#F8ECEA'], soundtrack: ['#D8E2DC', '#A2AEDA'],
+    costs: ['#DCE2BE', '#F8ECEA'], faq: ['#A2AEDA', '#DCE2BE'], rsvp: ['#DCE2BE', '#A2AEDA'], guests: ['#F8ECEA', '#D8E2DC'], memories: ['#A2AEDA', '#F8ECEA'] };
+  var tintIds = Object.keys(TINT), tintLast = '';
+  function tint() {
+    var nav = $('dock'); if (!nav) return;
+    var cur = 'top';
+    tintIds.forEach(function (id) { var el = document.getElementById(id); if (el && el.getBoundingClientRect().top <= 64) cur = id; });
+    if (cur === tintLast) return; tintLast = cur;
+    nav.style.setProperty('--dk-a', TINT[cur][0]); nav.style.setProperty('--dk-b', TINT[cur][1]);
+  }
+
   // Top bar: five chapters, the current one highlighted; "All sections" lists every section by chapter.
   function dock() {
     var nav = $('dock'); if (!nav) return;
@@ -135,6 +149,7 @@
       nav.classList.toggle('show', past || !list.hidden);
       var max = document.documentElement.scrollHeight - window.innerHeight;
       prog.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, window.scrollY / max) : 0).toFixed(4) + ')';
+      tint();
       var line = 90, on = links[0];
       links.forEach(function (a) { var el = document.querySelector(a.getAttribute('href')); if (el && el.getBoundingClientRect().top <= line) on = a; });
       links.forEach(function (a) { a.classList.toggle('on', a === on); });
