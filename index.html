@@ -497,6 +497,14 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 /* panels: white on linen, soft edge */
 .site [style*="background: var(--"]{border-radius:16px}
 .dock{color:#0D0D0D}
+/* Glass top bar with a clear dividing line */
+.dk-bar{background:rgba(250,250,247,.62)!important;backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border-bottom:1px solid rgba(28,28,26,.16)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.dk-tabs a:hover{background:rgba(255,255,255,.55)}
+.dk-list{background:rgba(250,250,247,.86)!important;backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border-bottom:1px solid rgba(28,28,26,.16)!important}
+/* Hero: title and dates sit above the photos */
+.hcopy{z-index:4!important}
+/* Room for descenders on the big headings */
+.site h2.big{padding-bottom:.1em}
 </style>
 <script src="rsvp.js" defer></script>
 <script src="guests.js" defer></script>
@@ -521,18 +529,18 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 
 <!-- HERO -->
 <section class="hero" aria-label="Miami Art Week">
-<nav class="pola" aria-label="Jump to a section">
-<a href="#itinerary"><span class="ph"><img src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="" style="object-position: 55% 55%"></span><span class="pc mono"><span>01</span><span>Itinerary</span></span></a>
-<a href="#stay"><span class="ph"><img src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt=""></span><span class="pc mono"><span>02</span><span>The house</span></span></a>
-<a href="#boat" class="maybe"><span class="ph"><img src="assets/9208bb2aa1b5568c58d43073ad5e76c6.jpg" alt=""><span class="hold mono">On hold</span></span><span class="pc mono"><span>03</span><span>Boat, maybe</span></span></a>
-<a href="#wardrobe"><span class="ph"><img src="assets/88f0eb29b662472738110e66db71790d.jpg" alt=""></span><span class="pc mono"><span>04</span><span>Wardrobe</span></span></a>
-<a href="#soundtrack"><span class="ph"><img src="assets/11a1b42b2656fccd82af0047a0a10060.jpg" alt=""></span><span class="pc mono"><span>05</span><span>Soundtrack</span></span></a>
-<a href="#rsvp"><span class="ph"><img src="assets/c4eb66219cdb3bccb6a3bd147e0dcdea.jpg" alt=""></span><span class="pc mono"><span>06</span><span>RSVP</span></span></a>
+<nav class="pola" aria-label="The weekend in six frames">
+<a href="#fri"><span class="ph"><img src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="Sunset through the plane window, landing in Miami" style="object-position: 55% 55%"></span><span class="pc mono"><span>01</span><span>Fri · Wheels down</span></span></a>
+<a href="#stay"><span class="ph"><img src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt="The white house under the trees in Little River"></span><span class="pc mono"><span>02</span><span>Fri · The house</span></span></a>
+<a href="#sat"><span class="ph"><img src="assets/ce9c479ce68a77630ab0c0e8cee3ed96.jpg" alt="Standing in front of a striped painting in a white gallery"></span><span class="pc mono"><span>03</span><span>Sat · The galleries</span></span></a>
+<a href="#sat"><span class="ph"><img src="assets/11a1b42b2656fccd82af0047a0a10060.jpg" alt="A wall of pink and silver domes"></span><span class="pc mono"><span>04</span><span>Sat · The fair</span></span></a>
+<a href="#sun"><span class="ph"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Loungers under fringed umbrellas facing the skyline" style="object-position: 50% 55%"></span><span class="pc mono"><span>05</span><span>Sun · Casa Neos</span></span></a>
+<a href="#mon"><span class="ph"><img src="assets/a84798b4498739329e65cf17fed751f2.jpg" alt="Pool loungers under palm trees" style="object-position: 50% 70%"></span><span class="pc mono"><span>06</span><span>Mon · Last swim</span></span></a>
 </nav>
 
 <div class="hcue mono lbl pop hbar" style="animation-delay: 1.2s"><span class="rec">Rec</span><span>(Scroll)</span><span>Four days in Miami for Art Week</span></div>
 <div class="hcopy">
-<h1 style="display: flex; flex-direction: column; align-items: center; gap: 14px; color: #1C1C1A; font-size: 48px"><span class="mask"><span class="big" style="animation-delay: 0.3s">Open <br>Edition</span></span><span class="mask"><span style="animation-delay: 0.42s; font-weight: 400; font-size: clamp(18px, 1.9vw, 28px); line-height: 1.1; letter-spacing: -0.01em; color: #6E6A69">Miami Art Week</span></span></h1>
+<h1 style="display: flex; flex-direction: column; align-items: center; gap: 14px; color: #1C1C1A; font-size: 48px"><span class="mask"><span class="big" style="animation-delay: 0.3s">Open <br>Edition</span></span><span class="mask"><span style="animation-delay: 0.42s; font-weight: 400; font-size: clamp(18px, 1.9vw, 28px); line-height: 1.1; letter-spacing: -0.01em; color: #6E6A69">Miami Art Week · December 4–7, 2026</span></span></h1>
 </div></section>
 
 <!-- 01 · THE PLAN -->
@@ -621,7 +629,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </svg>
 
 </figure>
-<div><p class="mono lbl ip" style="margin:0 0 12px">The weekend on a map</p><ol><li data-i="0"><span>01</span><b>MIA or FLL</b><small>Fri · whenever you land · Share an Uber</small></li><li data-i="1"><span>02</span><b>Downtown</b><small>Fri · 22:30 · Welcome dinner at Mangrove</small></li><li data-i="2"><span>03</span><b>Wynwood</b><small>Sat · 10:00 · Libertino Cafe, and tacos at 20:00</small></li><li data-i="3"><span>04</span><b>Design District</b><small>Sat · 11:30 · Galleries and ICA Miami</small></li><li data-i="4"><span>05</span><b>Venetian Marina</b><small>Sat · 13:45 · Free water taxi across the bay</small></li><li data-i="5"><span>06</span><b>Art Basel</b><small>Sat · 14:15 · Miami Beach Convention Center</small></li><li data-i="6"><span>07</span><b>Little River</b><small>Sun · 12:15 · Magic City Flea Market at Ironside</small></li><li data-i="7"><span>08</span><b>Wynwood Walls</b><small>Sun · 13:45 · After the flea market</small></li><li data-i="8"><span>09</span><b>Miami River</b><small>Sun · 15:30 · Casa Neos, the day party</small></li></ol></div>
+<div><p class="mono lbl ip" style="margin:0 0 12px">The weekend on a map</p><ol><li data-i="0"><span>01</span><b>MIA or FLL</b><small>Fri · whenever you land · Share an Uber</small></li><li data-i="1"><span>02</span><b>Downtown</b><small>Fri · 22:30 · Welcome dinner at Mangrove, after the 19:00 mixer in Wynwood</small></li><li data-i="2"><span>03</span><b>Wynwood</b><small>Sat · 10:00 · Libertino Cafe, and tacos at 20:00</small></li><li data-i="3"><span>04</span><b>Design District</b><small>Sat · 11:30 · Galleries and ICA Miami</small></li><li data-i="4"><span>05</span><b>Venetian Marina</b><small>Sat · 13:45 · Free water taxi across the bay</small></li><li data-i="5"><span>06</span><b>Art Basel</b><small>Sat · 14:15 · Miami Beach Convention Center</small></li><li data-i="6"><span>07</span><b>Little River</b><small>Sun · 12:15 · Magic City Flea Market at Ironside</small></li><li data-i="7"><span>08</span><b>Wynwood Walls</b><small>Sun · 13:45 · After the flea market</small></li><li data-i="8"><span>09</span><b>Miami River</b><small>Sun · 15:30 · Casa Neos, the day party</small></li></ol></div>
 </div>
 <div class="arr sv" id="arrivals-board">
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 8px"><p class="mono lbl ip">Who lands when</p><p class="mono cap">This fills in as people RSVP.</p></div>
@@ -637,8 +645,8 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 </div>
 
 <nav class="cards" aria-label="Days">
-<a class="card sv" href="#fri"><span class="cimg"><img src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt="The house in Little River"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ip">Fri / Dec 4</span><span class="ct">Arrivals and dinner</span><span class="cap">Land, drop bags, dinner at Mangrove</span></a>
-<a class="card sv" href="#sat"><span class="cimg"><img src="assets/487dd456b4007dab547d2dbdda5fdc60.jpg" alt="Downtown Miami at dusk under pink-lit buildings"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ir">Sat / Dec 5</span><span class="ct">Art day</span><span class="cap">Libertino, galleries, the fair, the beach, tacos</span></a>
+<a class="card sv" href="#fri"><span class="cimg"><img src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="Sunset through the plane window, landing in Miami" style="object-position: 55% 55%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ip">Fri / Dec 4</span><span class="ct">Arrivals and dinner</span><span class="cap">Land, drop bags, dinner at Mangrove</span></a>
+<a class="card sv" href="#sat"><span class="cimg"><img src="assets/ce9c479ce68a77630ab0c0e8cee3ed96.jpg" alt="Standing in front of a striped painting in a white gallery"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ir">Sat / Dec 5</span><span class="ct">Art day</span><span class="cap">Libertino, galleries, the fair, the beach, tacos</span></a>
 <a class="card sv" href="#sun"><span class="cimg"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Loungers under fringed umbrellas facing the Miami skyline" style="object-position: 50% 60%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl is">Sun / Dec 6</span><span class="ct">Slow Sunday</span><span class="cap">Church, matcha, the flea, Wynwood, Casa Neos</span></a>
 <a class="card sv" href="#mon"><span class="cimg"><img src="assets/a84798b4498739329e65cf17fed751f2.jpg" alt="Pool loungers under palm trees" style="object-position: 50% 70%"></span><span class="mono cap today-tag">Today</span><span class="mono lbl ip">Mon / Dec 7</span><span class="ct">Monday</span><span class="cap">Work, explore, or head home</span></a>
 </nav>
@@ -649,15 +657,16 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="page" style="background: var(--mist)">
 <p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="ip">Day 01</span><span>Fri · Dec 4</span></p>
 <h3 class="big">Friday</h3>
-<p class="mono cap shot">Today’s shot · The first night in</p>
-<p style="max-width: 400px; font-size: 16px; line-height: 1.4">Everyone gets in at different times, so the day is free. We’ll meet for a relaxed welcome dinner at Mangrove around 10:30.</p>
-<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="assets/c4eb66219cdb3bccb6a3bd147e0dcdea.jpg" alt="Palm trees and Brickell towers at night"></div>
+<p class="mono cap shot">Frame 01 · Wheels down</p>
+<p style="max-width: 400px; font-size: 16px; line-height: 1.4">Everyone gets in at different times, so the day is free. The Art Week Industry Mixer in Wynwood at 7, then a relaxed welcome dinner at Mangrove around 10:30.</p>
+<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="Sunset through the plane window, landing in Miami" style="object-position: 55% 55%"></div>
 </div>
 <div class="page" style="background: #FFFFFF">
 <p class="mono cap" style="text-transform: uppercase">Run of show</p>
 <div>
 <div class="ros"><span class="mono cap">Anytime</span><div><p style="font-weight: 550">Land and drop your bags</p><p class="cap">MIA is about 20 minutes from the house and FLL is 40 to 50. Share an Uber with anyone landing around the same time.</p></div></div>
-<div class="ros"><span class="mono cap">Daytime</span><div><p style="font-weight: 550">If you’re in early</p><p class="cap">Rest at the house or walk around the Design District. Nothing’s planned until dinner.</p></div></div>
+<div class="ros"><span class="mono cap">Daytime</span><div><p style="font-weight: 550">If you’re in early</p><p class="cap">Rest at the house or walk around the Design District. Nothing’s planned until the mixer.</p></div></div>
+<div class="ros"><span class="mono cap">19:00</span><div><p style="font-weight: 550">Art Week Industry Mixer</p><p class="cap">We’ve RSVP’d. Hosted by Creative Titans at Bronco Wynwood, 2335 N Miami Ave, 7pm to midnight, with music from AYA, DJ Bassto and Lewis Martinee. Invitation only, so come with the group. We’ll head to dinner around 10. <a class="lk" href="https://partiful.com/e/8zpX8lBZHK2Pf0ELWs77" target="_blank" rel="noopener">Event ↗</a> <a class="lk" href="https://www.google.com/maps/search/?api=1&query=Bronco%20Wynwood%2C%202335%20N%20Miami%20Ave%2C%20Miami%2C%20FL" target="_blank" rel="noopener">Map ↗</a></p></div></div>
 <div class="ros"><span class="mono cap">22:30</span><div><p style="font-weight: 550">Welcome dinner at Mangrove</p><p class="cap">A relaxed first night, late enough for the 8:30 arrivals to drop their bags first. Jamaican food and cocktails downtown at 103 NW 1st Ave. The kitchen is open until 11:45 on Fridays and there’s a DJ later. Around $30 each before drinks. <a class="lk" href="https://www.opentable.ca/r/mangrove-miami" target="_blank" rel="noopener">Reserve ↗</a></p></div></div>
 <div class="ros"><span class="mono cap">Late</span><div><p style="font-weight: 550">Out, if you’re up for it</p><p class="cap">unKommon Art Week at Little River Studios is a few blocks from the house. Tickets on DICE. <a class="lk" href="https://www.google.com/maps/search/?api=1&query=Little%20River%20Studios%2C%20Miami" target="_blank" rel="noopener">Map ↗</a></p></div></div>
 </div>
@@ -668,9 +677,9 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="page" style="background: var(--peri)">
 <p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="ir">Day 02</span><span>Sat · Dec 5</span></p>
 <h3 class="big">Saturday</h3>
-<p class="mono cap shot">Today’s shot · Your first look at the fair</p>
+<p class="mono cap shot">Frame 03 · The galleries</p>
 <p style="max-width: 400px; font-size: 16px; line-height: 1.4">Breakfast, the galleries and the fair, the beach at sunset, then tacos and a night out.</p>
-<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="assets/11a1b42b2656fccd82af0047a0a10060.jpg" alt="Friends walking up lit stairs at night"></div>
+<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="assets/ce9c479ce68a77630ab0c0e8cee3ed96.jpg" alt="Standing in front of a striped painting in a white gallery"></div>
 </div>
 <div class="page" style="background: #FFFFFF">
 <p class="mono cap" style="text-transform: uppercase">Run of show</p>
@@ -684,6 +693,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="ros"><span class="mono cap">18:30</span><div><p style="font-weight: 550">Home to get ready</p><p class="cap">Water taxi back, or a shared ride.</p></div></div>
 <div class="ros"><span class="mono cap">20:00</span><div><p style="font-weight: 550">Dinner at The Taco Stand</p><p class="cap">Wynwood, 313 NW 25th St, around the corner from Everyday People. Fish tacos and carne asada fries. Cheap and quick before the party. <a class="lk" href="https://letstaco.com" target="_blank" rel="noopener">Menu ↗</a> <a class="lk" href="https://www.google.com/maps/search/?api=1&query=The%20Taco%20Stand%2C%20313%20NW%2025th%20St%2C%20Miami%2C%20FL" target="_blank" rel="noopener">Map ↗</a></p></div></div>
 <div class="ros"><span class="mono cap">22:00</span><div><p style="font-weight: 550">Everyday People</p><p class="cap">The Art Week party, Saturday, December 5 at Wynwood Marketplace. Last year tickets were about $35. <a class="lk" href="https://dice.fm/partner/tickets/event/q2wkl9-everyday-people-miami-5th-dec-wynwood-marketplace-miami-tickets" target="_blank" rel="noopener">Tickets on DICE ↗</a></p></div></div>
+<div class="ros"><span class="mono cap">Late</span><div><p style="font-weight: 550">Or Soulection, if we get off the waitlist</p><p class="cap">We’re on the waitlist. If we get in, we’ll go to Soulection instead of Everyday People. I’ll confirm in the group chat.</p></div></div>
 </div>
 </div>
 </article>
@@ -692,7 +702,7 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="page" style="background: var(--sage)">
 <p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="is">Day 03</span><span>Sun · Dec 6</span></p>
 <h3 class="big">Sunday</h3>
-<p class="mono cap shot">Today’s shot · The day party</p>
+<p class="mono cap shot">Frame 05 · Casa Neos</p>
 <p style="max-width: 400px; font-size: 16px; line-height: 1.4">Church and matcha in the morning, the flea market and Wynwood Walls, then home to change before Casa Neos at 3:30.</p>
 <div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Loungers under fringed umbrellas on the sand, facing the Miami skyline" style="object-position: 50% 55%"></div>
 </div>
@@ -714,9 +724,9 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="page" style="background: var(--blush)">
 <p class="mono cap" style="display: flex; justify-content: space-between; text-transform: uppercase"><span class="ip">Day 04</span><span>Mon · Dec 7</span></p>
 <h3 class="big">Monday</h3>
-<p class="mono cap shot">Today’s shot · The last view before you fly</p>
+<p class="mono cap shot">Frame 06 · Last swim</p>
 <p style="max-width: 400px; font-size: 16px; line-height: 1.4">I’m working from Miami and flying out around 9pm. You’re welcome to work alongside me, take the day off, or go to the beach.</p>
-<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="Sunset through a plane window on the way home" style="object-position: 55% 55%"></div>
+<div class="sc" style="flex: 1; min-height: 320px; overflow: hidden"><img class="im" src="assets/a84798b4498739329e65cf17fed751f2.jpg" alt="Pool loungers under palm trees" style="object-position: 50% 70%"></div>
 </div>
 <div class="page" style="background: #FFFFFF">
 <p class="mono cap" style="text-transform: uppercase">Run of show</p>
@@ -772,14 +782,11 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <span class="ir">Bring</span><span>A layer, a swimsuit, your songs</span>
 </div>
 <p class="cap sv" style="max-width: 300px">I’ll share the marina and exact time once it’s booked.</p>
-<figure class="sc maybe" style="width: 140px"><img src="assets/1c8c9309193976c9a4e1ebbffde5c892.jpg" alt="Pink cabin lights over the wake" style="display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover"><figcaption class="mono cap" style="padding-top: 6px; text-transform: uppercase"><span class="ir">(Above)</span> Lights on</figcaption></figure>
 </div>
-<div>
-<div class="mono cap" style="display: flex; justify-content: space-between; border-top: 1px solid #1C1C1A; margin-top: 20px; padding-top: 12px; text-transform: uppercase"><span>Miami Art Week</span><span>2026</span><span>If it happens</span></div>
-</div>
+<div></div>
 </div>
 <div style="background: var(--sage); display: flex; align-items: center; justify-content: center; padding: 64px 27px; min-height: 760px">
-<figure class="sc maybe" style="position: relative; background: #F2F2EE; padding: 18px 18px 14px; width: min(420px, 100%)"><span class="hold mono" style="left: 32px; top: 32px">On hold</span><img src="assets/9208bb2aa1b5568c58d43073ad5e76c6.jpg" alt="Sunset over the wake from a pink-lit boat" style="display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover"><figcaption class="mono cap" style="padding-top: 10px; text-transform: uppercase"><span class="is">(Above)</span> Golden hour, back of the boat</figcaption></figure>
+<figure class="sc maybe" style="position: relative; background: #F2F2EE; padding: 18px 18px 14px; width: min(420px, 100%)"><span class="hold mono" style="left: 32px; top: 32px">On hold</span><img src="assets/9208bb2aa1b5568c58d43073ad5e76c6.jpg" alt="Sunset over the wake from a pink-lit boat" style="display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover"></figure>
 </div>
 </div>
 </section>
@@ -1143,12 +1150,12 @@ a{color:#1C1C1A;text-decoration:none}a:hover{color:#4F5DA8}
 <div class="daily" id="daily"><figure><span class="mono cap">Fri</span></figure><figure><span class="mono cap">Sat</span></figure><figure><span class="mono cap">Sun</span></figure><figure><span class="mono cap">Mon</span></figure></div>
 </div>
 <div class="sheet">
-<figure class="fr sv"><span class="mono cap ip">01 · Fri</span><span class="fb"><img src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="Plane window at sunrise"></span><figcaption class="cap">Wheels down</figcaption></figure>
-<figure class="fr sv"><span class="mono cap ip">02 · Fri</span><span class="fb"><img src="assets/c4eb66219cdb3bccb6a3bd147e0dcdea.jpg" alt="Palms and towers at night"></span><figcaption class="cap">First night</figcaption></figure>
-<figure class="fr sv"><span class="mono cap ir">03 · Sat</span><span class="fb"><img src="assets/487dd456b4007dab547d2dbdda5fdc60.jpg" alt="Downtown Miami at dusk"></span><figcaption class="cap">Art day</figcaption></figure>
-<figure class="fr sv"><span class="mono cap ir">04 · Sat</span><span class="fb"><img src="assets/11a1b42b2656fccd82af0047a0a10060.jpg" alt="Friends walking up lit stairs at night"></span><figcaption class="cap">After dark</figcaption></figure>
-<figure class="fr sv"><span class="mono cap is">05 · Sun</span><span class="fb"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Beach club loungers"></span><figcaption class="cap">The flea market</figcaption></figure>
-<figure class="fr sv"><span class="mono cap is">06 · Sun</span><span class="fb"><img src="assets/45d3085f470d21e1b85bcaedd49351e5.jpg" alt="Lit stairs on the way to dinner"></span><figcaption class="cap">Casa Neos</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ip">01 · Fri</span><span class="fb"><img src="assets/f63505a42750c5a52910c41fafde0526.jpg" alt="Sunset through the plane window, landing in Miami"></span><figcaption class="cap">Wheels down</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ip">02 · Fri</span><span class="fb"><img src="assets/33b2dca8bf23bad75dc01309e0e0694f.jpg" alt="The white house under the trees in Little River"></span><figcaption class="cap">The house</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ir">03 · Sat</span><span class="fb"><img src="assets/ce9c479ce68a77630ab0c0e8cee3ed96.jpg" alt="Standing in front of a striped painting in a white gallery"></span><figcaption class="cap">The galleries</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ir">04 · Sat</span><span class="fb"><img src="assets/11a1b42b2656fccd82af0047a0a10060.jpg" alt="A wall of pink and silver domes"></span><figcaption class="cap">The fair</figcaption></figure>
+<figure class="fr sv"><span class="mono cap is">05 · Sun</span><span class="fb"><img src="assets/f74d28082aed0a2416fb3f59121b5f88.jpg" alt="Loungers under fringed umbrellas facing the skyline"></span><figcaption class="cap">Casa Neos</figcaption></figure>
+<figure class="fr sv"><span class="mono cap ip">06 · Mon</span><span class="fb"><img src="assets/a84798b4498739329e65cf17fed751f2.jpg" alt="Pool loungers under palm trees"></span><figcaption class="cap">Last swim</figcaption></figure>
 </div>
 <div id="mem-album-wrap" style="margin-top: 64px" hidden>
 <div class="sh mono lbl" style="border-top: 1px solid #1C1C1A; padding-top: 14px"><span>The album</span><span id="mem-count"></span><span>Hover for colour</span></div>

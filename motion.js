@@ -31,10 +31,10 @@
       if (!born) born = ts;
       var grow = Math.min(1, (ts - born) / 1400); grow = 1 - Math.pow(1 - grow, 3);
       var w = hero.clientWidth, h = hero.clientHeight;
-      var rx = w * 0.38 * (0.35 + 0.65 * grow), ry = h * 0.27 * (0.35 + 0.65 * grow);
+      var rx = w * 0.38 * (0.35 + 0.65 * grow), ry = h * 0.36 * (0.35 + 0.65 * grow);
       for (var i = 0; i < N; i++) {
         var a = theta + (i / N) * Math.PI * 2 + (1 - grow) * 2.2;
-        var z = Math.cos(a), x = Math.sin(a) * rx, y = z * ry - h * 0.02;
+        var z = Math.cos(a), x = Math.sin(a) * rx, y = z * ry + h * 0.02;
         var depth = (z + 1) / 2, s = 0.6 + 0.4 * depth;
         var el = cards[i];
         el.style.transform = 'translate(-50%,-50%) translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + s.toFixed(3) + ') rotate(' + (Math.sin(a) * -7).toFixed(2) + 'deg)';

@@ -6,7 +6,7 @@
    "date": "2026-12-04",
    "side": "A",
    "color": "#D8E2DC",
-   "shot": "The first night in",
+   "shot": "Your first look at the fair",
    "rows": [
     {
      "time": "Anytime",
@@ -16,7 +16,22 @@
     {
      "time": "Daytime",
      "title": "If you’re in early",
-     "desc": "Rest at the house or walk around the Design District. Nothing’s planned until dinner."
+     "desc": "Rest at the house or walk around the Design District. Nothing’s planned until the mixer."
+    },
+    {
+     "time": "19:00",
+     "title": "Art Week Industry Mixer",
+     "desc": "We’ve RSVP’d. Hosted by Creative Titans at Bronco Wynwood, 2335 N Miami Ave, 7pm to midnight, with music from AYA, DJ Bassto and Lewis Martinee. Invitation only, so come with the group. We’ll head to dinner around 10.",
+     "links": [
+      {
+       "label": "Event",
+       "url": "https://partiful.com/e/8zpX8lBZHK2Pf0ELWs77"
+      },
+      {
+       "label": "Map",
+       "url": "https://www.google.com/maps/search/?api=1&query=Bronco%20Wynwood%2C%202335%20N%20Miami%20Ave%2C%20Miami%2C%20FL"
+      }
+     ]
     },
     {
      "time": "22:30",
@@ -48,7 +63,7 @@
    "date": "2026-12-05",
    "side": "B",
    "color": "#A2AEDA",
-   "shot": "Your first look at the fair",
+   "shot": "Golden hour on the boat",
    "rows": [
     {
      "time": "10:00",
@@ -152,6 +167,11 @@
        "url": "https://dice.fm/partner/tickets/event/q2wkl9-everyday-people-miami-5th-dec-wynwood-marketplace-miami-tickets"
       }
      ]
+    },
+    {
+     "time": "Late",
+     "title": "Or Soulection, if we get off the waitlist",
+     "desc": "We’re on the waitlist. If we get in, we’ll go to Soulection instead of Everyday People. I’ll confirm in the group chat."
     }
    ]
   },
@@ -161,7 +181,7 @@
    "date": "2026-12-06",
    "side": "C",
    "color": "#DCE2BE",
-   "shot": "The day party",
+   "shot": "Sand to Wynwood",
    "rows": [
     {
      "time": "10:00",
