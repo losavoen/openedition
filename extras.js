@@ -130,7 +130,7 @@
   function tint() {
     var nav = $('dock'); if (!nav) return;
     var cur = 'top';
-    tintIds.forEach(function (id) { var el = document.getElementById(id); if (el && el.getBoundingClientRect().top <= 64) cur = id; });
+    tintIds.forEach(function (id) { var el = document.getElementById(id); if (el && el.getBoundingClientRect().top <= 80) cur = id; });
     if (cur === tintLast) return; tintLast = cur;
     nav.style.setProperty('--dk-a', TINT[cur][0]); nav.style.setProperty('--dk-b', TINT[cur][1]);
   }
